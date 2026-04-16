@@ -1,12 +1,16 @@
 import io
 import time
+from pathlib import Path
 
 import pandas as pd
 import requests as r
 
-from sympheny_toolbox import enymap, execution, execution_results
-from sympheny_toolbox.utils import excel_to_dict
+from sympheny_toolbox import enymap, execution, execution_results, utils_demand
+from sympheny_toolbox.utils import excel_to_dict, excel_to_dict_profile, excel_to_dict_profile_input, get_excel_sheets
+from sympheny_toolbox.utils_variant import build_excel_profiles
 
+VARIANTS = "Variants"
+PROFILES = "Profiles"
 
 class Sympheny:
     def __init__(self, username, password, is_dev=False):
@@ -169,11 +173,17 @@ class Sympheny:
     def create_variants_from_excel_dict(self, excel_dict, master_scenario_id):
         # 1. Convert the list of dicts to an Excel file in memory
         excel_buffer = io.BytesIO()
-        df = pd.DataFrame(excel_dict)
 
-        # We use 'xlsxwriter' or 'openpyxl' as the engine
-        with pd.ExcelWriter(excel_buffer, engine="openpyxl") as writer:
-            df.to_excel(writer, index=False, sheet_name="Variants")
+        if isinstance(excel_dict, dict):
+            df = pd.DataFrame(excel_dict[VARIANTS])
+            df_profiles = build_excel_profiles(excel_dict[PROFILES])
+            with pd.ExcelWriter(excel_buffer, engine="openpyxl") as writer:
+                df.to_excel(writer, index=False, sheet_name=VARIANTS)
+                df_profiles.to_excel(writer, index=False, sheet_name=PROFILES)
+        else:
+            df = pd.DataFrame(excel_dict)
+            with pd.ExcelWriter(excel_buffer, engine="openpyxl") as writer:
+                df.to_excel(writer, index=False, sheet_name=VARIANTS)
 
         # Seek back to the start of the buffer so r.put can read it
         excel_buffer.seek(0)
@@ -207,7 +217,11 @@ class Sympheny:
 
     def get_variants_dict(self, master_scenario_id):
         excel_url = self.get_variants_excel(master_scenario_id)
-        return excel_to_dict(excel_url, ["A"])["A"]
+        sheet_names = get_excel_sheets(excel_url)
+        variants = excel_to_dict(excel_url, [VARIANTS])[VARIANTS]
+
+        profiles = excel_to_dict_profile_input(excel_url, PROFILES) if PROFILES in sheet_names else []
+        return {VARIANTS: variants, PROFILES: profiles}
 
     def delete_scenario(self, scenario_guid) -> int:
         resp = r.delete(f"{self.be}scenario/{scenario_guid}", headers=self.h)
@@ -293,3 +307,6 @@ class Sympheny:
 
     def get_job(self, job_id):
         return execution_results.get_job(self, job_id)
+
+    def get_demand_profile(self, demand_type, building_type, construction_end, building_area_m2):
+        return utils_demand.get_demand_profile(demand_type, building_type, construction_end, building_area_m2, self.base_url, self.h)

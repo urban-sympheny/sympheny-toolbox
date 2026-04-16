@@ -31,6 +31,10 @@ def load_sheet_from_presigned_url(url: str, sheet: str) -> list[dict]:
     df = pd.read_excel(io.BytesIO(resp.content), sheet_name=sheet)
     return df.to_dict(orient="records")
 
+def get_excel_sheets(excel):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        return pd.ExcelFile(excel).sheet_names
 
 def excel_to_dict(excel, sheets):
     excel_dict = {}
@@ -61,6 +65,35 @@ def excel_to_dict_profile(excel, sheets):
 
     return excel_dict
 
+def excel_to_dict_profile_input(excel, sheet):
+    profiles_dict = {}
+    TARGET_LENGTH = 8760
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+
+        # skip line 2 (idx=1)
+        df = pd.read_excel(
+            excel,
+            sheet_name=sheet,
+            header=0,
+            skiprows=[1],
+            index_col=0
+        )
+
+        df = df.fillna(0)
+
+        for col_name in df.columns:
+            data = df[col_name].values.tolist()
+            current_len = len(data)
+            if current_len < TARGET_LENGTH:
+                data.extend([0.0] * (TARGET_LENGTH - current_len))
+            else:
+                data = data[:TARGET_LENGTH]
+
+            profiles_dict[col_name] = data
+
+    return profiles_dict
 
 def wait_until(request_fn, check_fn, wait_sec: int = 5, max_retries: int = 100):
     for _ in range(max_retries):
