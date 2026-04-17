@@ -4,10 +4,10 @@ build-backend = "uv_build"
 
 [project]
 name = "sympheny-toolbox"
-version = "1.1.0"
+version = "1.1.1"
 description = "Lightweight Python wrapper for the Sympheny SaaS API to automate common workflows."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<4"
 license = "Apache-2.0"
 keywords = [
   "sympheny",
@@ -27,10 +27,10 @@ classifiers = [
 ]
 
 dependencies = [
-    "jproperties>=2.1.2",
-    "openpyxl>=3.1.5",
-    "pandas>=3.0.2",
-    "requests>=2.33.1",
+  "jproperties>=2.0.0,<3",
+  "openpyxl>=3.0.0,<4",
+  "pandas>=2.0.0,<4",
+  "requests>=2.0.0,<3",
 ]
 
 [project.urls]
