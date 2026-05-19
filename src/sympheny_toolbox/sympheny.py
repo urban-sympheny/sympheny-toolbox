@@ -139,6 +139,10 @@ class Sympheny:
         ).json()["data"]
         return data["scenarioGuid"]
 
+    def copy_scenario(self, scenario_id, new_scenario_name):
+        resp = r.put(f"{self.be}scenarios/copy/{scenario_id}", params={"name": new_scenario_name}, headers=self.h).json()
+        return resp["data"]
+
     def create_scenario_enymap(
         self,
         scenario_name,
