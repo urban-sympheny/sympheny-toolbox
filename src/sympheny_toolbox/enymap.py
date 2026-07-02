@@ -2,6 +2,7 @@ import requests as r
 
 from sympheny_toolbox.utils import wait_until
 
+
 tech_options = [
     "PV",
     "HEAT_PUMP",
@@ -63,9 +64,7 @@ def create_enymap(
     )
     resp.raise_for_status()
     wait_until(
-        request_fn=lambda: r.get(
-            f"{base_url}api-services/gis/background", headers=h
-        ).json(),
+        request_fn=lambda: r.get(f"{base_url}api-services/gis/background", headers=h).json(),
         check_fn=lambda resp: resp[0]["is_done"],
     )
 
@@ -87,6 +86,4 @@ def validate(params: list[str], refs: list[str]):
 
     missing_items = params_set - set(refs)
     if missing_items:
-        raise ValueError(
-            f"Invalid values found: {missing_items}. Acceptable values are: {refs}"
-        )
+        raise ValueError(f"Invalid values found: {missing_items}. Acceptable values are: {refs}")
