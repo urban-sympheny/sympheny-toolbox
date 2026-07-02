@@ -14,9 +14,7 @@ def list_jobs(s, scenario_id, status):
     h = s.h
 
     data = {"scenarioGuids": [scenario_id], "limit": 200}
-    resp = r.post(
-        f"{base_url}sense-api/ext/solver/jobs/get-scenarios", headers=h, json=data
-    )
+    resp = r.post(f"{base_url}sense-api/ext/solver/jobs/get-scenarios", headers=h, json=data)
     jobs = list(filter(lambda j: j["scenarioGuid"] == scenario_id, resp.json()))
     if status:
         jobs = [x for x in jobs if x["status"] == status]
@@ -48,17 +46,11 @@ def read_output_file(solution, presigned_url):
                 break
 
         if not target_file:
-            raise FileNotFoundError(
-                f"Could not find Excel file starting with {solution}"
-            )
+            raise FileNotFoundError(f"Could not find Excel file starting with {solution}")
 
         dict1 = excel_to_dict(target_file, sheets)
         sheet_names = pd.ExcelFile(target_file).sheet_names
-        sheets = [
-            sheet
-            for sheet in sheet_names
-            if any(sheet.startswith(s) for s in sheet_prefixes)
-        ]
+        sheets = [sheet for sheet in sheet_names if any(sheet.startswith(s) for s in sheet_prefixes)]
         dict2 = excel_to_dict_profile(target_file, sheets)
 
         return dict1 | dict2

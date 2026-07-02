@@ -35,9 +35,7 @@ def execute(s, scenario_guid):
 
     sleep = 10
     for _ in range(100):
-        resp = r.post(
-            f"{base_url}sense-api/ext/solver/jobs/get-scenarios", headers=h, json=data
-        )
+        resp = r.post(f"{base_url}sense-api/ext/solver/jobs/get-scenarios", headers=h, json=data)
         running_jobs = list(
             filter(
                 lambda j: j["scenarioGuid"] == scenario_guid and not j["terminated"],
@@ -82,9 +80,7 @@ def dashboard_url_v2(s, scenario_id) -> str | None:
     project_id = scenario["projectGuid"]
 
     data = {"scenarioGuids": [scenario_id], "limit": 200}
-    resp = r.post(
-        f"{base_url}sense-api/ext/solver/jobs/get-scenarios", headers=h, json=data
-    )
+    resp = r.post(f"{base_url}sense-api/ext/solver/jobs/get-scenarios", headers=h, json=data)
 
     done_jobs = list(
         filter(

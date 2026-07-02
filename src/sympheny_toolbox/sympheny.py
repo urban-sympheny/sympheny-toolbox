@@ -1,24 +1,21 @@
 import io
 import time
-from pathlib import Path
 
 import pandas as pd
 import requests as r
 
 from sympheny_toolbox import enymap, execution, execution_results, utils_demand
-from sympheny_toolbox.utils import excel_to_dict, excel_to_dict_profile, excel_to_dict_profile_input, get_excel_sheets
+from sympheny_toolbox.utils import excel_to_dict, excel_to_dict_profile_input, get_excel_sheets
 from sympheny_toolbox.utils_variant import build_excel_profiles
+
 
 VARIANTS = "Variants"
 PROFILES = "Profiles"
 
+
 class Sympheny:
     def __init__(self, username, password, is_dev=False):
-        self.base_url = (
-            "https://eu-north-1-api.dev.sympheny.com/"
-            if is_dev
-            else "https://eu-north-1-api.sympheny.com/"
-        )
+        self.base_url = "https://eu-north-1-api.dev.sympheny.com/" if is_dev else "https://eu-north-1-api.sympheny.com/"
         self.is_dev = is_dev
         self.be = f"{self.base_url}sympheny-app/"
         self.username = username
@@ -27,9 +24,7 @@ class Sympheny:
 
     def _authenticate(self):
         auth_url = f"{self.base_url}backoffice/auth/ext/token"
-        response = r.post(
-            auth_url, json={"email": self.username, "password": self.password}
-        )
+        response = r.post(auth_url, json={"email": self.username, "password": self.password})
         response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
         jwt = response.json()["access_token"]
         return {"authorization": f"Bearer {jwt}"}
@@ -72,34 +67,22 @@ class Sympheny:
         return r.get(f"{self.be}analysis/{analysis_id}", headers=self.h).json()["data"]
 
     def find_analysis(self, analysis_name, projectGuid):
-        analyses = r.get(f"{self.be}projects/{projectGuid}", headers=self.h).json()[
-            "data"
-        ]["analyses"]
-        analysis = next(
-            (x for x in analyses if x["analysisName"] == analysis_name), None
-        )
+        analyses = r.get(f"{self.be}projects/{projectGuid}", headers=self.h).json()["data"]["analyses"]
+        analysis = next((x for x in analyses if x["analysisName"] == analysis_name), None)
         if not analysis:
             return None
 
         analysis_guid = analysis["analysisGuid"]
-        return r.get(f"{self.be}analysis/{analysis_guid}", headers=self.h).json()[
-            "data"
-        ]
+        return r.get(f"{self.be}analysis/{analysis_guid}", headers=self.h).json()["data"]
 
     def find_scenario(self, scenario_name, analysis_guid):
-        scenarios = r.get(f"{self.be}analysis/{analysis_guid}", headers=self.h).json()[
-            "data"
-        ]["scenarios"]
-        scenario = next(
-            (x for x in scenarios if x["scenarioName"] == scenario_name), None
-        )
+        scenarios = r.get(f"{self.be}analysis/{analysis_guid}", headers=self.h).json()["data"]["scenarios"]
+        scenario = next((x for x in scenarios if x["scenarioName"] == scenario_name), None)
         if not scenario:
             return None
 
         scenario_guid = scenario["scenarioGuid"]
-        return r.get(f"{self.be}scenario/{scenario_guid}", headers=self.h).json()[
-            "data"
-        ]
+        return r.get(f"{self.be}scenario/{scenario_guid}", headers=self.h).json()["data"]
 
     def create_project(self, project_name):
         data = r.post(
@@ -117,13 +100,9 @@ class Sympheny:
         ).json()["data"]
         return data["analysisGuid"]
 
-    def create_scenario_from_excel(
-        self, excel_path, scenario_name, analysis_guid
-    ) -> str:
+    def create_scenario_from_excel(self, excel_path, scenario_name, analysis_guid) -> str:
         # get presigned urls
-        presigned = r.get(
-            f"{self.be}db-update/s3-presigned-url", headers=self.h
-        ).json()["data"]
+        presigned = r.get(f"{self.be}db-update/s3-presigned-url", headers=self.h).json()["data"]
         presigned_url = presigned["s3PresignedUrl"]
 
         # upload excels to presigned urls
@@ -153,14 +132,10 @@ class Sympheny:
         exports: list[str],
         poly: list,
     ):
-        return enymap.create_enymap(
-            self, scenario_name, analysis_id, techs, demands, imports, exports, poly
-        )
+        return enymap.create_enymap(self, scenario_name, analysis_id, techs, demands, imports, exports, poly)
 
     def create_variants_from_excel(self, excel_path, master_scenario_id):
-        presigned_url = r.get(
-            f"{self.be}db-update/s3-presigned-url", headers=self.h
-        ).json()["data"]["s3PresignedUrl"]
+        presigned_url = r.get(f"{self.be}db-update/s3-presigned-url", headers=self.h).json()["data"]["s3PresignedUrl"]
         with open(excel_path, "rb") as f:
             r.put(presigned_url, data=f)
 
@@ -169,9 +144,7 @@ class Sympheny:
             "masterScenarioGuid": master_scenario_id,
             "deleteExisting": True,
         }
-        resp = r.put(
-            f"{self.be}scenario-variants-excel", json=data, headers=self.h
-        ).json()
+        resp = r.put(f"{self.be}scenario-variants-excel", json=data, headers=self.h).json()
         return resp["data"]
 
     def create_variants_from_excel_dict(self, excel_dict, master_scenario_id):
@@ -193,9 +166,7 @@ class Sympheny:
         excel_buffer.seek(0)
 
         # 2. Get the presigned URL
-        presigned_url_resp = r.get(
-            f"{self.be}db-update/s3-presigned-url", headers=self.h
-        )
+        presigned_url_resp = r.get(f"{self.be}db-update/s3-presigned-url", headers=self.h)
         presigned_url_resp.raise_for_status()
         presigned_url = presigned_url_resp.json()["data"]["s3PresignedUrl"]
 
@@ -233,17 +204,13 @@ class Sympheny:
 
     def scenario_url(self, scenario_guid):
         domain = "app.dev.sympheny.com" if self.is_dev else "app.sympheny.com"
-        resp = r.get(f"{self.be}scenario/{scenario_guid}", headers=self.h).json()[
-            "data"
-        ]
+        resp = r.get(f"{self.be}scenario/{scenario_guid}", headers=self.h).json()["data"]
         project_id = resp["projectGuid"]
         analysis_id = resp["analysisGuid"]
         return f"https://{domain}/projects/{project_id}/analysis/{analysis_id}/scenario/{scenario_guid}"
 
     def close_diagram(self, scenario_guid):
-        resp = r.put(
-            f"{self.be}scenarios/{scenario_guid}/close-diagram", headers=self.h, data={}
-        )
+        resp = r.put(f"{self.be}scenarios/{scenario_guid}/close-diagram", headers=self.h, data={})
         return resp.status_code
 
     # returns presigned_url
@@ -253,21 +220,13 @@ class Sympheny:
             headers=self.h,
             json={"scenarioGuids": [scenario_guid]},
         )
-        analysis_id = r.get(
-            f"{self.be}scenario/{scenario_guid}", headers=self.h
-        ).json()["data"]["analysisGuid"]
+        analysis_id = r.get(f"{self.be}scenario/{scenario_guid}", headers=self.h).json()["data"]["analysisGuid"]
 
-        scenario_name = r.get(
-            f"{self.be}scenario/{scenario_guid}", headers=self.h
-        ).json()["data"]["scenarioName"]
+        scenario_name = r.get(f"{self.be}scenario/{scenario_guid}", headers=self.h).json()["data"]["scenarioName"]
         sleep_time = 5
         for _ in range(20):
-            results = r.get(f"{self.be}analysis/{analysis_id}", headers=self.h).json()[
-                "data"
-            ]["results"]["scenarios"]
-            result_scenar = next(
-                filter(lambda s: s["scenarioName"] == scenario_name, results)
-            )
+            results = r.get(f"{self.be}analysis/{analysis_id}", headers=self.h).json()["data"]["results"]["scenarios"]
+            result_scenar = next(filter(lambda s: s["scenarioName"] == scenario_name, results))
 
             if result_scenar["inputFilepath"]:
                 return result_scenar["inputFilepath"]

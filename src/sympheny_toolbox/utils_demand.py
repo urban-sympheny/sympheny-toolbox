@@ -1,5 +1,6 @@
 import requests as r
 
+
 def get_demand_profile(demand_type, building_type, construction_end, building_area_m2, base_url, h):
     url = f"{base_url}api-services/demand/hub_demand?demand_type={demand_type}&building_type={building_type}"
     data = [{"construction_end": construction_end, "building_ground_area": building_area_m2, "nbr_floor": 1}]

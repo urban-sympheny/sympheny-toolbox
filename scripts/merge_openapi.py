@@ -17,12 +17,12 @@ Output: docs/sympheny_openapi.json
 Usage: python scripts/merge_openapi.py
 """
 
-from __future__ import annotations
-
 import json
 import sys
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 OUTPUT = DOCS / "sympheny_openapi.json"
@@ -50,6 +50,7 @@ def load(name: str) -> dict[str, Any]:
 # OpenAPI 3.0 -> 3.1 upgrade helpers (webapp)
 # ---------------------------------------------------------------------------
 
+
 def upgrade_schema_3_0_to_3_1(node: Any) -> None:
     """Recursively convert 3.0-style schema keywords to 3.1 in-place."""
     if isinstance(node, list):
@@ -60,7 +61,10 @@ def upgrade_schema_3_0_to_3_1(node: Any) -> None:
         return
 
     # boolean exclusiveMinimum/Maximum (3.0) -> numeric (3.1)
-    for bound, limit in (("exclusiveMinimum", "minimum"), ("exclusiveMaximum", "maximum")):
+    for bound, limit in (
+        ("exclusiveMinimum", "minimum"),
+        ("exclusiveMaximum", "maximum"),
+    ):
         if isinstance(node.get(bound), bool):
             if node[bound] and limit in node:
                 node[bound] = node.pop(limit)
@@ -121,15 +125,15 @@ def mark_non_required_nullable(node: Any) -> None:
 # Filtering and pruning
 # ---------------------------------------------------------------------------
 
-def filter_paths(spec: dict[str, Any], keep_op) -> None:
+
+def filter_paths(
+    spec: dict[str, Any],
+    keep_op: Callable[[str, str, dict[str, Any]], bool],
+) -> None:
     """Keep only operations for which keep_op(path, method, operation) is true."""
     new_paths: dict[str, Any] = {}
     for path, path_item in spec["paths"].items():
-        kept = {
-            method: op
-            for method, op in path_item.items()
-            if method in HTTP_METHODS and keep_op(path, method, op)
-        }
+        kept = {method: op for method, op in path_item.items() if method in HTTP_METHODS and keep_op(path, method, op)}
         if kept:
             # preserve path-level fields (parameters, summary, ...)
             extras = {k: v for k, v in path_item.items() if k not in HTTP_METHODS}
@@ -156,20 +160,14 @@ def prune_components(spec: dict[str, Any]) -> None:
     frontier: set[str] = set()
     collect_refs(spec["paths"], frontier)
     while frontier:
-        names = {
-            ref.rsplit("/", 1)[-1]
-            for ref in frontier
-            if ref.startswith("#/components/schemas/")
-        }
+        names = {ref.rsplit("/", 1)[-1] for ref in frontier if ref.startswith("#/components/schemas/")}
         new = names - reachable
         reachable |= new
         frontier = set()
         for name in new:
             if name in schemas:
                 collect_refs(schemas[name], frontier)
-    spec["components"]["schemas"] = {
-        name: schema for name, schema in schemas.items() if name in reachable
-    }
+    spec["components"]["schemas"] = {name: schema for name, schema in schemas.items() if name in reachable}
 
 
 def rename_schema(spec: dict[str, Any], old: str, new: str) -> None:
@@ -195,6 +193,7 @@ def rename_schema(spec: dict[str, Any], old: str, new: str) -> None:
 # ---------------------------------------------------------------------------
 # Merge
 # ---------------------------------------------------------------------------
+
 
 def is_superset_schema(a: dict[str, Any], b: dict[str, Any]) -> bool:
     """True if object schema `a` equals `b` except for extra optional properties."""
@@ -238,7 +237,7 @@ def used_tags(spec: dict[str, Any]) -> set[str]:
     return tags
 
 
-def set_default_security(spec: dict[str, Any], security: list[dict[str, list]]) -> None:
+def set_default_security(spec: dict[str, Any], security: list[dict[str, list[str]]]) -> None:
     """Copy a document-level security requirement onto each operation lacking one."""
     for path_item in spec["paths"].values():
         for method, op in path_item.items():
@@ -327,18 +326,16 @@ def main() -> int:
 
     # single bearer scheme for all backends (webapp's bearerAuth is equivalent;
     # APIKeyHeader is internal-only and never referenced by kept operations)
-    merged["components"]["securitySchemes"] = {
-        "HTTPBearer": backoffice["components"]["securitySchemes"]["HTTPBearer"]
-    }
+    merged["components"]["securitySchemes"] = {"HTTPBearer": backoffice["components"]["securitySchemes"]["HTTPBearer"]}
 
     # --- tags ----------------------------------------------------------------
-    tag_descriptions = {
-        tag["name"]: tag.get("description")
-        for spec in (webapp, backoffice, sense)
-        for tag in spec.get("tags", [])
-    }
+    tag_descriptions = {tag["name"]: tag.get("description") for spec in (webapp, backoffice, sense) for tag in spec.get("tags", [])}
     merged["x-tagGroups"] = []
-    for group_name, spec in (("Platform", webapp), ("Account", backoffice), ("Solver", sense)):
+    for group_name, spec in (
+        ("Platform", webapp),
+        ("Account", backoffice),
+        ("Solver", sense),
+    ):
         names = sorted(used_tags(spec))
         merged["x-tagGroups"].append({"name": group_name, "tags": names})
         for name in names:
@@ -356,16 +353,8 @@ def main() -> int:
         raise SystemExit(f"dangling $refs: {sorted(dangling)}")
 
     OUTPUT.write_text(json.dumps(merged, indent=2) + "\n")
-    ops = sum(
-        1
-        for item in merged["paths"].values()
-        for method in item
-        if method in HTTP_METHODS
-    )
-    print(
-        f"wrote {OUTPUT}: {len(merged['paths'])} paths, {ops} operations, "
-        f"{len(merged['components']['schemas'])} schemas"
-    )
+    ops = sum(1 for item in merged["paths"].values() for method in item if method in HTTP_METHODS)
+    print(f"wrote {OUTPUT}: {len(merged['paths'])} paths, {ops} operations, {len(merged['components']['schemas'])} schemas")
     return 0
 
 

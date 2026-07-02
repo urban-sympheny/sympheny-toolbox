@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def build_excel_profiles(profiles):
     profile_names = list(profiles.keys())
     time_steps = list(range(1, 8761))
@@ -16,7 +17,7 @@ def build_excel_profiles(profiles):
 
     # 4. Create the sub-header row ("Time step") to match the screenshot's Row 2
     # Initialize a row with empty strings for all columns
-    sub_header = {col: "" for col in df.columns}
+    sub_header = dict.fromkeys(df.columns, "")
     # Set the specific text for the first column
     sub_header["Profile name"] = "Time step"
 
