@@ -1,5 +1,5 @@
-[![PyPI - Version](https://img.shields.io/pypi/v/sympheny-toolbox.svg)](https://pypi.org/project/sympheny-toolbox)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sympheny-toolbox.svg)](https://pypi.org/project/sympheny-toolbox)
+[![PyPI - Version](https://img.shields.io/pypi/v/sympheny-toolbox.svg?cacheSeconds=300)](https://pypi.org/project/sympheny-toolbox)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/sympheny-toolbox.svg?cacheSeconds=300)](https://pypi.org/project/sympheny-toolbox)
 
 # Sympheny Toolbox
 
