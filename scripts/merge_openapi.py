@@ -17,11 +17,16 @@ Output: docs/sympheny_openapi.json
 Usage: python scripts/merge_openapi.py
 """
 
+from __future__ import annotations
+
 import json
 import sys
-from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 DOCS = Path(__file__).resolve().parent.parent / "docs"
@@ -43,7 +48,8 @@ SENSE_KEEP_TAGS = {"External Solver Jobs"}
 
 
 def load(name: str) -> dict[str, Any]:
-    return json.loads((DOCS / name).read_text())
+    data: dict[str, Any] = json.loads((DOCS / name).read_text())
+    return data
 
 
 # ---------------------------------------------------------------------------
@@ -94,9 +100,8 @@ def add_null_type(schema: dict[str, Any]) -> None:
     if isinstance(schema_type, str):
         if schema_type != "null":
             schema["type"] = [schema_type, "null"]
-    elif isinstance(schema_type, list):
-        if "null" not in schema_type:
-            schema_type.append("null")
+    elif isinstance(schema_type, list) and "null" not in schema_type:
+        schema_type.append("null")
     if "enum" in schema and None not in schema["enum"]:
         schema["enum"].append(None)
 

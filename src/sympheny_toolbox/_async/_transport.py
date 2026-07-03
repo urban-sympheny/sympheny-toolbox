@@ -1,0 +1,100 @@
+"""HTTP transport with token authentication for the Sympheny API."""
+
+from __future__ import annotations
+
+import time
+from typing import Any
+
+import httpx
+
+from sympheny_toolbox.errors import APIError, AuthenticationError, NotFoundError
+from sympheny_toolbox.models import Auth0UserAccessToken, Auth0UserCredentials
+
+
+DEFAULT_BASE_URL = "https://eu-north-1-api.sympheny.com"
+DEV_BASE_URL = "https://eu-north-1-api.dev.sympheny.com"
+
+_TOKEN_PATH = "/backoffice/auth/ext/token"  # noqa: S105
+_TOKEN_EXPIRY_MARGIN_SEC = 60.0
+
+
+def raise_for_status(response: httpx.Response) -> None:
+    """Map an unsuccessful HTTP response to a :class:`~sympheny_toolbox.errors.APIError`."""
+    if response.is_success:
+        return
+    body = response.text
+    message = f"{response.request.method} {response.request.url.path} failed with HTTP {response.status_code}: {body[:500]}"
+    if response.status_code in (401, 403):
+        raise AuthenticationError(message, status_code=response.status_code, body=body)
+    if response.status_code == 404:
+        raise NotFoundError(message, status_code=response.status_code, body=body)
+    raise APIError(message, status_code=response.status_code, body=body)
+
+
+class AsyncTransport:
+    """Issues authenticated requests against the Sympheny API.
+
+    Fetches a bearer token lazily on the first request, caches it until shortly
+    before expiry, and retries once with a fresh token on HTTP 401.
+    """
+
+    def __init__(self, username: str, password: str, *, base_url: str, timeout: float) -> None:
+        self._credentials = Auth0UserCredentials(email=username, password=password)
+        self._client = httpx.AsyncClient(base_url=base_url, timeout=timeout)
+        self._token: str | None = None
+        self._token_expires_at = 0.0
+
+    @property
+    def base_url(self) -> str:
+        return str(self._client.base_url)
+
+    async def _authenticate(self) -> None:
+        response = await self._client.post(_TOKEN_PATH, json=self._credentials.model_dump(mode="json"))
+        raise_for_status(response)
+        token = Auth0UserAccessToken.model_validate(response.json())
+        self._token = token.access_token
+        self._token_expires_at = time.monotonic() + token.expires_in - _TOKEN_EXPIRY_MARGIN_SEC
+
+    async def _bearer_headers(self) -> dict[str, str]:
+        if self._token is None or time.monotonic() >= self._token_expires_at:
+            await self._authenticate()
+        return {"Authorization": f"Bearer {self._token}"}
+
+    async def request_json(
+        self,
+        method: str,
+        path: str,
+        *,
+        params: dict[str, Any] | None = None,
+        json: Any | None = None,
+    ) -> Any:
+        """Send an authenticated request and return the parsed JSON body (``None`` if empty)."""
+        response = await self._request(method, path, params=params, json=json)
+        if response.status_code == 401:
+            # Token may have been revoked before its expiry time: re-authenticate once.
+            self._token = None
+            response = await self._request(method, path, params=params, json=json)
+        raise_for_status(response)
+        if not response.content:
+            return None
+        return response.json()
+
+    async def _request(
+        self,
+        method: str,
+        path: str,
+        *,
+        params: dict[str, Any] | None = None,
+        json: Any | None = None,
+    ) -> httpx.Response:
+        headers = await self._bearer_headers()
+        return await self._client.request(method, path, params=params, json=json, headers=headers)
+
+    async def request_unauthenticated(self, method: str, url: str, *, content: bytes | None = None) -> httpx.Response:
+        """Send a request without auth headers to an absolute URL (e.g. an S3 presigned URL)."""
+        response = await self._client.request(method, url, content=content)
+        raise_for_status(response)
+        return response
+
+    async def aclose(self) -> None:
+        await self._client.aclose()
