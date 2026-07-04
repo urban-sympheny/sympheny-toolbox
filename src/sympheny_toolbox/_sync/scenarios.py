@@ -55,14 +55,37 @@ class Scenarios:
         envelope = ResponseDtoScenarioResponseDto.model_validate(raw)
         return unwrap(envelope.data)
 
-    def delete(self, scenario_guid: str) -> Status:
-        """Delete a scenario. ``DELETE /sympheny-app/scenario/{scenarioGuid}``"""
-        raw = self._t.request_json("DELETE", f"/sympheny-app/scenario/{scenario_guid}")
-        envelope = ResponseDtoStatus.model_validate(raw)
+    def rename(self, scenario_guid: str, request: ScenarioRequestDto) -> ScenarioResponseDto:
+        """Rename a scenario in place. ``PUT /sympheny-app/scenarios/{scenarioGuid}``
+
+        Unlike :meth:`copy`, this sets the scenario's name directly, so it works within the scenario's
+        current analysis without creating a duplicate.
+        """
+        raw = self._t.request_json("PUT", f"/sympheny-app/scenarios/{scenario_guid}", json=dump(request))
+        envelope = ResponseDtoScenarioResponseDto.model_validate(raw)
         return unwrap(envelope.data)
 
+    def delete(self, scenario_guid: str) -> Status:
+        """Delete a scenario. ``DELETE /sympheny-app/scenario/{scenarioGuid}``
+
+        The API returns no ``data`` payload for this endpoint even on success, so a missing payload is
+        treated as an empty :class:`Status` rather than an error.
+        """
+        raw = self._t.request_json("DELETE", f"/sympheny-app/scenario/{scenario_guid}")
+        envelope = ResponseDtoStatus.model_validate(raw)
+        return envelope.data if envelope.data is not None else Status()
+
     def copy(self, scenario_guid: str, *, analysis_destination_guid: str | None = None, name: str | None = None) -> ScenarioResponseDto:
-        """Copy a scenario, optionally into another analysis. ``PUT /sympheny-app/scenarios/copy/{scenarioGuid}``"""
+        """Copy a scenario, optionally into another analysis. ``PUT /sympheny-app/scenarios/copy/{scenarioGuid}``
+
+        Broken as of this writing (to be fixed server-side): the ``name`` argument is only applied when
+        ``analysis_destination_guid`` is omitted (the copy stays in the source's analysis). When a
+        destination *is* given, ``name`` is ignored and the copy takes the source's name *without*
+        deduplicating, so copying the same source into one analysis twice fails the
+        ``scenario_name + analysis_id`` unique constraint. To place a renamed copy in another analysis:
+        copy into it without a name (the server assigns a unique "... (Copy)" name), then copy that in
+        place with the wanted name.
+        """
         params: dict[str, str] = {}
         if analysis_destination_guid is not None:
             params["analysisDestinationGuid"] = analysis_destination_guid

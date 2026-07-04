@@ -97,7 +97,13 @@ workflows.create_variants_from_excel(client, "variants.xlsx", scenario_guid)
 job = workflows.execute_scenario(client, scenario_guid)
 results = workflows.get_output_file_dict(client, job.id, solution_num=1)
 print(workflows.dashboard_url(client, scenario_guid))
+
+# Or submit several scenarios in a single request, without waiting for results
+requests = [workflows.build_solver_job_request(guid) for guid in (scenario_guid,)]
+workflows.execute_scenarios(client, requests, wait=False)
 ```
+
+Rename a scenario in place with `client.scenarios.rename(scenario_guid, models.ScenarioRequestDto(scenario_name="..."))`.
 
 ### EnyMap scenarios
 

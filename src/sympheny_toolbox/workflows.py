@@ -177,6 +177,87 @@ def get_variants_dict(client: Sympheny, master_scenario_guid: str) -> dict[str, 
 # -- execution ----------------------------------------------------------------
 
 
+def build_solver_job_request(
+    scenario_guid: str,
+    *,
+    scenario_name: str | None = None,
+    job_name: str = "sympheny-toolbox job",
+    objective1: ObjectiveFunction = ObjectiveFunction.min_life_cycle_cost,
+    objective2: ObjectiveFunction | None = ObjectiveFunction.min_co2_emissions,
+    temporal_resolution: TemporalResolution = TemporalResolution.low,
+    points: int = 2,
+    time_limit: int = 60,
+    mip_gap: float = 1.0,
+) -> PostSolverJobExt:
+    """Build a solver-job request for a scenario.
+
+    ``time_limit`` is the solver's processing budget in **minutes** (queue time excluded). Pass the
+    resulting request(s) to :func:`execute_scenarios`.
+    """
+    # Built via model_validate with alias keys: type checkers disagree on the synthesized
+    # __init__ parameter names of aliased fields (mypy plugin: field names; pyright/ty: aliases).
+    return PostSolverJobExt.model_validate(
+        {
+            "name": job_name,
+            "objective1": objective1,
+            "objective2": objective2,
+            "scenarioGuid": scenario_guid,
+            "scenarioName": scenario_name,
+            "temporalResolution": temporal_resolution,
+            "points": points,
+            "timeLimit": time_limit,
+            "mipGap": mip_gap,
+        }
+    )
+
+
+def execute_scenarios(
+    client: Sympheny,
+    requests: list[PostSolverJobExt],
+    *,
+    wait: bool = True,
+    poll_interval_sec: float = 10.0,
+) -> list[GetSolverJobExt]:
+    """Submit solver jobs in a single request and, by default, wait until they all terminate.
+
+    ``time_limit`` on each request is the solver's processing budget in **minutes** (queue time
+    excluded); the server terminates a job once it is exceeded. When waiting, this helper does not
+    impose its own wall-clock timeout, so jobs may sit queued for as long as needed.
+
+    With ``wait=False`` the jobs are only submitted and the freshly queued jobs are returned,
+    without polling. Returns the jobs in the same order as ``requests``. Raises
+    :class:`~sympheny_toolbox.errors.SymphenyError` if any scenario is infeasible.
+    """
+    submitted = client.solver_jobs.submit(requests)
+    job_ids = [job.id for job in submitted]
+    if not wait:
+        logger.info("Submitted %d solver job(s) (not waiting for results)", len(job_ids))
+        return [client.solver_jobs.get(job_id) for job_id in job_ids]
+
+    results: list[GetSolverJobExt] = []
+    for job_id in job_ids:
+        job = _wait_for_termination(client, job_id, poll_interval_sec)
+        if job.infeasibility_info:
+            raise SymphenyError(f"Execution failed, scenario is infeasible: {job.infeasibility_info}")
+        logger.info("Execution finished with status %s", job.status)
+        results.append(job)
+    return results
+
+
+def _wait_for_termination(client: Sympheny, job_id: str | UUID, poll_interval_sec: float) -> GetSolverJobExt:
+    last_status: JobStatus | None = None
+
+    def fetch_terminated_job() -> GetSolverJobExt | None:
+        nonlocal last_status
+        job = client.solver_jobs.get(job_id)
+        if job.status != last_status:
+            logger.info("Solver job %s status: %s", job_id, job.status)
+            last_status = job.status
+        return job if job.terminated else None
+
+    return wait_until(fetch_terminated_job, wait_sec=poll_interval_sec, timeout_sec=None)
+
+
 def execute_scenario(
     client: Sympheny,
     scenario_guid: str,
@@ -190,52 +271,25 @@ def execute_scenario(
     mip_gap: float = 1.0,
     poll_interval_sec: float = 10.0,
 ) -> GetSolverJobExt:
-    """Submit a solver job for a scenario and wait until it terminates.
+    """Submit a solver job for a single scenario and wait until it terminates.
 
-    ``time_limit`` is the solver's processing budget in **minutes** (queue time excluded);
-    the server terminates the job once it is exceeded. This helper does not impose its own
-    wall-clock timeout, so a job may sit queued for as long as needed; it polls until the
-    server terminates the job.
-
-    Returns the terminated job. Raises :class:`~sympheny_toolbox.errors.SymphenyError`
-    if the scenario is infeasible.
+    Convenience wrapper over :func:`build_solver_job_request` + :func:`execute_scenarios` for the
+    common single-scenario case. Returns the terminated job; raises
+    :class:`~sympheny_toolbox.errors.SymphenyError` if the scenario is infeasible.
     """
     scenario = client.scenarios.get(scenario_guid)
-    # Built via model_validate with alias keys: type checkers disagree on the synthesized
-    # __init__ parameter names of aliased fields (mypy plugin: field names; pyright/ty: aliases).
-    job_request = PostSolverJobExt.model_validate(
-        {
-            "name": job_name,
-            "objective1": objective1,
-            "objective2": objective2,
-            "scenarioGuid": scenario_guid,
-            "scenarioName": scenario.scenario_name,
-            "temporalResolution": temporal_resolution,
-            "points": points,
-            "timeLimit": time_limit,
-            "mipGap": mip_gap,
-        }
+    request = build_solver_job_request(
+        scenario_guid,
+        scenario_name=scenario.scenario_name,
+        job_name=job_name,
+        objective1=objective1,
+        objective2=objective2,
+        temporal_resolution=temporal_resolution,
+        points=points,
+        time_limit=time_limit,
+        mip_gap=mip_gap,
     )
-    response = client.solver_jobs.submit([job_request])
-    job_id = response[0].id
-
-    last_status: JobStatus | None = None
-
-    def fetch_terminated_job() -> GetSolverJobExt | None:
-        nonlocal last_status
-        job = client.solver_jobs.get(job_id)
-        if job.status != last_status:
-            logger.info("Solver job status: %s", job.status)
-            last_status = job.status
-        if not job.terminated:
-            return None
-        return job
-
-    job = wait_until(fetch_terminated_job, wait_sec=poll_interval_sec, timeout_sec=None)
-    if job.infeasibility_info:
-        raise SymphenyError(f"Execution failed, scenario is infeasible: {job.infeasibility_info}")
-    logger.info("Execution finished with status %s", job.status)
-    return job
+    return execute_scenarios(client, [request], poll_interval_sec=poll_interval_sec)[0]
 
 
 def generate_input_file(client: Sympheny, scenario_guid: str, *, poll_interval_sec: float = 5.0, timeout_sec: float = 100.0) -> str:
