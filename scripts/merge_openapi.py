@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 """Merge the Sympheny backend OpenAPI schemas into a single OpenAPI 3.1 document.
 
-Sources (in docs/):
+Only the merged output, ``docs/sympheny_openapi.json``, is committed and public. The upstream exports
+below are **internal Sympheny artifacts, git-ignored** (see ``docs/.gitignore``); a fresh clone will
+not have them, so this script is a **maintainer-only** step for regenerating the public spec.
+
+Private source inputs (in docs/, git-ignored):
 - webapp_openapi.json     (OpenAPI 3.0.1) : all endpoints, upgraded to 3.1,
                                             non-required fields marked nullable
 - backoffice_openapi.json (OpenAPI 3.1.0) : only POST /backoffice/auth/ext/token
                                             and GET /backoffice/ext/users/profile
 - sense_openapi.json      (OpenAPI 3.1.0) : only "External Solver Jobs" endpoints
 
-Manual additions to webapp_openapi.json (extracted from docs/legacy_webapp.json,
-the legacy Swagger 2.0 export, because they are missing from the current export):
+Manual additions to webapp_openapi.json (extracted from docs/webapp_legacy_openapi.json,
+the legacy Swagger 2.0 export, and converted to OpenAPI 3.0, because they are missing
+from the current export):
 - PUT /scenarios/copy/{scenarioGuid}    (copyScenario)
+- PUT /scenarios/{scenarioGuid}         (renameScenario)
 
-Output: docs/sympheny_openapi.json
+Output (committed, public): docs/sympheny_openapi.json
 
 Usage: python scripts/merge_openapi.py
 """
@@ -32,6 +38,9 @@ if TYPE_CHECKING:
 DOCS = Path(__file__).resolve().parent.parent / "docs"
 OUTPUT = DOCS / "sympheny_openapi.json"
 
+# Internal Sympheny exports, git-ignored (see docs/.gitignore); only OUTPUT is committed/public.
+PRIVATE_SOURCES = ("webapp_openapi.json", "backoffice_openapi.json", "sense_openapi.json")
+
 SERVER_URL = "https://eu-north-1-api.sympheny.com"
 WEBAPP_PREFIX = "/sympheny-app"
 
@@ -48,7 +57,14 @@ SENSE_KEEP_TAGS = {"External Solver Jobs"}
 
 
 def load(name: str) -> dict[str, Any]:
-    data: dict[str, Any] = json.loads((DOCS / name).read_text())
+    path = DOCS / name
+    if not path.exists():
+        raise SystemExit(
+            f"{name} not found in docs/. The upstream OpenAPI exports ({', '.join(PRIVATE_SOURCES)}) are "
+            "internal Sympheny artifacts and are not committed; obtain them and place them in docs/. "
+            "Only the merged docs/sympheny_openapi.json is public — regenerating it is a maintainer-only step."
+        )
+    data: dict[str, Any] = json.loads(path.read_text())
     return data
 
 

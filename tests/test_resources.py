@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from sympheny_toolbox.errors import UnexpectedResponseError
-from sympheny_toolbox.models import GetScenarioGuidsPage, JobStatus, ProjectRequestDto, Version
+from sympheny_toolbox.models import GetScenarioGuidsPage, JobStatus, ProjectRequestDto, ScenarioRequestDto, Status, Version
 
 
 if TYPE_CHECKING:
@@ -73,6 +73,15 @@ def test_analyses_list_unwraps_paged_envelope(client: Sympheny, api: MockAPI) ->
     assert [analysis.analysis_guid for analysis in analyses] == ["ana-1"]
 
 
+def test_analyses_delete_tolerates_missing_data_payload(client: Sympheny, api: MockAPI) -> None:
+    # The live API returns `data: null` for this endpoint even on a successful delete.
+    api.add("DELETE", "/sympheny-app/analysis/ana-1", {"data": None})
+
+    status = client.analyses.delete("ana-1")
+
+    assert status == Status()
+
+
 def test_scenarios_copy_sends_query_params(client: Sympheny, api: MockAPI) -> None:
     api.add("PUT", "/sympheny-app/scenarios/copy/scn-1", {"data": {"scenarioGuid": "scn-2", "scenarioName": "Copy"}})
 
@@ -81,6 +90,22 @@ def test_scenarios_copy_sends_query_params(client: Sympheny, api: MockAPI) -> No
     assert copy.scenario_guid == "scn-2"
     params = dict(api.last_request.url.params)
     assert params == {"analysisDestinationGuid": "ana-2", "name": "Copy"}
+
+
+def test_scenarios_rename_sends_body(client: Sympheny, api: MockAPI) -> None:
+    api.add("PUT", "/sympheny-app/scenarios/scn-1", {"data": {"scenarioGuid": "scn-1", "scenarioName": "New"}})
+
+    renamed = client.scenarios.rename("scn-1", ScenarioRequestDto(scenario_name="New"))
+
+    assert renamed.scenario_name == "New"
+    assert api.last_json == {"scenarioName": "New"}
+
+
+def test_scenarios_delete_tolerates_missing_data_payload(client: Sympheny, api: MockAPI) -> None:
+    # The live API returns `data: null` for this endpoint even on a successful delete.
+    api.add("DELETE", "/sympheny-app/scenario/scn-1", {"data": None})
+
+    assert client.scenarios.delete("scn-1") == Status()
 
 
 def test_solver_jobs_list_for_scenarios_sends_aliased_body(client: Sympheny, api: MockAPI) -> None:

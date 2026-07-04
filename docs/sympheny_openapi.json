@@ -3344,6 +3344,53 @@
         ]
       }
     },
+    "/sympheny-app/scenarios/{scenarioGuid}": {
+      "put": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "renameScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/backoffice/auth/ext/token": {
       "post": {
         "tags": [

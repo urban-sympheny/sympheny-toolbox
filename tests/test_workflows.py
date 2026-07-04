@@ -60,6 +60,36 @@ def test_execute_scenario_submits_and_polls_until_terminated(client: Sympheny, a
     ]
 
 
+def test_build_solver_job_request_uses_aliases_and_defaults() -> None:
+    request = workflows.build_solver_job_request("scn-9", scenario_name="Nine", job_name="job", points=5)
+
+    assert request.model_dump(by_alias=True, exclude_none=True) == {
+        "name": "job",
+        "objective1": "MIN_LIFE_CYCLE_COST",
+        "objective2": "MIN_CO2_EMISSIONS",
+        "scenarioGuid": "scn-9",
+        "scenarioName": "Nine",
+        "temporalResolution": "LOW",
+        "points": 5,
+        "timeLimit": 60,
+        "mipGap": 1.0,
+    }
+
+
+def test_execute_scenarios_submits_batch_in_one_post_without_waiting(client: Sympheny, api: MockAPI) -> None:
+    job_b = SOLVER_JOB | {"id": "11111111-1111-4111-8111-111111111111", "scenarioGuid": "scn-2"}
+    api.add("POST", "/sense-api/ext/solver/jobs", [RUNNING_JOB, job_b])  # one submit returns both jobs
+    api.add("GET", f"/sense-api/ext/solver/jobs/{JOB_ID}", RUNNING_JOB)
+    api.add("GET", f"/sense-api/ext/solver/jobs/{job_b['id']}", job_b)
+
+    requests = [workflows.build_solver_job_request("scn-1", scenario_name="One"), workflows.build_solver_job_request("scn-2", scenario_name="Two")]
+    jobs = workflows.execute_scenarios(client, requests, wait=False)
+
+    assert [job.scenario_guid for job in jobs] == ["scn-1", "scn-2"]
+    assert sum(1 for r in api.requests if r.url.path == "/sense-api/ext/solver/jobs") == 1  # single batch POST
+    assert len(_submit_body(api)) == 2
+
+
 def _submit_body(api: MockAPI) -> Any:
     request = next(request for request in api.requests if request.url.path == "/sense-api/ext/solver/jobs")
     return json.loads(request.content)
