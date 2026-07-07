@@ -1,7 +1,7 @@
 """UNOFFICIAL Sympheny API endpoints.
 
 Every method in this module calls an endpoint that is **not part of the official
-documented Sympheny API** (``docs/sympheny_openapi.json``). These endpoints may
+documented Sympheny API** (``specs/sympheny_openapi.json``). These endpoints may
 change or disappear without notice. They return raw JSON payloads (``dict``/``list``)
 instead of typed models.
 

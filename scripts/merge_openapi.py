@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Merge the Sympheny backend OpenAPI schemas into a single OpenAPI 3.1 document.
 
-Only the merged output, ``docs/sympheny_openapi.json``, is committed and public. The upstream exports
-below are **internal Sympheny artifacts, git-ignored** (see ``docs/.gitignore``); a fresh clone will
+Only the merged output, ``specs/sympheny_openapi.json``, is committed and public. The upstream exports
+below are **internal Sympheny artifacts, git-ignored** (see ``specs/.gitignore``); a fresh clone will
 not have them, so this script is a **maintainer-only** step for regenerating the public spec.
 
 Private source inputs (in docs/, git-ignored):
@@ -12,13 +12,13 @@ Private source inputs (in docs/, git-ignored):
                                             and GET /backoffice/ext/users/profile
 - sense_openapi.json      (OpenAPI 3.1.0) : only "External Solver Jobs" endpoints
 
-Manual additions to webapp_openapi.json (extracted from docs/webapp_legacy_openapi.json,
+Manual additions to webapp_openapi.json (extracted from specs/webapp_legacy_openapi.json,
 the legacy Swagger 2.0 export, and converted to OpenAPI 3.0, because they are missing
 from the current export):
 - PUT /scenarios/copy/{scenarioGuid}    (copyScenario)
 - PUT /scenarios/{scenarioGuid}         (renameScenario)
 
-Output (committed, public): docs/sympheny_openapi.json
+Output (committed, public): specs/sympheny_openapi.json
 
 Usage: python scripts/merge_openapi.py
 """
@@ -35,10 +35,10 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 
-DOCS = Path(__file__).resolve().parent.parent / "docs"
-OUTPUT = DOCS / "sympheny_openapi.json"
+SPECS = Path(__file__).resolve().parent.parent / "specs"
+OUTPUT = SPECS / "sympheny_openapi.json"
 
-# Internal Sympheny exports, git-ignored (see docs/.gitignore); only OUTPUT is committed/public.
+# Internal Sympheny exports, git-ignored (see specs/.gitignore); only OUTPUT is committed/public.
 PRIVATE_SOURCES = ("webapp_openapi.json", "backoffice_openapi.json", "sense_openapi.json")
 
 SERVER_URL = "https://eu-north-1-api.sympheny.com"
@@ -57,12 +57,12 @@ SENSE_KEEP_TAGS = {"External Solver Jobs"}
 
 
 def load(name: str) -> dict[str, Any]:
-    path = DOCS / name
+    path = SPECS / name
     if not path.exists():
         raise SystemExit(
-            f"{name} not found in docs/. The upstream OpenAPI exports ({', '.join(PRIVATE_SOURCES)}) are "
-            "internal Sympheny artifacts and are not committed; obtain them and place them in docs/. "
-            "Only the merged docs/sympheny_openapi.json is public — regenerating it is a maintainer-only step."
+            f"{name} not found in specs/. The upstream OpenAPI exports ({', '.join(PRIVATE_SOURCES)}) are "
+            "internal Sympheny artifacts and are not committed; obtain them and place them in specs/. "
+            "Only the merged specs/sympheny_openapi.json is public — regenerating it is a maintainer-only step."
         )
     data: dict[str, Any] = json.loads(path.read_text())
     return data

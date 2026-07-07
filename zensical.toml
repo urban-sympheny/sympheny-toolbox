@@ -1,0 +1,262 @@
+# Zensical site configuration.
+# Docs: https://zensical.org/docs/setup/basics/
+#
+# The markdown_extensions section below is the sanctioned authoring whitelist
+# (see .agents/skills/docs/SKILL.md, ground rule 1): pages may use exactly the
+# syntax these extensions enable, plus the <video> HTML exception. Extend the
+# list deliberately — never work around it with raw HTML.
+#
+# Two extensions carry a narrowed sanction (added Phase 5b): md_in_html is
+# permitted ONLY for the upstream `<div class="grid cards" markdown>` pattern on
+# index/landing pages; pymdownx.emoji is permitted ONLY for bundled-set icon and
+# arrow shortcodes (e.g. :material-web:, :octicons-arrow-right-24:) inside those
+# cards. Neither licenses arbitrary raw HTML or decorative emoji elsewhere.
+
+[project]
+site_name = "Sympheny Documentation"
+site_description = "Documentation for the Sympheny web application, REST API, Python SDK, and AI integrations."
+site_url = "https://urban-sympheny.github.io/sympheny-toolbox/"
+
+extra_css = ["stylesheets/extra.css"]
+# The footer links below are HTML inside the copyright config value — a
+# sanctioned use (Phase 5c), not page content. "Change cookie settings" reopens
+# the consent dialog via the upstream-documented `#__consent` anchor.
+copyright = """<span class="sy-footer-legal">© 2026 Urban Sympheny AG. Registered in Switzerland. All rights reserved.</span> <span class="sy-footer-links"><a href="https://urbansympheny.atlassian.net/servicedesk/customer/portal/2">Support</a> · <a href="https://www.sympheny.com/privacy">Privacy policy</a> · <a href="#__consent">Change cookie settings</a></span>"""
+
+nav = [
+  { "Home" = "index.md" },
+  { "Web Application" = [
+    "web-app/index.md",
+    { "Getting started" = [
+      "web-app/getting-started/index.md",
+      "web-app/getting-started/sign-up-and-login.md",
+      "web-app/getting-started/quickstart.md",
+    ] },
+    { "How-to guides" = [
+      "web-app/how-to/index.md",
+      "web-app/how-to/managing-projects.md",
+      "web-app/how-to/managing-analyses.md",
+      { "Modeling scenarios" = [
+        "web-app/how-to/modeling-scenarios/index.md",
+        "web-app/how-to/modeling-scenarios/general-step.md",
+        "web-app/how-to/modeling-scenarios/hubs-step.md",
+        "web-app/how-to/modeling-scenarios/energy-carriers-step.md",
+        "web-app/how-to/modeling-scenarios/energy-demands-step.md",
+        "web-app/how-to/modeling-scenarios/on-site-resources-step.md",
+        "web-app/how-to/modeling-scenarios/imports-exports-step.md",
+        "web-app/how-to/modeling-scenarios/conversion-technology-step.md",
+        "web-app/how-to/modeling-scenarios/storage-technologies-step.md",
+        "web-app/how-to/modeling-scenarios/network-links-step.md",
+      ] },
+      "web-app/how-to/executing-scenarios.md",
+      "web-app/how-to/scenario-results.md",
+      { "Database center" = [
+        "web-app/how-to/database-center/index.md",
+        "web-app/how-to/database-center/upload-databases.md",
+        "web-app/how-to/database-center/download-databases.md",
+      ] },
+      { "EnyTool" = [
+        "web-app/how-to/enytool/index.md",
+        "web-app/how-to/enytool/ramp-tool-suite.md",
+      ] },
+      "web-app/how-to/enyflow/index.md",
+    ] },
+    { "Concepts" = [
+      "web-app/concepts/index.md",
+      "web-app/concepts/stages.md",
+      "web-app/concepts/hubs.md",
+      "web-app/concepts/energy-carriers.md",
+      "web-app/concepts/energy-demands.md",
+      "web-app/concepts/imports.md",
+      "web-app/concepts/exports.md",
+      "web-app/concepts/on-site-resources.md",
+      "web-app/concepts/conversion-technologies.md",
+      "web-app/concepts/storage-technologies.md",
+      "web-app/concepts/technology-packages.md",
+      "web-app/concepts/network-technologies.md",
+      "web-app/concepts/intra-hub-networks.md",
+      "web-app/concepts/clustered-profiles.md",
+      "web-app/concepts/demand-profiles-methodology.md",
+      "web-app/concepts/glossary.md",
+      "web-app/concepts/discounted-cash-flow-analysis.md",
+      "web-app/concepts/capital-recovery-factor.md",
+      { "Parameters" = [
+        "web-app/concepts/parameters/index.md",
+        "web-app/concepts/parameters/input-parameters.md",
+        "web-app/concepts/parameters/general.md",
+        "web-app/concepts/parameters/stages.md",
+        "web-app/concepts/parameters/hubs.md",
+        "web-app/concepts/parameters/energy-carriers.md",
+        "web-app/concepts/parameters/conversion-technologies.md",
+        "web-app/concepts/parameters/energy-demands.md",
+        "web-app/concepts/parameters/output-parameters.md",
+      ] },
+    ] },
+    { "What's new" = [
+      "web-app/whats-new/index.md",
+      "web-app/whats-new/2025-november.md",
+      "web-app/whats-new/2024-april.md",
+      "web-app/whats-new/2023-march.md",
+      "web-app/whats-new/2023-january.md",
+      "web-app/whats-new/2022-november.md",
+      "web-app/whats-new/2022-september.md",
+      "web-app/whats-new/2022-june.md",
+      "web-app/whats-new/2022-may.md",
+      "web-app/whats-new/2022-april.md",
+      "web-app/whats-new/2022-march.md",
+      "web-app/whats-new/2021-november.md",
+    ] },
+    { "Troubleshooting" = [
+      "web-app/troubleshooting/index.md",
+      "web-app/troubleshooting/faqs.md",
+      "web-app/troubleshooting/common-issues.md",
+      "web-app/troubleshooting/contact-support.md",
+    ] },
+  ] },
+  { "REST API" = [
+    "api/index.md",
+    "api/authentication.md",
+    { "Reference" = [
+      "api/reference/projects.md",
+      "api/reference/analyses.md",
+      "api/reference/scenarios.md",
+      "api/reference/stages.md",
+      "api/reference/hubs.md",
+      "api/reference/energy-carriers.md",
+      "api/reference/energy-demands.md",
+      "api/reference/profiles.md",
+      "api/reference/solar-resources.md",
+      "api/reference/conversion-technologies.md",
+      "api/reference/storage-technologies.md",
+      "api/reference/technology-packages.md",
+      "api/reference/network-technologies.md",
+      "api/reference/network-links.md",
+      "api/reference/intra-hub-network-links.md",
+      "api/reference/impex.md",
+      "api/reference/auth.md",
+      "api/reference/users.md",
+      "api/reference/solver-jobs.md",
+    ] },
+  ] },
+  { "Python SDK" = [
+    "sdk/index.md",
+    { "Workflows" = [
+      "sdk/workflows/index.md",
+      "sdk/workflows/scenario-from-excel.md",
+      "sdk/workflows/run-solver-job.md",
+      "sdk/workflows/download-results.md",
+    ] },
+    { "Reference" = [
+      "sdk/reference/projects.md",
+      "sdk/reference/analyses.md",
+      "sdk/reference/scenarios.md",
+      "sdk/reference/stages.md",
+      "sdk/reference/hubs.md",
+      "sdk/reference/energy_carriers.md",
+      "sdk/reference/energy_demands.md",
+      "sdk/reference/profiles.md",
+      "sdk/reference/solar_resources.md",
+      "sdk/reference/conversion_technologies.md",
+      "sdk/reference/storage_technologies.md",
+      "sdk/reference/technology_packages.md",
+      "sdk/reference/network_technologies.md",
+      "sdk/reference/network_links.md",
+      "sdk/reference/intra_hub_network_links.md",
+      "sdk/reference/impex.md",
+      "sdk/reference/solver_jobs.md",
+      "sdk/reference/users.md",
+      "sdk/reference/unofficial.md",
+      { "Models" = [
+        "sdk/reference/models/common.md",
+        "sdk/reference/models/projects.md",
+        "sdk/reference/models/scenarios.md",
+        "sdk/reference/models/energy.md",
+        "sdk/reference/models/technologies.md",
+        "sdk/reference/models/solver.md",
+      ] },
+    ] },
+  ] },
+  { "Use with AI" = [
+    "ai/index.md",
+    "ai/mcp.md",
+  ] },
+]
+
+[project.theme]
+logo = "assets/sympheny-logo-light.svg"
+favicon = "assets/favicon.ico"
+# custom_dir is sanctioned ONLY for overrides/main.html's announce block (the
+# dismissible beta banner) — see the header comment and SKILL.md ground rule 1.
+custom_dir = "overrides"
+features = [
+  "navigation.tabs",
+  "navigation.indexes",
+  "content.tabs.link",
+  "content.code.copy",
+  "search.highlight",
+  "announce.dismiss",
+]
+
+# Brand color schemes: two-way light/dark toggle. The media queries make the
+# FIRST visit follow the OS preference; after that the visitor's choice sticks.
+# primary/accent = "custom" defer the actual colors to docs/stylesheets/extra.css.
+
+# Light mode.
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+# Dark mode.
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[project.extra]
+generator = false
+
+# Cookie consent (config-only — no analytics is wired yet, so nothing loads
+# behind the consent). Users reopen this dialog via the footer "Change cookie
+# settings" link. The privacy policy link uses HTML in the description, the
+# upstream-documented pattern. The generic "Analytics" cookie is declared so
+# "Manage settings" has something to manage; the stored consent flag will gate
+# the analytics snippet once a provider is chosen (no re-consent needed).
+[project.extra.consent]
+title = "Cookie consent"
+description = """We track page visits to see what's useful. No ads, no selling your data. See our <a href="https://www.sympheny.com/privacy">privacy policy</a>."""
+actions = ["accept", "reject", "manage"]
+
+[project.extra.consent.cookies.analytics]
+name = "Analytics"
+checked = true
+
+# Link validation: invalid links and anchors are warnings, which --strict
+# turns into build failures (Zensical's defaults; listed here to make the
+# CI-enforced invariant explicit).
+[project.validation]
+invalid_links = true
+invalid_link_anchors = true
+
+# Sanctioned Markdown extension whitelist — see header comment.
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.toc]
+permalink = true
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.emoji]
+# Zensical's bundled icon sets (material, octicons, …) + inline SVG rendering.
+# Required explicitly: declaring our own markdown_extensions opts out of the
+# upstream default emoji config, so the icon index would otherwise be empty.
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index = "zensical.extensions.emoji.twemoji"
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true

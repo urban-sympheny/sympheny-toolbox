@@ -15,3 +15,9 @@ env/
 
 # App specific
 *.properties
+
+# Docs site build output
+site/
+.cache/
+
+# Private Confluence export (source of the docs/platform migration)

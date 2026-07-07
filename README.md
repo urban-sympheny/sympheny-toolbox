@@ -46,7 +46,7 @@ username, password = load_creds_basic("creds.properties")
 
 ## Client structure
 
-Every documented endpoint of the Sympheny API ([`docs/sympheny_openapi.json`](docs/sympheny_openapi.json)) is available as a typed method on a resource group:
+Every documented endpoint of the Sympheny API ([`specs/sympheny_openapi.json`](specs/sympheny_openapi.json)) is available as a typed method on a resource group:
 
 | Resource group | Endpoints |
 |---|---|
@@ -59,7 +59,9 @@ Every documented endpoint of the Sympheny API ([`docs/sympheny_openapi.json`](do
 | `client.users` | Account profile |
 | `client.unofficial` | ⚠️ Endpoints **not part of the documented API** — may change without notice |
 
-Requests and responses use Pydantic models generated from the OpenAPI spec (`sympheny_toolbox.models`). Errors are raised as `sympheny_toolbox.errors.SymphenyError` subclasses (`APIError`, `AuthenticationError`, `NotFoundError`).
+Requests and responses use Pydantic models generated from the OpenAPI spec (`sympheny_toolbox.models`). Errors are raised as `sympheny_toolbox.errors.SymphenyError` subclasses (`APIError`, `AuthenticationError`, `PermissionDeniedError`, `NotFoundError`).
+
+Some backend endpoints have quirks the client works around (or that you need to work around yourself); these are documented in [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md).
 
 ```python
 from sympheny_toolbox import Sympheny, models
@@ -141,7 +143,8 @@ Version 2.0.0 is a complete rewrite and a breaking change:
 
 The client is layered as follows:
 
-- `sympheny_toolbox/models.py` — Pydantic models, **generated** from `docs/sympheny_openapi.json` via `scripts/generate_models.py`.
+- `specs/sympheny_openapi.json` — the public API spec, **merged** by `scripts/merge_openapi.py` from git-ignored upstream Sympheny exports (maintainer-only; a fresh clone lacks the private inputs).
+- `sympheny_toolbox/models.py` — Pydantic models, **generated** from `specs/sympheny_openapi.json` via `scripts/generate_models.py`.
 - `sympheny_toolbox/_async/` — the hand-written asynchronous client (source of truth).
 - `sympheny_toolbox/_sync/` — the synchronous client, **generated** from `_async/` via `scripts/generate_sync.py` (unasync-style transform).
 - `sympheny_toolbox/workflows.py`, `excel.py`, `utils.py` — hand-written helpers.
@@ -152,4 +155,4 @@ Tests live under [`tests/`](tests/) and run against a mock API (`httpx.MockTrans
 
 ### Releasing
 
-Bump the version in `pyproject.toml` (semantic versioning), then push a matching `vX.Y.Z` tag. The [publish workflow](.github/workflows/publish.yml) verifies that the tag matches the project version, runs all checks, and publishes to PyPI.
+Bump the version in `pyproject.toml` (semantic versioning), add a matching entry to [`CHANGELOG.md`](CHANGELOG.md), then push a matching `vX.Y.Z` tag. The [publish workflow](.github/workflows/publish.yml) verifies that the tag matches the project version, runs all checks, and publishes to PyPI.

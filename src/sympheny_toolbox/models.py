@@ -1,4 +1,4 @@
-"""Pydantic models generated from docs/sympheny_openapi.json — do NOT edit by hand.
+"""Pydantic models generated from specs/sympheny_openapi.json — do NOT edit by hand.
 
 Regenerate with: uv run python scripts/generate_models.py
 """

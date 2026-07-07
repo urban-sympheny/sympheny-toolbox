@@ -8,7 +8,7 @@ import httpx
 import pytest
 
 from sympheny_toolbox import AsyncSympheny, Sympheny
-from sympheny_toolbox.errors import APIError, AuthenticationError, NotFoundError
+from sympheny_toolbox.errors import APIError, AuthenticationError, NotFoundError, PermissionDeniedError
 
 
 if TYPE_CHECKING:
@@ -61,10 +61,10 @@ def test_persistent_401_raises_authentication_error(client: Sympheny, api: MockA
     assert exc_info.value.status_code == 401
 
 
-def test_403_raises_authentication_error(client: Sympheny, api: MockAPI) -> None:
+def test_403_raises_permission_denied_error(client: Sympheny, api: MockAPI) -> None:
     api.add("GET", SCENARIO_PATH, {"message": "forbidden"}, status_code=403)
 
-    with pytest.raises(AuthenticationError) as exc_info:
+    with pytest.raises(PermissionDeniedError) as exc_info:
         client.scenarios.get("scn-1")
     assert exc_info.value.status_code == 403
 

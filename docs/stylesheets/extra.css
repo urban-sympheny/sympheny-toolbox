@@ -1,0 +1,100 @@
+/* Sympheny brand theme — Phase 5a (branding & theming).
+ *
+ * Brand palette (maintainer-provided, HSL):
+ *   White          0 0% 100%     background / on-accent text
+ *   Deep Navy      214 76% 14%   foreground / header / on-primary text
+ *   Teal           165 100% 38%  primary accent
+ *   Dark Teal      165 100% 26%  hover / strong (and light-scheme link text)
+ *   Light Gray-Blue 210 33% 96%  muted backgrounds
+ *   Slate Gray     215 19% 35%   muted text
+ *
+ * The palette entries in zensical.toml set data-md-color-primary/accent="custom",
+ * which the bundled stylesheet leaves undefined — these overrides supply the values.
+ */
+
+:root {
+  --sy-white:      hsl(0 0% 100%);
+  --sy-navy:       hsl(214 76% 14%);
+  --sy-navy-light: hsl(214 76% 24%);
+  --sy-teal:       hsl(165 100% 38%);
+  --sy-teal-dark:  hsl(165 100% 26%);
+}
+
+/* Light scheme -------------------------------------------------------------- */
+[data-md-color-scheme="default"] {
+  /* Header / nav-tab bar: deep navy with white text. */
+  --md-primary-fg-color:        var(--sy-navy);
+  --md-primary-fg-color--light: var(--sy-navy-light);
+  --md-primary-fg-color--dark:  hsl(214 76% 10%);
+  --md-primary-bg-color:        var(--sy-white);
+
+  /* Interactive accent (active nav, search focus, hovers). */
+  --md-accent-fg-color:             var(--sy-teal-dark);
+  --md-accent-fg-color--transparent: hsl(165 100% 26% / 0.1);
+
+  /* Body links: dark teal for readable contrast on white. */
+  --md-typeset-a-color: var(--sy-teal-dark);
+}
+
+/* Dark scheme --------------------------------------------------------------- */
+[data-md-color-scheme="slate"] {
+  /* Tint the slate background toward brand navy (hue 214). */
+  --md-hue: 214;
+
+  /* Keep the navy header; white text stays legible on it. */
+  --md-primary-fg-color:        var(--sy-navy);
+  --md-primary-fg-color--light: var(--sy-navy-light);
+  --md-primary-fg-color--dark:  hsl(214 76% 8%);
+  --md-primary-bg-color:        var(--sy-white);
+
+  /* Brighter teal reads better on the dark background. */
+  --md-accent-fg-color:             var(--sy-teal);
+  --md-accent-fg-color--transparent: hsl(165 100% 38% / 0.1);
+
+  --md-typeset-a-color: var(--sy-teal);
+}
+
+/* Logo variant swap --------------------------------------------------------- */
+/* The header/nav logo is a plain <img>; theme.logo points at the light-scheme
+ * wordmark. Swap the rendered image for the dark-scheme wordmark under slate.
+ * url() is resolved relative to this stylesheet, so it survives a subpath deploy. */
+[data-md-color-scheme="slate"] .md-logo img {
+  content: url("../assets/sympheny-logo-dark.svg");
+}
+
+/* Global polish (kept minimal) ---------------------------------------------- */
+/* Generous width cap: fixes wide tables without ultrawide prose lines. */
+.md-grid {
+  max-width: 100rem;
+}
+
+/* The wordmark logo already names the site — hide the redundant site-name text
+ * in the header, keeping the page title that slides in on scroll. */
+.md-header__topic:not([data-md-component="header-topic"]) {
+  display: none;
+}
+
+/* Underline links on hover only. */
+.md-typeset a {
+  text-decoration: none;
+}
+.md-typeset a:hover {
+  text-decoration: underline;
+}
+
+/* Footer: legal text left, Support / Privacy / cookie links pushed right.
+ * The bundled theme collapses .md-copyright to content width on wide screens
+ * (width:auto), so space-between had nothing to spread across. flex:1 makes the
+ * copyright fill the footer row (it is the only child once the generator notice
+ * is off) — accounting for its margins, so no overflow — and space-between then
+ * pushes the links to the right edge. Wraps to stacked, left-aligned lines on
+ * narrow viewports. */
+.md-copyright {
+  flex: 1;
+}
+.md-copyright__highlight {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.2rem 1rem;
+}

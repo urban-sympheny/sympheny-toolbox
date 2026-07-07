@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+<!--
+  Theme override — sanctioned ONLY for the announcement bar (Phase 5c; see
+  .agents/skills/docs/SKILL.md ground rule 1 and docs-implementation-plan.md §0).
+  This is the single permitted use of a custom_dir partial: the dismissible beta
+  banner. Page content stays Markdown-only; do not add other block overrides here.
+  A dismissed banner stays hidden until this text changes — edit the copy to
+  re-show it.
+-->
+{% block announce %}
+  These docs are in beta. The
+  <a href="https://support.app.sympheny.com/">legacy documentation</a>
+  stays available for the next few weeks while we finish the move. Spotted a
+  gap or a bug?
+  <a href="https://urbansympheny.atlassian.net/servicedesk/customer/portal/2">Send us feedback</a>.
+{% endblock %}

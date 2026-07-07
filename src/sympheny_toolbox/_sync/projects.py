@@ -92,7 +92,7 @@ class Analyses:
         """Delete an analysis. ``DELETE /sympheny-app/analysis/{analysisGuid}``
 
         The API returns no ``data`` payload for this endpoint even on success, so a missing
-        payload is treated as an empty :class:`Status` rather than an error.
+        payload is treated as an empty [Status][sympheny_toolbox.models.Status] rather than an error.
         """
         raw = self._t.request_json("DELETE", f"/sympheny-app/analysis/{analysis_guid}")
         envelope = ResponseDtoStatus.model_validate(raw)

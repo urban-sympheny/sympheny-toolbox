@@ -58,8 +58,8 @@ class Scenarios:
     def rename(self, scenario_guid: str, request: ScenarioRequestDto) -> ScenarioResponseDto:
         """Rename a scenario in place. ``PUT /sympheny-app/scenarios/{scenarioGuid}``
 
-        Unlike :meth:`copy`, this sets the scenario's name directly, so it works within the scenario's
-        current analysis without creating a duplicate.
+        Unlike [copy][sympheny_toolbox._sync.scenarios.Scenarios.copy], this sets the scenario's
+        name directly, so it works within the scenario's current analysis without creating a duplicate.
         """
         raw = self._t.request_json("PUT", f"/sympheny-app/scenarios/{scenario_guid}", json=dump(request))
         envelope = ResponseDtoScenarioResponseDto.model_validate(raw)
@@ -69,7 +69,7 @@ class Scenarios:
         """Delete a scenario. ``DELETE /sympheny-app/scenario/{scenarioGuid}``
 
         The API returns no ``data`` payload for this endpoint even on success, so a missing payload is
-        treated as an empty :class:`Status` rather than an error.
+        treated as an empty [Status][sympheny_toolbox.models.Status] rather than an error.
         """
         raw = self._t.request_json("DELETE", f"/sympheny-app/scenario/{scenario_guid}")
         envelope = ResponseDtoStatus.model_validate(raw)

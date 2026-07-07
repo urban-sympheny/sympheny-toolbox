@@ -2,7 +2,7 @@
 
 These helpers combine multiple API calls into common automation flows (scenario
 creation from Excel, execution with polling, result download, ...). They operate
-on a :class:`~sympheny_toolbox.Sympheny` client instance and are synchronous only.
+on a [Sympheny][sympheny_toolbox._sync.client.Sympheny] client instance and are synchronous only.
 """
 
 from __future__ import annotations
@@ -192,7 +192,7 @@ def build_solver_job_request(
     """Build a solver-job request for a scenario.
 
     ``time_limit`` is the solver's processing budget in **minutes** (queue time excluded). Pass the
-    resulting request(s) to :func:`execute_scenarios`.
+    resulting request(s) to [execute_scenarios][sympheny_toolbox.workflows.execute_scenarios].
     """
     # Built via model_validate with alias keys: type checkers disagree on the synthesized
     # __init__ parameter names of aliased fields (mypy plugin: field names; pyright/ty: aliases).
@@ -226,7 +226,7 @@ def execute_scenarios(
 
     With ``wait=False`` the jobs are only submitted and the freshly queued jobs are returned,
     without polling. Returns the jobs in the same order as ``requests``. Raises
-    :class:`~sympheny_toolbox.errors.SymphenyError` if any scenario is infeasible.
+    [SymphenyError][sympheny_toolbox.errors.SymphenyError] if any scenario is infeasible.
     """
     submitted = client.solver_jobs.submit(requests)
     job_ids = [job.id for job in submitted]
@@ -273,9 +273,10 @@ def execute_scenario(
 ) -> GetSolverJobExt:
     """Submit a solver job for a single scenario and wait until it terminates.
 
-    Convenience wrapper over :func:`build_solver_job_request` + :func:`execute_scenarios` for the
-    common single-scenario case. Returns the terminated job; raises
-    :class:`~sympheny_toolbox.errors.SymphenyError` if the scenario is infeasible.
+    Convenience wrapper over [build_solver_job_request][sympheny_toolbox.workflows.build_solver_job_request]
+    + [execute_scenarios][sympheny_toolbox.workflows.execute_scenarios] for the common single-scenario
+    case. Returns the terminated job; raises [SymphenyError][sympheny_toolbox.errors.SymphenyError] if
+    the scenario is infeasible.
     """
     scenario = client.scenarios.get(scenario_guid)
     request = build_solver_job_request(
@@ -416,7 +417,7 @@ def get_demand_profile(client: Sympheny, demand_type: str, building_type: str, c
 def wait_until(fetch: Callable[[], T | None], *, wait_sec: float = 5.0, timeout_sec: float | None = 500.0) -> T:
     """Poll ``fetch`` until it returns a non-``None`` result.
 
-    Raises :class:`TimeoutError` if ``timeout_sec`` elapses first. Pass ``timeout_sec=None``
+    Raises [TimeoutError][] if ``timeout_sec`` elapses first. Pass ``timeout_sec=None``
     to poll indefinitely (no deadline).
     """
     deadline = None if timeout_sec is None else time.monotonic() + timeout_sec
