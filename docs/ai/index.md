@@ -21,9 +21,9 @@ Until then, drive Sympheny programmatically with the [REST API](../api/index.md)
 This site publishes two machine-readable indexes, served from the site root and
 regenerated on every build:
 
-- [`llms.txt`](https://urban-sympheny.github.io/sympheny-toolbox/llms.txt) — a
+- [`llms.txt`](https://docs.sympheny.com/llms.txt) — a
   compact, nav-ordered index of every page with a one-line description.
-- [`llms-full.txt`](https://urban-sympheny.github.io/sympheny-toolbox/llms-full.txt) —
+- [`llms-full.txt`](https://docs.sympheny.com/llms-full.txt) —
   the full documentation concatenated in reading order, for tools that want the
   whole corpus in a single fetch.
 

@@ -15,7 +15,7 @@
 [project]
 site_name = "Sympheny Documentation"
 site_description = "Documentation for the Sympheny web application, REST API, Python SDK, and AI integrations."
-site_url = "https://urban-sympheny.github.io/sympheny-toolbox/"
+site_url = "https://docs.sympheny.com/"
 
 extra_css = ["stylesheets/extra.css"]
 # The footer links below are HTML inside the copyright config value — a
