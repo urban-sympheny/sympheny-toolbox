@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+  Interactive REST API explorer (Scalar). Kept per maintainer verdict
+  2026-07-10 (was a Phase 5c time-boxed beta): the static Markdown reference
+  under api/reference/ stays canonical (searchable, cross-linked, in llms.txt);
+  this page adds live "try it" on top of the same specification.
+
+  Static, non-Markdown page copied verbatim into the built site by Zensical.
+  Loads the Scalar API reference from a version-pinned CDN and renders the
+  committed OpenAPI spec, served alongside this file as ./openapi.json (emitted
+  by scripts/generate_api_reference.py, kept current by its --check in CI).
+
+  Not in the nav (nav entries can't open a new tab without custom JS, which
+  was tried 2026-07-10 and reverted — it interfered with content tabs); linked
+  as "API Explorer" from api/index.md, opening in a new tab via attr_list.
+  Removing it is a small delete: this file, the openapi.json copy, and the
+  copy step in scripts/generate_api_reference.py.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sympheny API Explorer</title>
+    <link rel="icon" href="../assets/favicon.ico" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference@1.62.5"></script>
+    <script>
+      Scalar.createApiReference('#app', {
+        url: 'openapi.json',
+        // Privacy: no Scalar telemetry, and deliberately NO proxyUrl — "try it"
+        // requests go straight from the visitor's browser to the Sympheny API,
+        // never through a third-party proxy. (If the API does not send CORS
+        // headers for this origin, in-browser requests fail; enable CORS on the
+        // API rather than adding a proxy.)
+        telemetry: false,
+        // Preselect the spec's Auth0 bearer scheme so "try it" asks for a token
+        // up front instead of an auth-scheme choice.
+        authentication: { preferredSecurityScheme: 'HTTPBearer' },
+        // The spec only exists as JSON; don't offer a converted YAML download.
+        documentDownloadType: 'json',
+        metaData: { title: 'Sympheny API Explorer' },
+        favicon: '../assets/favicon.ico',
+      })
+    </script>
+  </body>
+</html>

@@ -42,7 +42,7 @@ broke the impex update — it is one level deeper than an obvious top-level scru
 1. **Preferred:** give these PUT endpoints a dedicated *request* DTO that **omits** `created`,
    `updated`, `hubCreated`, `hubUpdated`, and any nested `created`/`updated` (e.g. on
    `energyCarrier`). The request contract should never contain server-owned audit timestamps.
-   Update `docs/sympheny_openapi.json` so the `requestBody` schema for each endpoint above no longer
+   Update `specs/sympheny_openapi.json` so the `requestBody` schema for each endpoint above no longer
    lists those fields.
 2. **Alternatively / additionally:** make the deserializer tolerant of the exact format the API
    emits (ISO-8601 with 6-digit fractional seconds and `Z`), and ignore audit fields on input.
@@ -77,7 +77,7 @@ org.hibernate.exception.ConstraintViolationException: could not execute statemen
 
 **A rename endpoint exists on the backend but is missing from the OpenAPI export.**
 `PUT /sympheny-app/scenarios/{scenarioGuid}` (`renameScenario`, body `ScenarioRequestDto` =
-`{scenarioName}`) is present in the legacy Swagger 2.0 export (`docs/webapp_legacy_openapi.json`) but
+`{scenarioName}`) is present in the legacy Swagger 2.0 export (`specs/webapp_legacy_openapi.json`) but
 **absent from the current webapp export**. It is re-added by hand in `scripts/merge_openapi.py` (exactly
 as `copyScenario` is), so the published spec — and the SDK's `scenarios.rename` — expose it.
 
@@ -158,7 +158,7 @@ or a description), and ideally round on the server instead of rejecting.
 
 ---
 
-## Summary for the spec update (`docs/sympheny_openapi.json`)
+## Summary for the spec update (`specs/sympheny_openapi.json`)
 
 | # | Endpoint / DTO | Change |
 |---|---|---|

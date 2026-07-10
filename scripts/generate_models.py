@@ -1,6 +1,6 @@
 """Generate Pydantic models from the merged OpenAPI spec.
 
-Regenerates ``src/sympheny_toolbox/models.py`` from ``docs/sympheny_openapi.json``
+Regenerates ``src/sympheny_toolbox/models.py`` from ``specs/sympheny_openapi.json``
 using datamodel-code-generator (dev dependency). Rerun after any spec change:
 
     uv run python scripts/generate_models.py
@@ -14,7 +14,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SPEC = REPO_ROOT / "docs" / "sympheny_openapi.json"
+SPEC = REPO_ROOT / "specs" / "sympheny_openapi.json"
 OUTPUT = REPO_ROOT / "src" / "sympheny_toolbox" / "models.py"
 
 
@@ -43,7 +43,7 @@ def main() -> None:
         "--disable-timestamp",
         "--custom-file-header",
         (
-            '"""Pydantic models generated from docs/sympheny_openapi.json — do NOT edit by hand.\n\n'
+            '"""Pydantic models generated from specs/sympheny_openapi.json — do NOT edit by hand.\n\n'
             'Regenerate with: uv run python scripts/generate_models.py\n"""'
         ),
     ]

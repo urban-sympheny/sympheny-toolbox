@@ -8,7 +8,7 @@ from typing import Any
 
 import httpx
 
-from sympheny_toolbox.errors import APIError, AuthenticationError, NotFoundError
+from sympheny_toolbox.errors import APIError, AuthenticationError, NotFoundError, PermissionDeniedError
 from sympheny_toolbox.models import Auth0UserAccessToken, Auth0UserCredentials
 
 
@@ -20,13 +20,15 @@ _TOKEN_EXPIRY_MARGIN_SEC = 60.0
 
 
 def raise_for_status(response: httpx.Response) -> None:
-    """Map an unsuccessful HTTP response to a :class:`~sympheny_toolbox.errors.APIError`."""
+    """Map an unsuccessful HTTP response to an [APIError][sympheny_toolbox.errors.APIError]."""
     if response.is_success:
         return
     body = response.text
     message = f"{response.request.method} {response.request.url.path} failed with HTTP {response.status_code}: {body[:500]}"
-    if response.status_code in (401, 403):
+    if response.status_code == 401:
         raise AuthenticationError(message, status_code=response.status_code, body=body)
+    if response.status_code == 403:
+        raise PermissionDeniedError(message, status_code=response.status_code, body=body)
     if response.status_code == 404:
         raise NotFoundError(message, status_code=response.status_code, body=body)
     raise APIError(message, status_code=response.status_code, body=body)

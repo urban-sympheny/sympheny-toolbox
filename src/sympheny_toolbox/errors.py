@@ -20,6 +20,10 @@ class AuthenticationError(APIError):
     """Authentication failed (invalid credentials or expired/rejected token)."""
 
 
+class PermissionDeniedError(APIError):
+    """The authenticated user may not perform this action (HTTP 403)."""
+
+
 class NotFoundError(APIError):
     """The requested resource does not exist (HTTP 404)."""
 
