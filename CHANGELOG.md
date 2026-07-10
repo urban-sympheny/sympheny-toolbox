@@ -5,6 +5,14 @@ All notable changes to `sympheny-toolbox` are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Docs
+- The documentation site now lives at [docs.sympheny.com](https://docs.sympheny.com): `site_url`
+  and all hardcoded links updated from the github.io URL, and a `Documentation` URL added to the
+  PyPI project metadata. Deployment still goes through GitHub Pages (the custom domain is
+  configured in the repository's Pages settings).
+
 ## [3.0.0b1] - 2026-07-10
 
 First beta of v3: the documentation site, plus one breaking error-handling change in the client.
