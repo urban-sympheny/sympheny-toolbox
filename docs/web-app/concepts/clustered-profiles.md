@@ -70,8 +70,8 @@ sum:
     - Max load duration error: 3%
     - Max sum error: 0.5%
 
-The clustering process also ensures that the non-zero maximum and minimum values of
-each profile are preserved, and maintains the linear combination of the profiles: the
+The clustering process preserves the non-zero maximum and minimum values of each
+profile and maintains the linear combination of the profiles: the
 peaks of two or more profiles occurring at the same time step are conserved.
 
 ## Clustered profiles metrics

@@ -21,7 +21,7 @@ Most automation follows the same three steps, each covered by one guide:
 3. **[Download the results](download-results.md)**: fetch the result file of a finished
    job, or link straight to its results dashboard.
 
-You can also start in the middle: if you already modelled a scenario in the
+You can also start in the middle: if you already modeled a scenario in the
 [web app](../../web-app/index.md), skip to step 2 with its scenario GUID.
 
 ## Prerequisites

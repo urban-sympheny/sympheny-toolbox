@@ -10,7 +10,7 @@ tags:
 
 Save time by loading predefined sets of technologies into your project with one click. Create your own technology packages and save them for future use.
 
-## Demand profiles generator
+## Demand profile generator
 
 Generate hourly energy demand profiles for different types of buildings, directly in the Sympheny web app.
 
@@ -28,13 +28,13 @@ Gain more insight into the cost breakdown of your optimal solutions.
 
 ## Expanded technology databases
 
-Extended and more easily navigable databases of energy conversion and storage technologies.
+This release includes extended, more easily navigable databases of energy conversion and storage technologies.
 
 ## Organization-specific workflows
 
 Need to customize your Sympheny workflow with a tailored module? Now we can do that.
 
-## Time varying efficiencies
+## Time-varying efficiencies
 
 Assign a different energy efficiency per month for your Conversion Technology candidates.
 
@@ -44,7 +44,7 @@ Define fixed O&M cost of Conversion, Storage and Network Technologies as a % of 
 
 ## Expanded databases for demands and supply technologies
 
-Extended databases for Energy Demands (including SIA 2024 profile scaling), Conversion and Storage Technology candidates.
+This release includes extended databases for Energy Demands (including SIA 2024 profile scaling) and for Conversion and Storage Technology candidates.
 
 ## And more
 

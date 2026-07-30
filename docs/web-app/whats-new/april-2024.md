@@ -20,7 +20,7 @@ In addition to these new features, we have made several performance enhancements
 
 We have prepared detailed documentation and resources to help you familiarize yourself with the new features and get the most out of them. Our customer support team is also available to assist you with any questions or concerns you may have.
 
-**What does it mean to you?**
+**What does this mean for you?**
 
 - Existing projects:
 
@@ -28,7 +28,7 @@ We have prepared detailed documentation and resources to help you familiarize yo
   - To upgrade an existing project into Version 3 to leverage its benefits, you have to actively migrate the project.
 - New projects:
 
-  - When creating a new project, you can currently choose whether to use the existing version (V2) or the new Version 3 (labelled as beta until 31 May). V2 will only receive bug fixes and no further development. We recommend adopting V3 for its ongoing support and access to all-new functionalities.
+  - When creating a new project, you can currently choose whether to use the existing version (V2) or the new Version 3 (labeled as beta until 31 May). V2 will only receive bug fixes and no further development. We recommend adopting V3 for its ongoing support and access to all-new functionalities.
   - As of 1 June 2024, V3 is the default for any new project.
 
 **Summary of timeline:**
@@ -39,11 +39,11 @@ We have prepared detailed documentation and resources to help you familiarize yo
 
 **How can I learn more about Sympheny Version 3?**
 
-- In June/July 2024, Sympheny hosted tutorials on the new version and its benefits. Contact us to register for specific trainings.
+- In June/July 2024, Sympheny hosted tutorials on the new version and its benefits. Contact us to register for specific training sessions.
 
-**So what is new, and does it change the way of modelling?**
+**So what is new, and does it change the way we model?**
 
-- The modelling and parameters remain the same. Additional features available in V3 are listed below.
+- The modeling and parameters remain the same. Additional features available in V3 are listed below.
 
 ## User experience
 
@@ -63,9 +63,9 @@ The following new features are available for projects in V3:
   - **Infeasible model insights:** clearer infeasibility messages provide insight into model limitations
   - **Enhanced readability:** input and output Excel sheets are now more user-friendly
   - **Execution history:** access past executions effortlessly, with options to download or delete
-  - **Hourly clustered profiles:** hourly profiles clustered from user input data are now available as information
+  - **Hourly clustered profiles:** hourly profiles clustered from user input data are now available for reference
   - **Editable energy carriers:** personalize colors for energy carriers, reflected in the results dashboard for easier identification
-- **Modeling multi-stages**
+- **Modeling multiple stages**
 
   - **Long-term planning:** multi-stage technology deployment enables strategic long-term planning
   - **Technology reusability:** deployed technologies can be reused across planning stages, optimizing resource utilization and cost-efficiency

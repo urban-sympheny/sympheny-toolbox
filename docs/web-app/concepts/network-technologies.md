@@ -8,7 +8,7 @@ tags:
 
 ![Network technologies](img/network-technologies-1.png)
 
-Networks transport energy between [hubs](hubs.md). For example, the section of district heating network. They are modeled in two parts:
+Networks transport energy between [hubs](hubs.md). For example, a network may represent a section of a district heating network. They are modeled in two parts:
 
 - **Network technology**: Defines the kind of energy transported, costs and embodied emissions.
 - **Network link**: Defines the length, capacity, losses and connected hubs of a single network segment.

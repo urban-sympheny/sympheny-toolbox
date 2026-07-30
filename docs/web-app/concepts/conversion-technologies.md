@@ -31,7 +31,7 @@ A mode represents a specific operational regime with its own set of inputs, outp
 - **Non-primary mode**: does not affect the installed capacity of the technology. The technology's investment or operational costs, or its CO2 emissions are not affected by the capacity of non-primary modes.
 
 !!! tip
-    In most multi-mode use cases, all modes should be set as primary mode.
+    In most multi-mode use cases, each mode should be set as a primary mode.
 
 ## Mode capacity
 

@@ -8,7 +8,7 @@ tags:
 
 Storage technologies can store an energy carrier for later use. For example, batteries store electricity and a hot water buffer stores heat at a certain temperature level.
 
-The capacity and operation of a storage technology is defined by these parameters:
+The capacity and operation of a storage technology are defined by these parameters:
 
 - **Capacity**: the maximum amount of energy that can be accumulated, expressed in kWh
 - **Discharge rate**: how fast the energy can be delivered, expressed in kW
@@ -31,11 +31,11 @@ You can choose different sizing methods. The size of the storage technology is e
 
 ## Maximum discharge rate
 
-The discharge rate is modeled as a %/h of the capacity. For a 10kWh battery, a discharge rate of 100%/h means the battery can deliver 100% of its capacity in one hour, equivalent to a power of 10kW.
+The discharge rate is modeled as a %/h of the capacity. For a 10 kWh battery, a discharge rate of 100%/h means the battery can deliver 100% of its capacity in one hour, equivalent to a power of 10 kW.
 
 ## Efficiency
 
-Losses can occur continuously or during charging and discharging. Stand-by losses are applied every hour relative to the state of charge. Charging and discharging losses are applied as a percentage of charge and discharge.
+Losses can occur continuously or during charging and discharging. Standby losses are applied every hour relative to the state of charge. Charging and discharging losses are applied as a percentage of charge and discharge.
 
 The minimum SoC (State of Charge) limits how much the storage can be discharged, effectively reducing the available capacity.
 

@@ -25,7 +25,7 @@ Once a scenario is complete, you run it from the **Execution** page. The page ha
 
 ## Execution history
 
-The page also lists every execution of every scenario in the analysis. Each run keeps a copy of the parameters it used, so earlier results stay reproducible. For each execution you can:
+The page also lists every execution of every scenario in the analysis. Each run keeps a copy of the parameters it used, so earlier results stay reproducible. For each execution, you can:
 
 - Download the [input file](../parameters/index.md), an Excel workbook holding all parameters of the scenario.
 - Download the output file, a compressed folder of Excel workbooks holding all results.

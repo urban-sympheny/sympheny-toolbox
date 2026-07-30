@@ -23,8 +23,8 @@ Analyses can be used as an archive: create different scenarios to compare agains
 
 Optional, while creating the project:
 
-- Send a copy of, or share, the project with other Sympheny users.
-- Upload an image to illustrate your project, using a small resolution.
+- Send a copy of the project to, or share the project with, other Sympheny users.
+- Upload an image to illustrate your project, using a low-resolution image.
 
 ![Creating a scenario within a project](img/quick-start-2.png)
 

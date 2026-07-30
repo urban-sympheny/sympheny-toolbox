@@ -6,9 +6,9 @@ tags:
 
 # RAMP tool suite
 
-The RAMP tool suite specializes in synthetic demand modelling for cases where measured datasets are unavailable or incomplete. It generates stochastic load profiles (domestic, hot water, EV, and more).
+The RAMP tool suite specializes in synthetic demand modeling for cases where measured datasets are unavailable or incomplete. It generates stochastic load profiles (domestic, hot water, EV, and more).
 
-**RAMP Mobility** is a dedicated sister repository focused on electric mobility demand modelling. It provides demand profiles for EV fleets and integrates them into energy system optimization. The complete RAMP Mobility documentation is available on [GitHub](https://github.com/RAMP-project/RAMP-mobility/blob/master/docs/getting_started.md).
+**RAMP Mobility** is a dedicated sister repository focused on electric mobility demand modeling. It provides demand profiles for EV fleets and integrates them into energy system optimization. The complete RAMP Mobility documentation is available on [GitHub](https://github.com/RAMP-project/RAMP-mobility/blob/master/docs/getting_started.md).
 
 ## In EnyTool
 
@@ -17,7 +17,7 @@ The RAMP tool suite specializes in synthetic demand modelling for cases where me
 
 Key benefits:
 
-- Enables richer modelling for sites without measured loads.
+- Enables richer modeling for sites without measured loads.
 - Supports future-proofing by including EV loads and mobility transitions.
 - Plugs into district/building energy models in EnyTool to assess flexibility, grid impact, and network sizing.
 
@@ -33,15 +33,15 @@ You must create at least two types of charging stations.
 
 1. Select **Ramp Mobility**.
 
-   ![Select Ramp Mobility](img/ramp-tool-suite-1.png)
+    ![Select Ramp Mobility](img/ramp-tool-suite-1.png)
 
 2. Add parameters. The charging station probabilities must sum to 100%.
 
-   ![Add parameters with probabilities summing to 100 percent](img/ramp-tool-suite-2.png)
+    ![Add parameters with probabilities summing to 100 percent](img/ramp-tool-suite-2.png)
 
 3. After a couple of minutes, three profiles are generated.
 
-   ![Three generated profiles](img/ramp-tool-suite-3.png)
+    ![Three generated profiles](img/ramp-tool-suite-3.png)
 
 Before clicking **Submit**, three profiles are available to download:
 

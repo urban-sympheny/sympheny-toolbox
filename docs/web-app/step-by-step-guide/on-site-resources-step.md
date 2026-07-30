@@ -41,9 +41,9 @@ When the hourly profile is measured or simulated with a third-party tool, use th
 !!! tip
     To upload a profile, select or drag and drop an XLSX file with the correct format. The file must contain a single sheet with 2 columns, no header, and exactly 8760 rows. The 1st column must contain incrementing numbers from 1 to 8760. The 2nd column must contain the hourly profile values, for every hour of the year from 00:00 on January 1 to 23:00 on December 31. Make sure the units are correct. The maximum file size is 2 MB. Uploaded profiles can be saved for later use. [Template profile XLSX](https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/templates/example-energy-demand-profile.xlsx)
 
-For example, the hourly resource profile of **Windpower** indicates the availability of wind-sourced electricity in kW per unit of peak load (kW/kWp). In this case, a conversion efficiency is already factored into the hourly resource profile, and the conversion efficiency of the wind turbine technology should be 100%.
+For example, the hourly resource profile of **wind power** indicates the availability of wind-sourced electricity in kW per unit of peak load (kW/kWp). In this case, a conversion efficiency is already factored into the hourly resource profile, and the conversion efficiency of the wind turbine technology should be 100%.
 
-![Windpower resource profile example](img/on-site-resources-step-6.png)
+![Wind power resource profile example](img/on-site-resources-step-6.png)
 
 The use of the on-site resource is determined by the optimal capacity of the technologies that use that resource.
 

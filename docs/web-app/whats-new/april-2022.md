@@ -14,11 +14,11 @@ tags:
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/change-scenario-currency.mp4"></video>
 
-## Time varying input share for Conversion Technology candidates
+## Time-varying input share for Conversion Technology candidates
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/time-varying-input-share.mp4"></video>
 
-## MFA (multi-factor authentication) at log in
+## MFA (multi-factor authentication) at login
 
 To protect your organization against lost or stolen credentials, you can request the use of MFA to log in to your Sympheny account.
 

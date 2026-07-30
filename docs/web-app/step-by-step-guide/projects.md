@@ -30,7 +30,7 @@ Most project management actions start by clicking the three dots on the project 
 - **Copy project**
 - **Delete project**
 - **Send project copy**
-- **Reinitialise project** (example projects only)
+- **Reinitialize project** (example projects only)
 - **Share project**
 - **Unlock** (shared projects only, while locked)
 
@@ -51,7 +51,7 @@ Sharing grants other users access to your Sympheny projects. To share a project:
 
 1. Choose **Share project** from the menu.
 2. Choose **Add secondary owner**. You can add multiple users.
-3. For each user, set an access level: **Read-only** (view the project but not modify it) or **Edit** (full control).
+3. For each user, set an access level: **Read-only** (view the project but do not modify it) or **Edit** (full control).
 
 !!! note
     Only one person can edit a shared project at a time. Sympheny locks the project while
@@ -60,4 +60,4 @@ Sharing grants other users access to your Sympheny projects. To share a project:
 
 ## Reinitialize a project
 
-This option is available only for the example projects provided by Sympheny. Click such a project, then select **Reinitialise** to restore it to its original state.
+This option is available only for the example projects provided by Sympheny. Click such a project, then select **Reinitialize** to restore it to its original state.

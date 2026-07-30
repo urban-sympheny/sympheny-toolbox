@@ -8,7 +8,7 @@ tags:
 
 ## What is Sympheny?
 
-Sympheny is a toolset for integrated energy system planning, suitable for scales ranging from buildings to cities. You can model energy systems with basic site details, quickly evaluate various supply options, and identify the most suitable ones. Its dashboards provide in-depth insights into the technology and performance of each solution. You can also run multiple scenarios simultaneously, to understand the impact of factors like energy prices and site configurations.
+Sympheny is a toolset for integrated energy system planning, suitable for scales ranging from buildings to cities. You can model energy systems with basic site details, quickly evaluate various supply options, and identify the most suitable ones. Its dashboards provide in-depth insights into the technology and performance of each solution. You can also run multiple scenarios simultaneously to understand the impact of factors like energy prices and site configurations.
 
 ![Sympheny web app overview](img/introduction-1.png)
 
