@@ -9,17 +9,17 @@ tags:
 Sympheny uses discounted cash flow (DCF) analysis to determine the present value of
 expected future cash flows. This approach is crucial for long-term energy projects, as
 it accounts for financing factors such as the cost of capital, loan structures, and
-risk premiums — ensuring that both initial investments and future cash flows are
+risk premiums, ensuring that both initial investments and future cash flows are
 properly evaluated.
 
 **Interest rate:**
 
 - **Interest rate as financing cost**: when you take out a loan (especially an
   amortized one, with regular payments), the interest rate directly reflects the cost
-  of borrowing that money — it's what the lender charges you.
+  of borrowing that money: it's what the lender charges you.
 - **Discounting future cash flows**: the interest rate can also be used to calculate
   the present value of money expected in the future (a process called discounting). In
-  this case, it reflects the opportunity cost of capital — the return you might earn
+  this case, it reflects the opportunity cost of capital: the return you might earn
   if you invested the money elsewhere. A risk premium is added to this rate to cover
   risks such as price fluctuations or project-specific uncertainties.
 - **Dual use**: in practice, the interest rate is often used both as the cost of
@@ -56,4 +56,4 @@ might set WACC as the interest rate with inflation assumed to be zero, which res
 the discount rate aligning with the interest rate.
 
 In Sympheny, you define these parameters along with other inputs in the Stage
-Parameters step. See [Stages parameters](parameters/stages.md) for details.
+Parameters step. See [Stages parameters](../parameters/stages.md) for details.

@@ -20,8 +20,8 @@ Requires Python 3.11 or newer.
 
 ## One API, sync and async
 
-Every method exists on both `Sympheny` and `AsyncSympheny` with identical signatures —
-the sync client is generated from the async source, so the two can never diverge.
+Every method exists on both `Sympheny` and `AsyncSympheny` with identical signatures.
+The sync client is generated from the async source, so the two can never diverge.
 These docs describe the async client once; every code example has a **Sync** / **Async**
 tab, and your choice persists across all pages.
 
@@ -66,8 +66,8 @@ The client is a context manager; it closes its HTTP connection pool on exit. Out
 
 | Argument | Default | Description |
 | --- | --- | --- |
-| `username` | — | Sympheny account email address. |
-| `password` | — | Sympheny account password. |
+| `username` | required | Sympheny account email address. |
+| `password` | required | Sympheny account password. |
 | `is_dev` | `False` | Use the development environment instead of production. |
 | `base_url` | production URL | Override the API base URL entirely (takes precedence over `is_dev`). |
 | `timeout` | `30.0` | Request timeout in seconds. |
@@ -82,11 +82,11 @@ payload).
 
 ## Where to go next
 
-- [Workflows](workflows/index.md) — end-to-end guides: create a scenario from Excel, run a
-  solver job, and download the results.
-- [SDK reference](reference/projects.md) — one page per resource group, one section per
+- [Workflows](workflows/index.md): end-to-end guides for creating a scenario from Excel,
+  running a solver job, and downloading the results.
+- [SDK reference](reference/projects.md): one page per resource group, one section per
   method, each cross-linked to the REST operation it wraps.
-- [Model reference](reference/models/common.md) — the Pydantic request/response models,
+- [Model reference](reference/models/common.md): the Pydantic request/response models,
   grouped by resource.
-- [REST API reference](../api/index.md) — the underlying HTTP API, if you need to call
+- [REST API reference](../api/index.md): the underlying HTTP API, if you need to call
   it directly.

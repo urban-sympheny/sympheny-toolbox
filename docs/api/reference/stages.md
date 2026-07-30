@@ -258,4 +258,4 @@ curl -X DELETE "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/{scen
 
 | Status | Description | Schema |
 | --- | --- | --- |
-| 201 | Created | — |
+| 201 | Created | n/a |

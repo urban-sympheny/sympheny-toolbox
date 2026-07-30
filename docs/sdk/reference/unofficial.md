@@ -17,7 +17,7 @@ Endpoints outside the official documented Sympheny API. May change without notic
 async def get_analysis(analysis_guid: str) -> dict[str, Any]
 ```
 
-UNOFFICIAL — Get analysis details incl. scenarios and results.
+UNOFFICIAL: Get analysis details incl. scenarios and results.
 
 REST operation: `GET /sympheny-app/analysis/{guid}` (not part of the official spec)
 
@@ -51,7 +51,7 @@ Prefer `client.analyses.get` unless you need the `results` payload (scenarios / 
 async def create_master_scenario(payload: dict[str, Any]) -> dict[str, Any]
 ```
 
-UNOFFICIAL — Create a master scenario.
+UNOFFICIAL: Create a master scenario.
 
 REST operation: `POST /sympheny-app/master-scenario/` (not part of the official spec)
 
@@ -83,7 +83,7 @@ REST operation: `POST /sympheny-app/master-scenario/` (not part of the official 
 async def list_variants(master_scenario_guid: str) -> list[dict[str, Any]]
 ```
 
-UNOFFICIAL — List scenario variants of a master scenario.
+UNOFFICIAL: List scenario variants of a master scenario.
 
 REST operation: `GET /sympheny-app/master-scenario/{guid}/scenario-variants` (not part of the official spec)
 
@@ -115,7 +115,7 @@ REST operation: `GET /sympheny-app/master-scenario/{guid}/scenario-variants` (no
 async def delete_all_variants(master_scenario_guid: str) -> None
 ```
 
-UNOFFICIAL — Delete all scenario variants of a master scenario.
+UNOFFICIAL: Delete all scenario variants of a master scenario.
 
 REST operation: `DELETE /sympheny-app/master-scenario/{guid}/scenario-variants` (not part of the official spec)
 
@@ -147,7 +147,7 @@ REST operation: `DELETE /sympheny-app/master-scenario/{guid}/scenario-variants` 
 async def get_variants_excel_url(master_scenario_guid: str) -> str
 ```
 
-UNOFFICIAL — Get a presigned URL to the variants Excel export.
+UNOFFICIAL: Get a presigned URL to the variants Excel export.
 
 REST operation: `GET /sympheny-app/master-scenario/{guid}/scenario-variants-excel` (not part of the official spec)
 
@@ -184,7 +184,7 @@ async def create_variants_from_excel_url(
 ) -> Any
 ```
 
-UNOFFICIAL — Create scenario variants from an uploaded Excel file.
+UNOFFICIAL: Create scenario variants from an uploaded Excel file.
 
 REST operation: `PUT /sympheny-app/scenario-variants-excel` (not part of the official spec)
 
@@ -218,7 +218,7 @@ REST operation: `PUT /sympheny-app/scenario-variants-excel` (not part of the off
 async def get_upload_url() -> str
 ```
 
-UNOFFICIAL — Get a presigned S3 URL for file uploads.
+UNOFFICIAL: Get a presigned S3 URL for file uploads.
 
 REST operation: `GET /sympheny-app/db-update/s3-presigned-url` (not part of the official spec)
 
@@ -244,7 +244,7 @@ REST operation: `GET /sympheny-app/db-update/s3-presigned-url` (not part of the 
 async def upload_to_presigned_url(presigned_url: str, content: bytes) -> None
 ```
 
-UNOFFICIAL — Upload raw bytes to a presigned S3 URL (no Sympheny auth).
+UNOFFICIAL: Upload raw bytes to a presigned S3 URL (no Sympheny auth).
 
 **Parameters**
 
@@ -279,7 +279,7 @@ async def create_scenario_from_excel_url(
 ) -> str
 ```
 
-UNOFFICIAL — Create a scenario from an uploaded Excel file; returns the scenario GUID.
+UNOFFICIAL: Create a scenario from an uploaded Excel file; returns the scenario GUID.
 
 REST operation: `POST /sympheny-app/v2/analysis/{guid}/scenario/excel` (not part of the official spec)
 
@@ -313,7 +313,7 @@ REST operation: `POST /sympheny-app/v2/analysis/{guid}/scenario/excel` (not part
 async def close_diagram(scenario_guid: str) -> None
 ```
 
-UNOFFICIAL — Close the hub diagram of a scenario.
+UNOFFICIAL: Close the hub diagram of a scenario.
 
 REST operation: `PUT /sympheny-app/scenarios/{guid}/close-diagram` (not part of the official spec)
 
@@ -345,7 +345,7 @@ REST operation: `PUT /sympheny-app/scenarios/{guid}/close-diagram` (not part of 
 async def generate_specs(scenario_guids: list[str]) -> None
 ```
 
-UNOFFICIAL — Trigger input-file (specs) generation for scenarios.
+UNOFFICIAL: Trigger input-file (specs) generation for scenarios.
 
 REST operation: `PUT /sympheny-app/v2/specs` (not part of the official spec)
 
@@ -377,7 +377,7 @@ REST operation: `PUT /sympheny-app/v2/specs` (not part of the official spec)
 async def generate_scenario_specs(scenario_guid: str) -> None
 ```
 
-UNOFFICIAL — Trigger specs generation for a single scenario.
+UNOFFICIAL: Trigger specs generation for a single scenario.
 
 REST operation: `PUT /sympheny-app/v2/scenarios/{guid}/specs` (not part of the official spec)
 
@@ -409,7 +409,7 @@ REST operation: `PUT /sympheny-app/v2/scenarios/{guid}/specs` (not part of the o
 async def create_scenario_enymap(analysis_guid: str, payload: dict[str, Any]) -> dict[str, Any]
 ```
 
-UNOFFICIAL — Create an enymap scenario.
+UNOFFICIAL: Create an enymap scenario.
 
 REST operation: `POST /sympheny-app/analysis/{guid}/scenario-enymap` (not part of the official spec)
 
@@ -442,7 +442,7 @@ REST operation: `POST /sympheny-app/analysis/{guid}/scenario-enymap` (not part o
 async def create_gis_hub(scenario_guid: str, polygon: list[Any]) -> Any
 ```
 
-UNOFFICIAL — Create a GIS hub for an enymap scenario.
+UNOFFICIAL: Create a GIS hub for an enymap scenario.
 
 REST operation: `POST /sympheny-app/scenario-enymap/{guid}/create-gis-hub` (not part of the official spec)
 
@@ -475,7 +475,7 @@ REST operation: `POST /sympheny-app/scenario-enymap/{guid}/create-gis-hub` (not 
 async def create_demand_solar(scenario_guid: str) -> Any
 ```
 
-UNOFFICIAL — Create demands and solar resources for an enymap scenario.
+UNOFFICIAL: Create demands and solar resources for an enymap scenario.
 
 REST operation: `POST /sympheny-app/scenario-enymap/{guid}/create-demand-solar` (not part of the official spec)
 
@@ -507,7 +507,7 @@ REST operation: `POST /sympheny-app/scenario-enymap/{guid}/create-demand-solar` 
 async def gis_background_jobs() -> list[dict[str, Any]]
 ```
 
-UNOFFICIAL — List GIS background jobs (`api-services` backend).
+UNOFFICIAL: List GIS background jobs (`api-services` backend).
 
 REST operation: `GET /api-services/gis/background` (not part of the official spec)
 
@@ -537,7 +537,7 @@ async def hub_demand(
 ) -> list[dict[str, Any]]
 ```
 
-UNOFFICIAL — Estimate building energy demand (`api-services` backend).
+UNOFFICIAL: Estimate building energy demand (`api-services` backend).
 
 REST operation: `POST /api-services/demand/hub_demand` (not part of the official spec)
 
@@ -571,7 +571,7 @@ REST operation: `POST /api-services/demand/hub_demand` (not part of the official
 async def get_database_demand_profile(demand_guid: str) -> list[dict[str, Any]]
 ```
 
-UNOFFICIAL — Get the normalized profile of a database energy demand.
+UNOFFICIAL: Get the normalized profile of a database energy demand.
 
 REST operation: `GET /sympheny-app/database-energy-demands/{guid}/profile` (not part of the official spec)
 

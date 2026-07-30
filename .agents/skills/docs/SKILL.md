@@ -2,7 +2,7 @@
 name: docs
 description: >
   How to create, regenerate, and edit pages of the product documentation site
-  (Zensical, four surfaces: Web Application / REST API / Python SDK / MCP). Use this
+  (Zensical, four surfaces: Web app / REST API / Python SDK / MCP). Use this
   skill for ANY task that touches the docs/ directory or zensical.toml — writing or
   editing a guide, regenerating the SDK reference after SDK changes, regenerating
   the REST API reference after the OpenAPI spec (specs/sympheny_openapi.json)
@@ -182,7 +182,7 @@ fails.
    transcribe. Confluence content is known-outdated: check each claim against
    the current product; flag anything unverifiable with `TODO(review)`.
 2. Split pages that mix concepts with how-to: concept → `web-app/concepts/`,
-   procedure → `web-app/how-to/`.
+   procedure → `web-app/step-by-step-guide/` (or `web-app/advanced-workflows/`).
 3. Note the superseded Confluence URL in the PR description so a redirect/
    banner can be placed on the old page.
 
@@ -192,7 +192,80 @@ fails.
 paragraphs. One H1 per page (the title). Sentence-case headings. Spell out the
 product's domain terms exactly as the UI does. No marketing tone.
 
-**Tabbed sync/async snippets** (linked tabs — the reader's choice persists
+**No em-dashes.** Never use `—` (or `–`) in page content. They read as
+machine-written. Restructure the sentence instead: use a period and two short
+sentences, a comma, a colon before a list or an explanation, or parentheses for
+a genuine aside. The same goes for the bullet lists on landing pages: write
+`[Hubs](hubs.md): the buildings or groups of buildings you model.` with a colon,
+not a dash. Hyphens in compound words (`on-site`, `multi-energy`,
+`sentence-case`) and minus signs in numbers are fine; it is only the long dash
+that is banned. Two exceptions, both outside hand-written prose: the `GENERATED`
+header emitted by the generators, and quoted product strings or API values that
+contain a dash of their own.
+
+A dash is also not a table placeholder. A cell with nothing to say reads `n/a`
+(no unit, no default), and a cell for a required argument reads `required`. The
+generators follow the same rule.
+
+**Direct, human language.** Say the thing. Prefer the short common word over
+the formal one (`use` not `utilize`, `about` not `regarding`, `so` not
+`thereby`). Cut hedges and filler (`simply`, `just`, `please note that`,
+`it is important to understand that`, `in order to`, `leverage`, `robust`,
+`seamless`, `powerful`, `comprehensive`). Lead with the action, not the
+preamble: "Click **Save**." beats "You will now want to make sure you click the
+Save button." Address the reader's task, and where a limit or a gotcha exists,
+state it plainly instead of softening it.
+
+**Naming: nav title, filename, and H1 all match.** A page's file name is the
+kebab-case form of its nav title, and its H1 is that title in sentence case.
+Pick the title first, then derive the path from it.
+
+| Nav title | Path | H1 |
+| --- | --- | --- |
+| Energy carriers step | `step-by-step-guide/energy-carriers-step.md` | `# Energy carriers step` |
+| Sign up and log in | `getting-started/sign-up-and-log-in.md` | `# Sign up and log in` |
+| Step-by-step guide | `step-by-step-guide/index.md` | `# Step-by-step guide` |
+| Imports & exports step | `step-by-step-guide/imports-exports-step.md` | `# Imports & exports step` |
+| What's new | `whats-new/index.md` | `# What's new` |
+
+Rules that follow from it:
+
+- Lowercase, words joined by single hyphens, no spaces, no underscores, no
+  capitals. Punctuation is dropped rather than transliterated, so an apostrophe
+  or an ampersand simply disappears (`What's new` → `whats-new`,
+  `Imports & exports step` → `imports-exports-step`). Directories follow the same
+  rule: a section directory is the kebab-case of its nav title.
+- A section is a directory whose landing page is `index.md`, with an H1 equal to
+  the section name.
+- Keep the title short. The section already gives the context, so a page inside
+  Getting started is `structure.md` ("Structure"), not
+  `web-app-structure.md` ("Web app structure"), and a page inside Parameters is
+  `hubs.md` ("Hubs"), not `hubs-parameters.md` ("Hubs parameters").
+- Keep filler words out of the title itself (`the`, `a`, `how-to`,
+  `introduction-to`), so that the filename can mirror it exactly: "Download
+  results", not "Download the results". Use the plural the UI uses for list pages
+  ("Analyses" → `analyses.md`, not `analysis.md`).
+- Images live in the section's `img/` directory and are named after the page they
+  belong to plus a counter (`quick-start-7.png`, `energy-carriers-step-2.png`). A
+  picture used by more than one page gets a descriptive name instead
+  (`database-center-panel.png`).
+- Renaming a page changes its URL. Rename only when the title genuinely changed,
+  rename its images in the same commit, repoint every relative link, and note
+  the old path in the PR so a redirect can be added.
+
+Three deliberate exceptions, and no others:
+
+1. **Surface roots keep their short directory names** even though their nav
+   titles are longer: `web-app/` ("Web app"), `api/` ("REST API"), `sdk/`
+   ("Python SDK"), `ai/` ("Use with AI"). They sit in every URL on the site and
+   in every relative link between surfaces, so they are stable by design.
+2. **The site home** (`docs/index.md`, H1 "Sympheny documentation") is not a
+   section index and has no directory to match.
+3. **Release notes** are `whats-new/<month>-<year>.md` with an H1 of
+   "`Month YYYY`" (`november-2025.md` → `# November 2025`). The nav lists them
+   newest first, so the file name does not carry the ordering.
+
+**Tabbed sync/async snippets** (linked tabs, and the reader's choice persists
 site-wide):
 
 ```markdown
@@ -211,7 +284,7 @@ site-wide):
     ```
 ```
 
-**Admonitions** for warnings/notes only — not for decoration:
+**Admonitions** for warnings and notes only, not for decoration:
 
 ```markdown
 !!! warning
@@ -221,16 +294,37 @@ site-wide):
 
 **Search tags.** Every hand-written page carries a YAML front-matter `tags:`
 block (Zensical 0.0.47 renders chips and indexes the tags into search with zero
-config). Pick 1–3 tags from this controlled vocabulary — two axes:
+config). Tags are a fixed, closed vocabulary on two axes:
 
-- **surface** (which of the four surfaces): `web-app`, `api`, `sdk`, `mcp`.
-- **topic** (what kind of page): `getting-started`, `how-to`, `concepts`,
+- **surface** (which of the four surfaces the page documents): `web-app`, `api`,
+  `sdk`, `mcp`.
+- **topic** (what kind of page it is): `getting-started`, `how-to`, `concepts`,
   `troubleshooting`, `workflow`, `release-notes`.
 
-Typical page = one surface + one topic (e.g. a scenario-editor guide is
-`web-app` + `how-to`; an SDK workflow guide is `sdk` + `workflow`; a release
-note is `web-app` + `release-notes`). Section landing pages may carry the
-surface tag alone. Front-matter shape:
+The convention, in full:
+
+1. **Exactly one surface tag plus exactly one topic tag**, in that order,
+   surface first. Two tags is the norm; three is already unusual and needs a
+   reason.
+2. **The topic tag matches the section the page lives in.** A page under
+   `getting-started/` is tagged `getting-started`; a step page under
+   `step-by-step-guide/` is `how-to`; anything under `concepts/` or
+   `parameters/` is `concepts`; support and FAQ pages are `troubleshooting`;
+   release notes are `release-notes`; SDK workflow guides are `workflow`. If the
+   right topic tag is not the one its section implies, the page is in the wrong
+   section. Move the page, don't bend the tag.
+3. **A section landing page (`index.md`) may carry the surface tag alone.** The
+   surface's own landing page (`web-app/index.md`) always does.
+4. **The site home (`docs/index.md`) stays untagged.** It sits above all four
+   surfaces, so no surface tag applies.
+5. **Never coin a tag.** No product names, feature names, page titles, versions,
+   or capitalised variants. Extending the vocabulary is a deliberate maintainer
+   decision, like the extension whitelist (ground rule 1).
+6. **Generated reference pages get tags only from their generators**, never by
+   hand-editing the output (ground rule 2). Pages under `api/reference/` and
+   `sdk/reference/` are currently untagged by design.
+
+Front-matter shape, which is the whole of it:
 
 ```markdown
 ---
@@ -242,13 +336,13 @@ tags:
 # Page title
 ```
 
-Extending the vocabulary is a deliberate maintainer decision, like the
-extension whitelist (ground rule 1) — don't coin new tags ad hoc. **Generated
-reference pages get tags only via their generators, never by hand-editing the
-output** (ground rule 2).
+Examples: a scenario-editor guide is `web-app` + `how-to`; an SDK workflow guide
+is `sdk` + `workflow`; a release note is `web-app` + `release-notes`; the FAQ
+page is `web-app` + `troubleshooting`.
 
 **Links** are always relative (`../api/reference/scenarios.md#operation-...`),
-never absolute site URLs — keeps the corpus portable and lets CI validate them.
+never absolute site URLs. Relative links keep the corpus portable and let CI
+validate them.
 
 **GENERATED header** (first line of every generated page):
 
@@ -273,3 +367,13 @@ never absolute site URLs — keeps the corpus portable and lets CI validate them
    (`check_sdk_docs_drift.py` / stale-generation check) passes locally.
 4. Confirm no page documents the sync client and no absolute internal links
    were introduced (`grep -rn "https://<docs-domain>" docs/` should be empty).
+5. Style and naming pass on every page you touched:
+   - No em-dashes: `grep -rn "—\|–" docs/ --include="*.md"` returns nothing
+     outside the `GENERATED` headers.
+   - Filenames are the kebab-case of their nav titles, and each H1 matches its
+     nav title.
+   - Front matter carries one surface tag plus one topic tag, and the topic tag
+     matches the page's section (landing pages may carry the surface alone; the
+     site home stays untagged).
+   - Read the prose back once: no hedges or filler, no marketing adjectives, the
+     action first in each step.

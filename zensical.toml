@@ -14,7 +14,7 @@
 
 [project]
 site_name = "Sympheny Documentation"
-site_description = "Documentation for the Sympheny web application, REST API, Python SDK, and AI integrations."
+site_description = "Documentation for the Sympheny web app, REST API, Python SDK, and AI integrations."
 site_url = "https://docs.sympheny.com/"
 
 extra_css = ["stylesheets/extra.css"]
@@ -25,41 +25,28 @@ copyright = """<span class="sy-footer-legal">© 2026 Urban Sympheny AG. Register
 
 nav = [
   { "Home" = "index.md" },
-  { "Web Application" = [
+  { "Web app" = [
     "web-app/index.md",
     { "Getting started" = [
       "web-app/getting-started/index.md",
-      "web-app/getting-started/sign-up-and-login.md",
-      "web-app/getting-started/quickstart.md",
+      "web-app/getting-started/sign-up-and-log-in.md",
+      "web-app/getting-started/structure.md",
+      "web-app/getting-started/quick-start.md",
     ] },
-    { "How-to guides" = [
-      "web-app/how-to/index.md",
-      "web-app/how-to/managing-projects.md",
-      "web-app/how-to/managing-analyses.md",
-      { "Modeling scenarios" = [
-        "web-app/how-to/modeling-scenarios/index.md",
-        "web-app/how-to/modeling-scenarios/general-step.md",
-        "web-app/how-to/modeling-scenarios/hubs-step.md",
-        "web-app/how-to/modeling-scenarios/energy-carriers-step.md",
-        "web-app/how-to/modeling-scenarios/energy-demands-step.md",
-        "web-app/how-to/modeling-scenarios/on-site-resources-step.md",
-        "web-app/how-to/modeling-scenarios/imports-exports-step.md",
-        "web-app/how-to/modeling-scenarios/conversion-technology-step.md",
-        "web-app/how-to/modeling-scenarios/storage-technologies-step.md",
-        "web-app/how-to/modeling-scenarios/network-links-step.md",
-      ] },
-      "web-app/how-to/executing-scenarios.md",
-      "web-app/how-to/scenario-results.md",
-      { "Database center" = [
-        "web-app/how-to/database-center/index.md",
-        "web-app/how-to/database-center/upload-databases.md",
-        "web-app/how-to/database-center/download-databases.md",
-      ] },
-      { "EnyTool" = [
-        "web-app/how-to/enytool/index.md",
-        "web-app/how-to/enytool/ramp-tool-suite.md",
-      ] },
-      "web-app/how-to/enyflow/index.md",
+    { "Step-by-step guide" = [
+      "web-app/step-by-step-guide/index.md",
+      "web-app/step-by-step-guide/projects.md",
+      "web-app/step-by-step-guide/analyses.md",
+      "web-app/step-by-step-guide/general-step.md",
+      "web-app/step-by-step-guide/hubs-step.md",
+      "web-app/step-by-step-guide/energy-carriers-step.md",
+      "web-app/step-by-step-guide/energy-demands-step.md",
+      "web-app/step-by-step-guide/on-site-resources-step.md",
+      "web-app/step-by-step-guide/imports-exports-step.md",
+      "web-app/step-by-step-guide/supply-technologies-step.md",
+      "web-app/step-by-step-guide/network-links-step.md",
+      "web-app/step-by-step-guide/execution.md",
+      "web-app/step-by-step-guide/results-dashboard.md",
     ] },
     { "Concepts" = [
       "web-app/concepts/index.md",
@@ -77,40 +64,42 @@ nav = [
       "web-app/concepts/intra-hub-networks.md",
       "web-app/concepts/clustered-profiles.md",
       "web-app/concepts/demand-profiles-methodology.md",
-      "web-app/concepts/glossary.md",
       "web-app/concepts/discounted-cash-flow-analysis.md",
       "web-app/concepts/capital-recovery-factor.md",
-      { "Parameters" = [
-        "web-app/concepts/parameters/index.md",
-        "web-app/concepts/parameters/input-parameters.md",
-        "web-app/concepts/parameters/general.md",
-        "web-app/concepts/parameters/stages.md",
-        "web-app/concepts/parameters/hubs.md",
-        "web-app/concepts/parameters/energy-carriers.md",
-        "web-app/concepts/parameters/conversion-technologies.md",
-        "web-app/concepts/parameters/energy-demands.md",
-        "web-app/concepts/parameters/output-parameters.md",
-      ] },
+    ] },
+    { "Parameters" = [
+      "web-app/parameters/index.md",
+      "web-app/parameters/general.md",
+      "web-app/parameters/stages.md",
+      "web-app/parameters/hubs.md",
+      "web-app/parameters/energy-carriers.md",
+      "web-app/parameters/conversion-technologies.md",
+      "web-app/parameters/energy-demands.md",
+    ] },
+    { "Advanced workflows" = [
+      "web-app/advanced-workflows/index.md",
+      "web-app/advanced-workflows/database-center.md",
+      "web-app/advanced-workflows/enytool.md",
+      "web-app/advanced-workflows/ramp-tool-suite.md",
+      "web-app/advanced-workflows/enyflow.md",
     ] },
     { "What's new" = [
       "web-app/whats-new/index.md",
-      "web-app/whats-new/2025-november.md",
-      "web-app/whats-new/2024-april.md",
-      "web-app/whats-new/2023-march.md",
-      "web-app/whats-new/2023-january.md",
-      "web-app/whats-new/2022-november.md",
-      "web-app/whats-new/2022-september.md",
-      "web-app/whats-new/2022-june.md",
-      "web-app/whats-new/2022-may.md",
-      "web-app/whats-new/2022-april.md",
-      "web-app/whats-new/2022-march.md",
-      "web-app/whats-new/2021-november.md",
+      "web-app/whats-new/november-2025.md",
+      "web-app/whats-new/april-2024.md",
+      "web-app/whats-new/march-2023.md",
+      "web-app/whats-new/january-2023.md",
+      "web-app/whats-new/november-2022.md",
+      "web-app/whats-new/september-2022.md",
+      "web-app/whats-new/june-2022.md",
+      "web-app/whats-new/may-2022.md",
+      "web-app/whats-new/april-2022.md",
+      "web-app/whats-new/march-2022.md",
+      "web-app/whats-new/november-2021.md",
     ] },
-    { "Troubleshooting" = [
-      "web-app/troubleshooting/index.md",
-      "web-app/troubleshooting/faqs.md",
-      "web-app/troubleshooting/common-issues.md",
-      "web-app/troubleshooting/contact-support.md",
+    { "Support" = [
+      "web-app/support/index.md",
+      "web-app/support/faqs.md",
     ] },
   ] },
   { "REST API" = [
@@ -142,7 +131,7 @@ nav = [
     "sdk/index.md",
     { "Workflows" = [
       "sdk/workflows/index.md",
-      "sdk/workflows/scenario-from-excel.md",
+      "sdk/workflows/create-scenario-from-excel.md",
       "sdk/workflows/run-solver-job.md",
       "sdk/workflows/download-results.md",
     ] },
@@ -178,7 +167,7 @@ nav = [
   ] },
   { "Use with AI" = [
     "ai/index.md",
-    "ai/mcp.md",
+    "ai/mcp-server-setup.md",
   ] },
 ]
 

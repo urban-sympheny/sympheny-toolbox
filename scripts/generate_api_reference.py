@@ -280,7 +280,7 @@ def operation_section(spec: dict[str, Any], method: str, path: str, operation: d
         content: dict[str, dict[str, Any]] = response.get("content", {})
         resp_schema: dict[str, Any] | None = next(iter(content.values())).get("schema") if content else None
         if resp_schema is None:
-            label = "—"
+            label = "n/a"
         else:
             schema_name = ref_name(resp_schema)
             label = f"`{schema_name}`" if schema_name else type_label(resp_schema)

@@ -8,6 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Docs
+- The web app documentation is restructured, and the rewritten tree now replaces the previous
+  `docs/web-app/` content. Getting started keeps only Sign up and log in, Structure, and Quick
+  start; a new flat **Step-by-step guide** section holds the project and analysis pages, the eight
+  scenario steps, Execution, and the Results dashboard; the standalone Glossary is folded into
+  **Concepts** as two definition tables; Parameters stays its own section; FAQs and support merge
+  into one **Support** section; and Advanced becomes **Advanced workflows**. Page URLs under
+  `/web-app/` change accordingly (for example `/web-app/how-to/executing-scenarios/` is now
+  `/web-app/step-by-step-guide/execution/`), and the inbound links from the SDK workflow guides
+  were repointed.
+- One name for the product surface across the site: **web app** (previously a mix of "web app",
+  "web application", and "Web Application"). Applied to page titles, prose, and the nav labels in
+  `zensical.toml`.
+- Page file names now match their titles (kebab-case) across every section:
+  `ai/mcp.md` → `ai/mcp-server-setup.md`,
+  `sdk/workflows/scenario-from-excel.md` → `create-scenario-from-excel.md`, and a set of renames
+  inside the restructured web app tree. Surface roots (`api/`, `sdk/`, `ai/`, `web-app/`), the site
+  home, and release-note file names are documented exceptions.
+- New writing conventions in the docs skill, and the whole corpus swept to match them: no em-dashes
+  or en-dashes in page content, direct language with no hedges or marketing adjectives, filenames as
+  the kebab-case of their nav title with a matching H1, and a closed tag vocabulary of one surface
+  tag plus one topic tag that follows the page's section.
+- Empty cells in the generated REST API response tables now read `n/a` instead of a dash, and the
+  unofficial-endpoint docstrings are prefixed `UNOFFICIAL:` instead of `UNOFFICIAL —`, which changes
+  the corresponding SDK reference pages.
 - The documentation site now lives at [docs.sympheny.com](https://docs.sympheny.com): `site_url`
   and all hardcoded links updated from the github.io URL, and a `Documentation` URL added to the
   PyPI project metadata. Deployment still goes through GitHub Pages (the custom domain is

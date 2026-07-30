@@ -9,7 +9,7 @@ tags:
 Intra-hub networks are connections that move energy within a single
 [hub](hubs.md), in contrast to [network technologies](network-technologies.md),
 which connect different hubs. Network link candidates are added in the
-[Network links step](../how-to/modeling-scenarios/network-links-step.md) of the
+[Network links step](../step-by-step-guide/network-links-step.md) of the
 scenario editor.
 
 !!! info "Coming soon"

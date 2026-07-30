@@ -14,7 +14,7 @@ Sympheny is a toolset for integrated energy system planning, suitable for scales
 
 ## What makes it unique?
 
-Sympheny supports you from initial data gathering to execution and detailed results, identifying optimal energy supply solutions with speed and precision. Advanced optimization algorithms analyze thousands of potential solutions, pinpointing the best options based on the planner's objectives. These algorithms solve energy balances for every hour of the year, considering complex site-specific supply and demand dynamics, interactions between various energy vectors, and the detailed techno-economic specifications of available technologies.
+Sympheny provides the data and the flexibility needed to quickly simulate scenarios that fit virtually any energy concept. Detailed results help identify optimal energy supply solutions with precision. Advanced optimization algorithms analyze thousands of potential solutions, pinpointing the best options based on the planner's objectives. These algorithms solve energy balances for every hour of the year, considering complex site-specific supply and demand dynamics, interactions between various energy vectors, and the detailed techno-economic specifications of available technologies.
 
 ## What can Sympheny be used for?
 
@@ -37,13 +37,16 @@ Sympheny allows for the combination of these optimizations and more, providing a
 
 ## Where should I start?
 
-The recommended starting point is the Example case, which is installed in every user's account upon first sign-in. From there, follow the steps below to sign in and complete your first walkthrough. Once you're familiar with the basics, explore the [how-to guides](../how-to/index.md) to learn the various features of the software and how to use them effectively.
+The recommended starting point is the Example case, which is installed in every user's account upon first sign-in. Work through these three pages in order to sign in, learn how the app is organized, and see what it can do:
 
-1. [Sign up and log in](sign-up-and-login.md)
-2. [Follow the quick start walkthrough](quickstart.md)
+1. [Sign up and log in](sign-up-and-log-in.md): create your account and sign in for the first time.
+2. [Structure](structure.md): how projects, analyses, scenarios, executions, and solutions relate to each other.
+3. [Quick start](quick-start.md): a guided walkthrough of the Example case, from opening the project to reading the results.
 
-For programmatic access, see the [REST API documentation](../../api/index.md).
+## Ready to build your own model?
+
+The [Step-by-step guide](../step-by-step-guide/index.md) takes you through the whole modeling process: creating a project and an analysis, working through the eight scenario steps, running the optimization, and exploring the results in the dashboard.
 
 ## What if I run into problems?
 
-You can reach out to us for support via the Help button located at the bottom-right corner of our website, or drop us an email at [support@sympheny.com](mailto:support@sympheny.com). Additionally, feel free to check out our [Troubleshooting and FAQs](../troubleshooting/index.md) sections for handy solutions.
+Check the [FAQs](../support/faqs.md) for answers to common questions, or [contact support](../support/index.md) to reach us directly.

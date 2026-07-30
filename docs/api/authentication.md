@@ -66,7 +66,7 @@ A missing, invalid, or expired token yields `401 Unauthorized`.
 ## Token lifetime
 
 Tokens expire `expires_in` seconds after they are issued and cannot be
-refreshed — request a new one the same way. Tokens can also be revoked before
+refreshed. Request a new one the same way. Tokens can also be revoked before
 their stated expiry, so treat any `401` as a signal to re-authenticate and
 retry once.
 
@@ -78,7 +78,7 @@ retry once.
 ## Keep credentials out of code
 
 Read credentials from environment variables or a local file excluded from
-version control — never commit them:
+version control. Never commit them:
 
 ```python
 import os
