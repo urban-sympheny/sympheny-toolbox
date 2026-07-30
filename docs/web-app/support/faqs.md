@@ -30,7 +30,7 @@ An optimization problem or model consists of the following elements:
 2. **Constraints and bounds** (e.g., max production per time step, max capacity)
 3. **Objective function** (e.g., total cost/profit, total emissions)
 
-A typical optimization problem starts by defining the variables in the model. In the case of Sympheny, the variables are technologies, energy carriers, energy networks, etc. Then, constraints of these variables, such as maximum capacity, seasonal operation, and charging/discharging behaviors, are defined. Finally, the objective functions are set.
+A typical optimization problem starts by defining the variables in the model. In the case of Sympheny, the variables are technologies, energy carriers, energy networks, etc. Then, constraints on these variables, such as maximum capacity, seasonal operation, and charging/discharging behaviors, are defined. Finally, the objective functions are set.
 
 Once the optimization problem is defined, it is solved mathematically to find the best set of values for all variables that minimize/maximize the objective function while satisfying all constraints in the model.
 
@@ -60,11 +60,11 @@ If installing a PV system is too expensive to be favored by the optimization whi
 
 ![Heat Pump and Chiller installed as a bivalent system](img/faqs-4.png)
 
-Yes, it's possible to use the waste heat of a cooling Technology candidate as an input for another Technology candidate (e.g., a Heat Pump). For example, when modeling heat recovery.
+Yes, it's possible to use the waste heat of a cooling Technology candidate as an input for another Technology candidate (e.g., a Heat Pump). This arrangement can be used when modeling heat recovery.
 
 ## When modeling solar panels, why is the capacity not what I expected?
 
-The capacity of the solar array depends on many factors. You can specify a fixed capacity to force the investment of the technology. You can specify a minimum energy production in kWh/year to ensure all of the available solar resource is used. Make sure that an export for electricity exists, to avoid a limit on the solar capacity based on electricity demand. Review the on-site resource profile for solar energy and make sure there is no units mistake. A small difference in expectations compared to results is often due to the efficiency of the solar PV technology, which may vary depending on panel and inverter model, shading, altitude, etc. Check out the section for [on-site resources](../step-by-step-guide/on-site-resources-step.md) for more information on how to model solar panels.
+The capacity of the solar array depends on many factors. You can specify a fixed capacity to force the investment of the technology. You can specify a minimum energy production in kWh/year to ensure all of the available solar resource is used. Make sure that an export for electricity exists, to avoid a limit on the solar capacity based on electricity demand. Review the on-site resource profile for solar energy and make sure there is no mistake in the units. A small difference in expectations compared to results is often due to the efficiency of the solar PV technology, which may vary depending on panel and inverter model, shading, altitude, etc. Check out the section for [on-site resources](../step-by-step-guide/on-site-resources-step.md) for more information on how to model solar panels.
 
 ## I set a fixed capacity, why is the technology capacity different in the results?
 

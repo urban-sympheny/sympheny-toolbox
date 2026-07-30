@@ -45,4 +45,4 @@ tags:
 | Variable Embodied CO2 | Variable embodied CO2 emitted, based on installed kW or total production. | kg-CO2/kW, kg-CO2/kWh/year | n/a |
 | Variable Captured CO2 | CO2 captured during operation, expressed per kWh of total input energy carrier of primary modes. | kg-CO2/kWh/year | n/a |
 
-Certain **advanced parameters** are not available to all plan users, but can be added through our add-on options. Contact our customer support team for a demo and to discuss how we could customize these options to your needs.
+Certain **advanced parameters** are not available to users on all plans, but can be added through our add-on options. Contact our customer support team for a demo and to discuss how we could customize these options to your needs.

@@ -16,7 +16,7 @@ of the demand profile:
 - **Building use** affects the shape of the profile. For example, an office building is
   generally closed on weekends and less occupied in summer, while a hospital operates
   at high capacity throughout the year.
-- **Building age or standard** is used to derive an energy intensity (kWh/m2/year), to
+- **Building age or standard** is used to derive an energy intensity (kWh/m2/year) to
   estimate annual demand in kWh from the energy reference area (m2). The SIA standards
   include values of peak load in kW. When you select SIA standards, profiles are
   slightly reshaped to match the annual demand in kWh and the peak load in kW.
@@ -36,9 +36,9 @@ building use:
     - Retail
     - Schools
     - Single-family house
-- Open-source data provided by
+- Open-source data from
   [Rutgers, The State University of New Jersey](https://data.mendeley.com/datasets/rfnp2d3kjp/1)
-  provided profile data for:
+  supplied the profile data for:
     - Hotel
     - Indoor swimming pool
     - Industry 2-shift fabricated metals

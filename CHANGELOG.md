@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Docs
+- Copy-editing pass over the whole web app section: sentence fragments joined or given a verb,
+  stray and missing commas fixed, subject/verb agreement corrected, and repeated wording removed.
+  Covers the overview, Getting started, the step-by-step guide, Concepts, Parameters, Advanced
+  workflows, FAQs, and the historical release notes.
+- US English is now the single spelling convention in the docs, matching the existing
+  "optimization"/"organization": "modelling"/"modelled" → "modeling"/"modeled", "labelled" →
+  "labeled", and "Reinitialise" → "Reinitialize". Also normalized "geojson" → "GeoJSON",
+  "Stand-by" → "Standby", "Time varying" → "Time-varying", "at log in" → "at login", and
+  "10kWh"/"10kW" → "10 kWh"/"10 kW".
+- Numbered instructions on the Energy demands step, Supply technologies step, and RAMP tool suite
+  pages render as one continuous list again. Their images and sub-lists were indented by three
+  spaces, which split each list into several `<ol>` elements that restarted the numbering at 1.
+- The Generate profile instructions on the Energy demands step page now follow the three steps the
+  dialog actually has (Select Type, Select Profile, Preview Profile) instead of four items, and
+  each screenshot sits under the step it shows.
 - The web app documentation is restructured, and the rewritten tree now replaces the previous
   `docs/web-app/` content. Getting started keeps only Sign up and log in, Structure, and Quick
   start; a new flat **Step-by-step guide** section holds the project and analysis pages, the eight

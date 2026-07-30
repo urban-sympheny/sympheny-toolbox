@@ -26,7 +26,7 @@ EnyTool acts as a gateway, linking simulation, optimization, and data layers acr
 | Empa | R&D partner | Research & development in digital twins, energy systems | Integration of R&D data models (for example, Digicities, GOES) | [empa.ch](https://www.empa.ch/) |
 | Planeto SA | Partner / software platform | District heating & cooling network design | Scenario generation for thermal networks | [planeto-energy.ch](https://planeto-energy.ch/) |
 | Ramp | Open-source tool | Synthetic multi-energy demand generation | Generate demand profiles where measured data is missing | [rampdemand.org](https://rampdemand.org/) |
-| Ramp Mobility | Open-source extension | Mobility & EV demand modelling | Integrate EV loads and transport demand | [rampdemand.org/mobility](https://rampdemand.org/) |
+| Ramp Mobility | Open-source extension | Mobility & EV demand modeling | Integrate EV loads and transport demand | [rampdemand.org/mobility](https://rampdemand.org/) |
 | JRC Solar (PVGIS) | Open data / research | Solar irradiation & PV potential data | Assess renewable generation potential | [joint-research-centre.ec.europa.eu](https://joint-research-centre.ec.europa.eu/) |
 | GeoAdmin (GWR data) | Open government data | Swiss federal geo & building data | Geospatial base data for Swiss projects | [data.geo.admin.ch](https://data.geo.admin.ch/) |
 
@@ -40,7 +40,7 @@ EnyTool integrates external services through standardized API connections and da
 - **GeoAdmin / GWR**: official geodata, cadastral and building registers
 - **JRC Solar**: European solar potential datasets
 
-### Modelling & simulation tools
+### Modeling & simulation tools
 
 - **Ramp / Ramp Mobility**: energy and mobility demand generation. See [RAMP tool suite](ramp-tool-suite.md).
 - **Planeto**: district heating & cooling network simulation

@@ -18,13 +18,13 @@ tags:
 
 ### How many buildings can I query?
 
-Each add-on subscription gives access to a specific number of building queries. The current add-on subscription packages are the following:
+Each add-on subscription gives access to a specific number of building queries. The current add-on subscription packages are as follows:
 
 - SEP Add-on Small: access to information for 1 to 1,000 buildings
 - SEP Add-on Medium: access to information for 1,000 to 50,000 buildings
 - SEP Add-on Large: access to information for 1,000 to 50,000 buildings
 
-The amount of remaining building queries according to the selected subscription can be read from the My Profile window.
+The number of remaining building queries according to the selected subscription can be read from the My Profile window.
 
 ### What type of data is available?
 
@@ -59,6 +59,6 @@ Now you can select the available resource area of your urban site and automatica
 
 ## New Help Center (user guide, tutorials, etc.)
 
-With this new portal it's now easier to navigate through all the documentation and resources available about Sympheny software.
+With this new portal, it's now easier to navigate through all the documentation and resources available about Sympheny software.
 
 ![Sympheny Help Center portal](img/2022-march-1.png)

@@ -20,7 +20,7 @@ To determine the EAC, start by calculating the capital recovery factor (CRF):
 
 ![Capital recovery factor formula](img/capital-recovery-factor-2.png)
 
-Where *i* is the [discount rate](discounted-cash-flow-analysis.md), and *n* is the
+Here, *i* is the [discount rate](discounted-cash-flow-analysis.md) and *n* is the
 number of years in a stage.
 
 Finally, the EAC is calculated using the CRF, which transforms the total NPC into an

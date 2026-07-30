@@ -18,5 +18,5 @@ Energy demands appear on the right side of the energy diagram, alongside exports
 
 
 !!! tip
-    During execution, all profiles are clustered, a proven method for reducing solving time without
+    During execution, all profiles are clustered using a proven method that reduces solving time without
     affecting the results. Hourly profiles in the results may therefore not have the exact same shape as the original energy demand profiles. See [Clustered profiles](clustered-profiles.md).

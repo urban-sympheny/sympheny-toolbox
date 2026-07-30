@@ -46,4 +46,4 @@ The energy hub diagram of your potential system appears at the bottom of each ta
 The colors of the technologies in the energy hub diagram are determined by the primary output energy carrier of the technology. You can define these colors in the [Energy carriers step](energy-carriers-step.md).
 
 !!! tip
-    The direction of the arrows in the energy hub diagram matches the direction of energy flows. A reversed energy demand (for example, a cooling demand) is shown as an arrow flowing away from the box representing that demand. Storages are the only technologies with bidirectional flows.
+    The direction of the arrows in the energy hub diagram matches the direction of energy flows. A reversed energy demand (for example, a cooling demand) is shown as an arrow flowing away from the box representing that demand. Storage technologies are the only technologies with bidirectional flows.

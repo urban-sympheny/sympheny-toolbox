@@ -14,13 +14,13 @@ Geolocate and organize all your projects at once on the same map. Order projects
 
 ## CO2 Capture Technology candidates
 
-Evaluate Technology candidates in your scenario optimization that are able to capture and/or emit CO2 in their operation. CO2 streams can also be modelled to consider more complex CCS (Carbon Capture and Storage) systems.
+Evaluate Technology candidates in your scenario optimization that are able to capture and/or emit CO2 in their operation. CO2 streams can also be modeled to consider more complex CCS (Carbon Capture and Storage) systems.
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/co2-capture-technologies.mp4"></video>
 
-## Upload and download geojson layers in/from the map
+## Upload and download GeoJSON layers in/from the map
 
-Add GIS datasets (geojson) with basic geometry, building, and infrastructure information to the map of your scenario. Download the same data (geojson) and the information included for each energy hub of your scenario.
+Add GIS datasets (GeoJSON) with basic geometry, building, and infrastructure information to the map of your scenario. Download the same data (GeoJSON) and the information included for each energy hub of your scenario.
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/geojson-layers-upload-download.mp4"></video>
 

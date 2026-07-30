@@ -28,7 +28,7 @@ The account type and license determine which rights are available to which users
 
 ## Download databases
 
-Downloading your database is useful when you want an overview of all your data, or need to do some post-processing or adjusting.
+Downloading your database is useful when you want an overview of all your data, or need to perform post-processing or make adjustments.
 
 To download your data:
 
@@ -47,7 +47,7 @@ To download your data:
 
 ### Conversion and storage technologies (scenario editor)
 
-While editing a scenario, you can upload single items to My User Database directly from the scenario editor (in Setup) by checking **Save the technology for future use?**.
+While editing a scenario, you can upload single items to My User Database directly from the scenario editor (in Setup) by selecting **Save the technology for future use?**
 
 ![Save the technology for future use checkbox](img/upload-databases-1.png)
 
@@ -275,7 +275,7 @@ When you upload data through the Excel upload, the data is in CHF.
 
 ## Templates
 
-Download the templates for the upload here:
+Download the upload templates here:
 
 ### Conversion technologies
 

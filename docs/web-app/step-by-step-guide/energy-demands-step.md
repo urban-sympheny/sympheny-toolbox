@@ -27,18 +27,17 @@ You have several options for creating energy demand profiles:
 
 Generate standard hourly energy demand profiles for buildings of different types. After clicking **Generate Profile**, a dialog opens where you specify the parameters of the profile. The process has three steps:
 
-![Generate profile dialog steps](img/energy-demands-step-3.png)
+1. **Select Type**: select the database to use, either Sympheny's database or your organization's database, then select a combination of demand type and building use to define the shape of the profile. This profile is normalized, meaning its total sum is 1 kWh/year. For more information on databases, see [Database Center](../advanced-workflows/database-center.md).
 
-1. **Database**: select the database to use, either Sympheny's database or your organization's database. For more information on databases, see [Database Center](../advanced-workflows/database-center.md).
-2. **Profile type**: select a combination of demand type and building use to define the shape of the profile. This profile is normalized, meaning its total sum is 1 kWh/year.
+    ![Select Type step of the Generate profile dialog](img/energy-demands-step-3.png)
 
-   ![Profile type selection](img/energy-demands-step-4.png)
+2. **Select Profile**: the normalized profile is multiplied by the annual energy demand in kWh/year. Enter this value directly as **Total Annual Demand**, or select a **Building Age or Standard** to get an estimated **Energy Intensity** in kWh/year/m², and specify the **Energy Reference Area** in m².
 
-3. **Energy use**: the normalized profile is multiplied by the annual energy demand in kWh/year. Enter this value directly as **Total Annual Demand**, or select a **Building Age or Standard** to get an estimated **Energy Intensity** in kWh/year/m², and specify the **Energy Reference Area** in m².
+    ![Select Profile step of the Generate profile dialog](img/energy-demands-step-4.png)
 
-   ![Energy use configuration](img/energy-demands-step-5.png)
+3. **Preview Profile**: review a statistical summary of the demand profile, including the source of the data used to generate it. For more detail on how profiles are generated and a list of available profiles, see the [demand profiles methodology](../concepts/demand-profiles-methodology.md).
 
-4. **Summary**: review a statistical summary of the demand profile, including the source of the data used to generate it. For more detail on how profiles are generated and a list of available profiles, see the [demand profiles methodology](../concepts/demand-profiles-methodology.md).
+    ![Preview Profile step of the Generate profile dialog](img/energy-demands-step-5.png)
 
 ## Upload profile
 
@@ -49,7 +48,7 @@ Download and edit this template (or any Sympheny demand profile) to make sure yo
 ![Upload profile dialog](img/energy-demands-step-6.png)
 
 !!! tip
-    Make sure your custom profile matches a Sympheny year. A Sympheny year starts at 00:00 on a Monday, January 1, and ends at 23:00 on December 31. 2018 is a good reference year, since it starts on a Monday and isn't a leap year.
+    Make sure your custom profile matches a Sympheny year. A Sympheny year starts at 00:00 on Monday, January 1, and ends at 23:00 on December 31. 2018 is a good reference year, since it starts on a Monday and isn't a leap year.
 
 ## Select saved
 

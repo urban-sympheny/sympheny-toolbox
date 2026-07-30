@@ -34,7 +34,7 @@ Execute, monitor, and get the results of your energy system optimization externa
 
 ## Receive example projects in your account
 
-The Sympheny team can send you project examples relevant to your type of project, to help you understand the modelling possibilities for your specific case.
+The Sympheny team can send you project examples relevant to your type of project to help you understand the modeling possibilities for your specific case.
 
 ## New plots of total investments in results dashboard
 

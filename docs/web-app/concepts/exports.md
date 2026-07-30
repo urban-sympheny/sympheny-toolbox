@@ -6,7 +6,7 @@ tags:
 
 # Exports
 
-Energy sold or sent outside the system. For example, feeding surplus solar electricity back into the grid. Exports are configured together with imports in the [Imports & exports step](../step-by-step-guide/imports-exports-step.md) of the scenario editor.
+Exports are energy sold or sent outside the system, such as surplus solar electricity fed back into the grid. Exports are configured together with imports in the [Imports & exports step](../step-by-step-guide/imports-exports-step.md) of the scenario editor.
 
 Exports appear on the right side of the energy diagram, alongside energy demands.
 

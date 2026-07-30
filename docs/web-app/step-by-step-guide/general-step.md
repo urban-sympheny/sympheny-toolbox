@@ -8,7 +8,7 @@ tags:
 
 ## Currency
 
-The currency shown in cost parameters and results. When you select a currency other than CHF, an [exchange rate](https://exchangeratesapi.io/) from CHF is applied to all economic data in the technology databases. All economic data in the databases, including user-defined data, is stored in CHF. For more information, see [General parameters](../parameters/general.md).
+This setting determines the currency shown in cost parameters and results. When you select a currency other than CHF, an [exchange rate](https://exchangeratesapi.io/) from CHF is applied to all economic data in the technology databases. All economic data in the databases, including user-defined data, is stored in CHF. For more information, see [General parameters](../parameters/general.md).
 
 ![Currency selection in the General step](img/general-step-1.png)
 

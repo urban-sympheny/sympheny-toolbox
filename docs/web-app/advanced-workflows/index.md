@@ -14,7 +14,7 @@ The [Database Center](database-center.md) gives you an overview of all your data
 
 ## EnyTool
 
-[EnyTool](enytool.md) connects the web app to partner tools and datasets across the Sympheny ecosystem, including electric vehicle demand profile modelling with the [RAMP tool suite](ramp-tool-suite.md).
+[EnyTool](enytool.md) connects the web app to partner tools and datasets across the Sympheny ecosystem, including electric vehicle demand profile modeling with the [RAMP tool suite](ramp-tool-suite.md).
 
 ## EnyFlow
 

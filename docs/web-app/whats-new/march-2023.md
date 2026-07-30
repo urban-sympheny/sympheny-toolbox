@@ -8,7 +8,7 @@ tags:
 
 ## Database Center
 
-Update or replace all the different types of databases of your organization or your user at once with an Excel file. You can also download all the databases as an Excel file. [Learn more](../advanced-workflows/database-center.md)
+Update or replace all the different database types for your organization or user account at once with an Excel file. You can also download all the databases as an Excel file. [Learn more](../advanced-workflows/database-center.md)
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/database-center.mp4"></video>
 
@@ -20,7 +20,7 @@ Share your projects with your colleagues or other users so you can collaborate w
 
 ## API documentation
 
-The documentation of how to use the Sympheny API in your own application is now available from the navigation bar of the Sympheny web app.
+Documentation on how to use the Sympheny API in your own application is now available from the navigation bar of the Sympheny web app.
 
 ![API documentation link in the Sympheny web app navigation bar](img/2023-march-1.png)
 
