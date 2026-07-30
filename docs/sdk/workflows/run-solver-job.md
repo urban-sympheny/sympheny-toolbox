@@ -4,16 +4,16 @@ tags:
   - workflow
 ---
 
-# Run a solver job
+# Run solver job
 
 Submit a scenario to the Sympheny solver and wait for the optimization to finish. This
-mirrors clicking **Execute** in the [web application](../../web-app/how-to/executing-scenarios.md),
+mirrors clicking **Execute** in the [web app](../../web-app/step-by-step-guide/execution.md),
 but scripted end to end.
 
 ## Prerequisites
 
-- A **scenario GUID** that is ready for execution — for example the one returned by
-  [Create a scenario from Excel](scenario-from-excel.md), or an existing scenario's GUID.
+- A **scenario GUID** that is ready for execution, for example the one returned by
+  [Create a scenario from Excel](create-scenario-from-excel.md), or an existing scenario's GUID.
 - Solver quota on your subscription. Check it with
   [`client.solver_jobs.usage()`](../reference/solver_jobs.md#method-solver_jobs-usage).
 
@@ -38,13 +38,13 @@ request = PostSolverJobExt(
 )
 ```
 
-- **`objective1` / `objective2`** — the optimization objectives (see
+- **`objective1` / `objective2`**: the optimization objectives (see
   [`ObjectiveFunction`](../reference/models/solver.md#model-ObjectiveFunction)). With two
   objectives the solver returns a Pareto front of `points` solutions.
-- **`temporal_resolution`** — how aggressively the 8760-hour year is
+- **`temporal_resolution`**: how aggressively the 8760-hour year is
   [clustered](../../web-app/concepts/clustered-profiles.md) before solving
   (`LOW`/`MEDIUM`/`HIGH`/`FULL`); lower is faster, coarser.
-- **`mip_gap`** — the optimality gap, in percent, at which the solver stops.
+- **`mip_gap`**: the optimality gap, in percent, at which the solver stops.
 
 !!! warning "`time_limit` is in minutes"
     `time_limit` is the solver's processing budget in **minutes** (queue time excluded),
@@ -79,7 +79,7 @@ optimization succeeded; `STOPPED`, `FAILED`, and `INVALID` are terminal failures
                 await asyncio.sleep(10)
 
             if job.status is not JobStatus.done:
-                raise RuntimeError(f"Job did not finish cleanly: {job.status} — {job.infeasibility_info}")
+                raise RuntimeError(f"Job did not finish cleanly ({job.status}): {job.infeasibility_info}")
             print("finished job", job_id)
 
 
@@ -108,7 +108,7 @@ optimization succeeded; `STOPPED`, `FAILED`, and `INVALID` are terminal failures
             time.sleep(10)
 
         if job.status is not JobStatus.done:
-            raise RuntimeError(f"Job did not finish cleanly: {job.status} — {job.infeasibility_info}")
+            raise RuntimeError(f"Job did not finish cleanly ({job.status}): {job.infeasibility_info}")
         print("finished job", job_id)
     ```
 
@@ -134,8 +134,8 @@ synchronous client; on the async client, use the submit-and-poll loop above.
 
 ## What to read next
 
-- [Download the results](download-results.md) — read the result file of the finished job.
-- [Solver jobs reference](../reference/solver_jobs.md) — every method on
+- [Download the results](download-results.md): read the result file of the finished job.
+- [Solver jobs reference](../reference/solver_jobs.md): every method on
   `client.solver_jobs`, including `list_for_scenarios`, `stop`, and `delete`.
-- [`POST /sense-api/ext/solver/jobs`](../../api/reference/solver-jobs.md#operation-post_solver_jobs_sense_api_ext_solver_jobs_post) —
+- [`POST /sense-api/ext/solver/jobs`](../../api/reference/solver-jobs.md#operation-post_solver_jobs_sense_api_ext_solver_jobs_post):
   the underlying REST operation.

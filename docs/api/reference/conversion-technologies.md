@@ -198,7 +198,7 @@ curl -X DELETE "https://eu-north-1-api.sympheny.com/sympheny-app/v2/scenarios/co
 
 | Status | Description | Schema |
 | --- | --- | --- |
-| 200 | OK | — |
+| 200 | OK | n/a |
 
 ## Get all conversion technologies by scenario v2 { #operation-getAllConversionTechnologiesByScenarioV2 }
 

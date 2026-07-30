@@ -2,3 +2,5 @@ sense_openapi.json
 webapp_openapi.json
 backoffice_openapi.json
 webapp_legacy_openapi.json
+webapp_manual_paths.json
+webapp_openapi_latest.json

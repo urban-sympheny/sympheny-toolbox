@@ -4,11 +4,11 @@ Sympheny helps you design and optimize multi-energy systems. Work with it throug
 
 <div class="grid cards" markdown>
 
--   :material-web:{ .lg .middle } __Web Application__
+-   :material-web:{ .lg .middle } __Web app__
 
     ---
 
-    Model and optimize multi-energy systems in the browser — projects, scenarios, and results.
+    Model and optimize multi-energy systems in the browser: projects, scenarios, and results.
 
     [:octicons-arrow-right-24: Open the guides](web-app/index.md)
 
@@ -24,7 +24,7 @@ Sympheny helps you design and optimize multi-energy systems. Work with it throug
 
     ---
 
-    `sympheny-toolbox` — a typed Python client with matching sync and async APIs.
+    `sympheny-toolbox`, a typed Python client with matching sync and async APIs.
 
     [:octicons-arrow-right-24: Get started](sdk/index.md)
 
@@ -32,7 +32,7 @@ Sympheny helps you design and optimize multi-energy systems. Work with it throug
 
     ---
 
-    Bring Sympheny into AI assistants and agents — the MCP server and machine-readable docs.
+    Bring Sympheny into AI assistants and agents with the MCP server and machine-readable docs.
 
     [:octicons-arrow-right-24: Learn more](ai/index.md)
 

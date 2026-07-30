@@ -4,21 +4,21 @@ tags:
   - workflow
 ---
 
-# Download the results
+# Download results
 
 Fetch the result file of a finished solver job, or link straight to its results dashboard
-in the [web application](../../web-app/how-to/scenario-results.md).
+in the [web app](../../web-app/step-by-step-guide/results-dashboard.md).
 
 ## Prerequisites
 
-- The **job id** of a finished job — the one returned by
+- The **job id** of a finished job, the one returned by
   [Run a solver job](run-solver-job.md). If you only have a scenario GUID, list its jobs
   with
   [`client.solver_jobs.list_for_scenarios([scenario_guid])`](../reference/solver_jobs.md#method-solver_jobs-list_for_scenarios).
 
 ## Get the result file URL
 
-A finished job carries an `output_file` — a presigned URL to a zip of result workbooks,
+A finished job carries an `output_file`: a presigned URL to a zip of result workbooks,
 one Excel file per Pareto solution. It is only populated once the job's status is `DONE`.
 
 === "Async"
@@ -88,9 +88,9 @@ Both helpers are built on the synchronous client and have no async twin.
 
 ## What to read next
 
-- [Scenario results](../../web-app/how-to/scenario-results.md) — how to read a results
+- [Results dashboard](../../web-app/step-by-step-guide/results-dashboard.md): how to read a results
   dashboard in the web app.
-- [Solver jobs reference](../reference/solver_jobs.md) — the full
+- [Solver jobs reference](../reference/solver_jobs.md): the full
   [`GetSolverJobExt`](../reference/models/solver.md#model-GetSolverJobExt) a job returns.
-- [`GET /sense-api/ext/solver/jobs/{id}`](../../api/reference/solver-jobs.md#operation-get_solver_job_sense_api_ext_solver_jobs__id__get) —
+- [`GET /sense-api/ext/solver/jobs/{id}`](../../api/reference/solver-jobs.md#operation-get_solver_job_sense_api_ext_solver_jobs__id__get):
   the underlying REST operation.

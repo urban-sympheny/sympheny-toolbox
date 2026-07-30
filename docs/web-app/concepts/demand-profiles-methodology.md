@@ -4,14 +4,14 @@ tags:
   - concepts
 ---
 
-# Sympheny demand profiles methodology
+# Demand profiles methodology
 
 The demand profiles in Sympheny are based on different sources depending on the
 building use. They are stored in three levels, each contributing to the overall shape
 of the demand profile:
 
 - **Demand type** refers to the energy carrier. Space heating and cooling depend on a
-  normalized weather profile, while the other profiles are stochastic — they depend on
+  normalized weather profile, while the other profiles are stochastic: they depend on
   the time of use of different appliances.
 - **Building use** affects the shape of the profile. For example, an office building is
   generally closed on weekends and less occupied in summer, while a hospital operates
@@ -22,7 +22,7 @@ of the demand profile:
   slightly reshaped to match the annual demand in kWh and the peak load in kW.
 
 In the database, all profiles are normalized for annual energy demand, meaning the sum
-of annual energy demand is 1 kWh. The profile is then "scaled" — multiplied by the
+of annual energy demand is 1 kWh. The profile is then "scaled": multiplied by the
 actual energy demand.
 
 The demand profiles in Sympheny are based on different sources depending on the

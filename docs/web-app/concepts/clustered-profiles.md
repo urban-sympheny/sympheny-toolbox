@@ -35,7 +35,7 @@ throughout the year. For instance, if 20 typical days are chosen, each of these 
 comprising 24 hours, is used to represent the entire year, filling in the 365 days.
 
 Each typical day is linked to specific data across all profiles, so the original days
-are not mixed and matched — a typical day consistently represents the same day across
+are not mixed and matched. A typical day consistently represents the same day across
 all profiles, rather than different days for different profiles. Each typical day
 consists of 24 hours multiplied by the number of profiles.
 
@@ -71,7 +71,7 @@ sum:
     - Max sum error: 0.5%
 
 The clustering process also ensures that the non-zero maximum and minimum values of
-each profile are preserved, and maintains the linear combination of the profiles — the
+each profile are preserved, and maintains the linear combination of the profiles: the
 peaks of two or more profiles occurring at the same time step are conserved.
 
 ## Clustered profiles metrics
