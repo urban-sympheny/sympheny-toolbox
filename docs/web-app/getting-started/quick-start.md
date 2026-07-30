@@ -72,7 +72,7 @@ The efficiency of this default solar PV is 18%, relative to the solar irradiance
 
 ![Setting solar PV efficiency and sizing to Optimize](img/quick-start-10.png)
 
-Unit commitment parameters are advanced parameters used for specific industrial equipment. You can edit parameters related to investment cost, maintenance, and embedded emissions.
+Unit commitment parameters are advanced parameters used for specific industrial equipment. You can edit parameters related to investment cost, maintenance, and embodied emissions.
 
 ![Advanced unit commitment and cost parameters](img/quick-start-11.png)
 
