@@ -93,11 +93,5 @@ class Transport:
         headers = self._bearer_headers()
         return self._client.request(method, path, params=params, json=json, headers=headers)
 
-    def request_unauthenticated(self, method: str, url: str, *, content: bytes | None = None) -> httpx.Response:
-        """Send a request without auth headers to an absolute URL (e.g. an S3 presigned URL)."""
-        response = self._client.request(method, url, content=content)
-        raise_for_status(response)
-        return response
-
     def close(self) -> None:
         self._client.close()

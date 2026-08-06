@@ -359,13 +359,12 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.energy_dem
 | `scenarioGuid` | path | string | yes |  |
 | `demand-guid` | path | string | yes |  |
 
-**Request body** (`EnergyDemandResponseDtoV2`)
+**Request body** (`EnergyDemandRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `energyDemandGuid` | string, nullable | no |  |
 | `energyCarrierName` | string | yes |  |
-| `hubs` | array of `HubResponseDto` | yes |  |
+| `hubs` | array of `HubRequestDtoPUTId` | yes |  |
 | `energyDemandName` | string | yes |  |
 | `energyCarrierGuid` | string | yes |  |
 | `demandSalePrice` | number, nullable | no |  |
@@ -390,7 +389,7 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.energy_dem
 | `energyDemandMetadataTotalAnnualDemand` | number, nullable | no |  |
 | `multiplicationFactorPreview` | integer (int32), nullable | no |  |
 | `multiplicationFactor` | integer (int32), nullable | no |  |
-| `reverse` | boolean | yes |  |
+| `reverse` | boolean, nullable | no |  |
 
 **Example request**
 
@@ -399,14 +398,10 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_2/scenarios/{sc
   -H "Authorization: Bearer $SYMPHENY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-  "energyDemandGuid": "string",
   "energyCarrierName": "string",
   "hubs": [
     {
-      "hubGuid": "string",
-      "hubName": "string",
-      "updated": "2026-01-01T00:00:00Z",
-      "created": "2026-01-01T00:00:00Z"
+      "hubGuid": "string"
     }
   ],
   "energyDemandName": "string",

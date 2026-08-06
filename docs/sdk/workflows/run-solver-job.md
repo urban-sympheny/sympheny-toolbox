@@ -12,8 +12,9 @@ but scripted end to end.
 
 ## Prerequisites
 
-- A **scenario GUID** that is ready for execution, for example the one returned by
-  [Create a scenario from Excel](create-scenario-from-excel.md), or an existing scenario's GUID.
+- A **scenario GUID** that is ready for execution, from
+  [`client.scenarios.create()`](../reference/scenarios.md#method-scenarios-create) or from a
+  scenario you modeled in the web app.
 - Solver quota on your subscription. Check it with
   [`client.solver_jobs.usage()`](../reference/solver_jobs.md#method-solver_jobs-usage).
 

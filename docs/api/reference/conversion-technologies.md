@@ -337,43 +337,38 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.conversion
 | --- | --- | --- | --- | --- |
 | `guid` | path | string | yes |  |
 
-**Request body** (`ConversionTechnologyDetailResponseDtoV2`)
+**Request body** (`ConversionTechnologyRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fixedInvestmentCost` | number, nullable | no |  |
-| `fixedOmCostChf` | number, nullable | no |  |
-| `variableOmCostPercent` | number, nullable | no |  |
-| `variableOmCostYear` | number, nullable | no |  |
-| `variableOmCost` | number, nullable | no |  |
-| `fixedEmbodiedCo2` | number, nullable | no |  |
-| `variableEmbodiedCo2` | number, nullable | no |  |
-| `variableEmittedCo2` | number, nullable | no |  |
-| `variableCapturedCo2` | number, nullable | no |  |
-| `fixedReplacementCost` | number, nullable | no |  |
-| `variableReplacementCostPercent` | number, nullable | no |  |
-| `variableReplacementCostCHF` | number, nullable | no |  |
-| `fixedSalvageValue` | number, nullable | no |  |
-| `variableSalvageValuePercent` | number, nullable | no |  |
-| `variableSalvageValueCHF` | number, nullable | no |  |
+| `fixedInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedOmCostChf` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostYear` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableEmittedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableCapturedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedReplacementCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedSalvageValue` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValuePercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValueCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `mustBeInstalledInHubs` | string | yes | One of: `canBeInstalled`, `mustBeInstalled`, `mustBeInstalledInAtLeastOneHub`. |
-| `conversionTechnologyGuid` | string, nullable | no |  |
 | `processName` | string | yes |  |
-| `exchangeCurrency` | string, nullable | no |  |
-| `exchangeRate` | number, nullable | no |  |
-| `variableInvestmentCost` | number, nullable | no |  |
+| `exchangeCurrency` | string | yes |  |
+| `exchangeRate` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `lifetime` | number | yes |  |
-| `created` | string (date-time), nullable | no |  |
-| `updated` | string (date-time), nullable | no |  |
-| `hubs` | array of `HubResponseDto` | yes |  |
-| `technologyModes` | array of `TechnologyModeResponseDtoV2`, nullable | no |  |
-| `category` | string, nullable | no |  |
+| `hubs` | array of `HubRequestDtoPUTId` | yes |  |
+| `technologyModes` | array of `TechnologyModeRequestDtoPUT` | yes |  |
 | `technologyCategory` | string, nullable | no |  |
 | `mutuallyExclusiveGroup` | string, nullable | no |  |
 | `notes` | string, nullable | no |  |
-| `virtual` | boolean | yes |  |
+| `virtual` | boolean, nullable | no |  |
 | `technologyOptional` | boolean, nullable | no |  |
-| `partOfTechnologyPackage` | boolean, nullable | no |  |
 | `technologyCapacity` | string, nullable | no |  |
 | `costComponents` | array of `AdvancedCostComponentResponseDto`, nullable | no |  |
 | `comesFromDb` | string, nullable | no |  |
@@ -402,20 +397,14 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/con
   "variableSalvageValuePercent": 0.0,
   "variableSalvageValueCHF": 0.0,
   "mustBeInstalledInHubs": "canBeInstalled",
-  "conversionTechnologyGuid": "string",
   "processName": "string",
   "exchangeCurrency": "string",
   "exchangeRate": 0.0,
   "variableInvestmentCost": 0.0,
   "lifetime": 0.0,
-  "created": "2026-01-01T00:00:00Z",
-  "updated": "2026-01-01T00:00:00Z",
   "hubs": [
     {
-      "hubGuid": "string",
-      "hubName": "string",
-      "updated": "2026-01-01T00:00:00Z",
-      "created": "2026-01-01T00:00:00Z"
+      "hubGuid": "string"
     }
   ],
   "technologyModes": [
@@ -428,16 +417,9 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/con
       "minPartLoad": 0.0,
       "minimumUpTime": 0,
       "minimumDownTime": 0,
-      "technologyModeGuid": "string",
       "inputEnergyCarriers": [
         {
           "energyCarrierGuid": "string",
-          "typeKey": "string",
-          "typeDisplayName": "string",
-          "subtypeKey": "string",
-          "subtypeDisplayName": "string",
-          "energyCarrierName": "string",
-          "colorHexCode": "string",
           "outputEfficiency": 0.0,
           "fixedInputShare": 0.0,
           "customOutputEfficiencyActivated": true,
@@ -448,21 +430,14 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/con
               "value": 0.0
             }
           ],
-          "inputShareProfileId": 0,
           "outputEfficiencyProfileId": 0,
-          "created": "2026-01-01T00:00:00Z",
+          "inputShareProfileId": 0,
           "primary": true
         }
       ],
       "outputEnergyCarriers": [
         {
           "energyCarrierGuid": "string",
-          "typeKey": "string",
-          "typeDisplayName": "string",
-          "subtypeKey": "string",
-          "subtypeDisplayName": "string",
-          "energyCarrierName": "string",
-          "colorHexCode": "string",
           "outputEfficiency": 0.0,
           "fixedInputShare": 0.0,
           "customOutputEfficiencyActivated": true,
@@ -473,9 +448,8 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/con
               "value": 0.0
             }
           ],
-          "inputShareProfileId": 0,
           "outputEfficiencyProfileId": 0,
-          "created": "2026-01-01T00:00:00Z",
+          "inputShareProfileId": 0,
           "primary": true
         }
       ],
@@ -488,13 +462,11 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/con
       "simultaneousOperation": true
     }
   ],
-  "category": "string",
   "technologyCategory": "string",
   "mutuallyExclusiveGroup": "string",
   "notes": "string",
   "virtual": true,
   "technologyOptional": true,
-  "partOfTechnologyPackage": true,
   "technologyCapacity": "string",
   "costComponents": [
     {
@@ -646,28 +618,28 @@ Needs at least 1 mode. Each mode needs at least 1 carrier INPUT and 1 carrier OU
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fixedInvestmentCost` | number, nullable | no |  |
-| `fixedOmCostChf` | number, nullable | no |  |
-| `variableOmCostPercent` | number, nullable | no |  |
-| `variableOmCostYear` | number, nullable | no |  |
-| `variableOmCost` | number, nullable | no |  |
-| `fixedEmbodiedCo2` | number, nullable | no |  |
-| `variableEmbodiedCo2` | number, nullable | no |  |
-| `variableEmittedCo2` | number, nullable | no |  |
-| `variableCapturedCo2` | number, nullable | no |  |
-| `fixedReplacementCost` | number, nullable | no |  |
-| `variableReplacementCostPercent` | number, nullable | no |  |
-| `variableReplacementCostCHF` | number, nullable | no |  |
-| `fixedSalvageValue` | number, nullable | no |  |
-| `variableSalvageValuePercent` | number, nullable | no |  |
-| `variableSalvageValueCHF` | number, nullable | no |  |
+| `fixedInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedOmCostChf` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostYear` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableEmittedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableCapturedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedReplacementCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedSalvageValue` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValuePercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValueCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `mustBeInstalledInHubs` | string | yes | One of: `canBeInstalled`, `mustBeInstalled`, `mustBeInstalledInAtLeastOneHub`. |
 | `processName` | string | yes |  |
-| `variableInvestmentCost` | number, nullable | no |  |
+| `variableInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `lifetime` | integer (int32) | yes |  |
 | `hubGuids` | array of string | yes |  |
 | `conversionTechnologyModes` | array of `TechnologyModeRequestDtoV2` | yes |  |
-| `virtual` | boolean | yes |  |
+| `virtual` | boolean, nullable | no |  |
 | `costComponents` | array of `AdvancedCostComponentRequestDto`, nullable | no |  |
 | `suggested` | boolean, nullable | no |  |
 | `technologyCategory` | string, nullable | no |  |
@@ -675,7 +647,7 @@ Needs at least 1 mode. Each mode needs at least 1 carrier INPUT and 1 carrier OU
 | `source` | string, nullable | no |  |
 | `comesFromDb` | string, nullable | no |  |
 | `exchangeCurrency` | string | yes |  |
-| `exchangeRate` | number | yes |  |
+| `exchangeRate` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `stages` | array of string (uuid) | yes |  |
 
 **Example request**

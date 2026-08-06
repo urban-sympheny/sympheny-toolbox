@@ -379,8 +379,8 @@ curl -X POST "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenario/{sc
       "timeOfUses": [
         "string"
       ],
-      "priceCategoryId": "ENERGY_DELIVERY",
-      "priceDimensionId": "ENERGY_PRICE_CHF_KWH"
+      "priceDimensionId": "ENERGY_PRICE_CHF_KWH",
+      "priceCategoryId": "ENERGY_DELIVERY"
     }
   ],
   "timeOfUses": [
@@ -518,7 +518,7 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.impex.upda
 | --- | --- | --- | --- | --- |
 | `guid` | path | string | yes |  |
 
-**Request body** (`ImportExportResponseDtoV2`)
+**Request body** (`ImportExportRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
@@ -533,14 +533,11 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.impex.upda
 | `co2IntensityKgCo2kWhCo2CompensationKgCo2kWh` | number, nullable | no |  |
 | `dynamicCo2ProfileId` | integer (int64), nullable | no |  |
 | `maximumHourlyEnergyAvailableProfileId` | integer (int64), nullable | no |  |
-| `energyCarrier` | `EnergyCarrierResponseDto` | yes |  |
+| `energyCarrier` | `EnergyCarrierRequestDtoPUTId` | yes |  |
 | `type` | string | yes |  |
-| `hubs` | array of `ImpexHubResponseDto` | yes |  |
-| `guid` | string, nullable | no |  |
-| `updated` | string (date-time), nullable | no |  |
-| `created` | string (date-time), nullable | no |  |
-| `priceComponents` | array of `AdvancedPriceComponentResponseDtoV2` | yes |  |
-| `timeOfUses` | array of `TimeOfUseResponseDto` | yes |  |
+| `hubs` | array of `ImpexHubRequestDtoPUT` | yes |  |
+| `priceComponents` | array of `AdvancedPriceComponentResponseDtoV2`, nullable | no |  |
+| `timeOfUses` | array of `TimeOfUseResponseDto`, nullable | no |  |
 | `product` | string, nullable | no |  |
 | `year` | integer (int32), nullable | no |  |
 | `notes` | string, nullable | no |  |
@@ -567,40 +564,14 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/imp
   "dynamicCo2ProfileId": 0,
   "maximumHourlyEnergyAvailableProfileId": 0,
   "energyCarrier": {
-    "energyCarrierGuid": "string",
-    "typeKey": "string",
-    "typeDisplayName": "string",
-    "subtypeKey": "string",
-    "subtypeDisplayName": "string",
-    "energyCarrierName": "string",
-    "colorHexCode": "string",
-    "fixedInputShare": 0.0,
-    "outputEfficiency": 0.0,
-    "customOutputEfficiencyActivated": true,
-    "customInputEfficiencyActivated": true,
-    "customSeasonalityValues": [
-      {
-        "month": "JANUARY",
-        "value": 0.0
-      }
-    ],
-    "outputEfficiencyProfileId": 0,
-    "created": "2026-01-01T00:00:00Z",
-    "primary": true
+    "energyCarrierGuid": "string"
   },
   "type": "string",
   "hubs": [
     {
-      "hubGuid": "string",
-      "hubName": "string",
-      "hubUpdated": "2026-01-01T00:00:00Z",
-      "hubCreated": "2026-01-01T00:00:00Z",
-      "impexGuid": "string"
+      "hubGuid": "string"
     }
   ],
-  "guid": "string",
-  "updated": "2026-01-01T00:00:00Z",
-  "created": "2026-01-01T00:00:00Z",
   "priceComponents": [
     {
       "name": "string",

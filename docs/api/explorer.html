@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <!--
-  Interactive REST API explorer (Scalar). Kept per maintainer verdict
-  2026-07-10 (was a Phase 5c time-boxed beta): the static Markdown reference
-  under api/reference/ stays canonical (searchable, cross-linked, in llms.txt);
-  this page adds live "try it" on top of the same specification.
+  Interactive REST API explorer (Scalar). A first-class page of the REST API
+  section: listed in the zensical.toml nav as "API Explorer" and linked from
+  api/index.md. The static Markdown reference under api/reference/ stays
+  canonical (searchable, cross-linked, in llms.txt); this page adds live
+  "try it" on top of the same specification.
 
   Static, non-Markdown page copied verbatim into the built site by Zensical.
+  The nav entry points at this file directly: a nav path Zensical cannot
+  resolve to a Markdown page is treated as a URL and rewritten relative to
+  each page. It opens in the same tab and has no site chrome, so the reader
+  returns with the browser's back button.
+
   Loads the Scalar API reference from a version-pinned CDN and renders the
   committed OpenAPI spec, served alongside this file as ./openapi.json (emitted
   by scripts/generate_api_reference.py, kept current by its --check in CI).
-
-  Not in the nav (nav entries can't open a new tab without custom JS, which
-  was tried 2026-07-10 and reverted — it interfered with content tabs); linked
-  as "API Explorer" from api/index.md, opening in a new tab via attr_list.
-  Removing it is a small delete: this file, the openapi.json copy, and the
-  copy step in scripts/generate_api_reference.py.
+  Removing it is a small delete: this file, the openapi.json copy, the copy
+  step in scripts/generate_api_reference.py, and the nav entry.
 -->
 <html lang="en">
   <head>

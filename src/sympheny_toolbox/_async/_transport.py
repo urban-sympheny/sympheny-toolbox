@@ -92,11 +92,5 @@ class AsyncTransport:
         headers = await self._bearer_headers()
         return await self._client.request(method, path, params=params, json=json, headers=headers)
 
-    async def request_unauthenticated(self, method: str, url: str, *, content: bytes | None = None) -> httpx.Response:
-        """Send a request without auth headers to an absolute URL (e.g. an S3 presigned URL)."""
-        response = await self._client.request(method, url, content=content)
-        raise_for_status(response)
-        return response
-
     async def aclose(self) -> None:
         await self._client.aclose()

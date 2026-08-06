@@ -6,19 +6,24 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from sympheny_toolbox._sync._transport import DEFAULT_BASE_URL, DEV_BASE_URL, Transport
-from sympheny_toolbox._sync.energy import EnergyCarriers, EnergyDemands, Impex, Profiles, SolarResources
-from sympheny_toolbox._sync.projects import Analyses, Projects
-from sympheny_toolbox._sync.scenarios import Hubs, Scenarios, Stages
-from sympheny_toolbox._sync.solver import SolverJobs, Users
-from sympheny_toolbox._sync.technologies import (
-    ConversionTechnologies,
-    IntraHubNetworkLinks,
-    NetworkLinks,
-    NetworkTechnologies,
-    StorageTechnologies,
-    TechnologyPackages,
-)
-from sympheny_toolbox._sync.unofficial import Unofficial
+from sympheny_toolbox._sync.analyses import Analyses
+from sympheny_toolbox._sync.conversion_technologies import ConversionTechnologies
+from sympheny_toolbox._sync.energy_carriers import EnergyCarriers
+from sympheny_toolbox._sync.energy_demands import EnergyDemands
+from sympheny_toolbox._sync.hubs import Hubs
+from sympheny_toolbox._sync.impex import Impex
+from sympheny_toolbox._sync.intra_hub_network_links import IntraHubNetworkLinks
+from sympheny_toolbox._sync.network_links import NetworkLinks
+from sympheny_toolbox._sync.network_technologies import NetworkTechnologies
+from sympheny_toolbox._sync.profiles import Profiles
+from sympheny_toolbox._sync.projects import Projects
+from sympheny_toolbox._sync.scenarios import Scenarios
+from sympheny_toolbox._sync.solar_resources import SolarResources
+from sympheny_toolbox._sync.solver_jobs import SolverJobs
+from sympheny_toolbox._sync.stages import Stages
+from sympheny_toolbox._sync.storage_technologies import StorageTechnologies
+from sympheny_toolbox._sync.technology_packages import TechnologyPackages
+from sympheny_toolbox._sync.users import Users
 
 
 if TYPE_CHECKING:
@@ -30,8 +35,7 @@ class Sympheny:
 
     Authenticates with email/password credentials against the Sympheny API and
     exposes the documented endpoints as typed resource groups, e.g.
-    ``client.projects.list()``. Undocumented endpoints live under
-    ``client.unofficial``.
+    ``client.projects.list()``.
 
     Args:
         username: Sympheny account email address.
@@ -73,7 +77,6 @@ class Sympheny:
         self.intra_hub_network_links = IntraHubNetworkLinks(self._transport)
         self.solver_jobs = SolverJobs(self._transport)
         self.users = Users(self._transport)
-        self.unofficial = Unofficial(self._transport)
 
     @property
     def base_url(self) -> str:

@@ -195,6 +195,13 @@ class ScenarioRequestDto(BaseModel):
     scenario_name: str = Field(..., alias="scenarioName", max_length=100, min_length=0)
 
 
+class ScenarioFrontendUrlResponseDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    frontend_url: str | None = Field(None, alias="frontendUrl")
+
+
 class StageRequestDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -210,8 +217,8 @@ class StageResponseDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    name: str
-    length: int
+    name: str | None = None
+    length: int | None = None
     interest_rate: float | None = Field(None, alias="interestRate")
     inflation_rate: float | None = Field(None, alias="inflationRate")
     index: int
@@ -226,6 +233,17 @@ class ResponseDtoListStageResponseDto(BaseModel):
     status: Status | None = None
 
 
+class StageCore(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    name: str
+    length: int
+    interest_rate: float | None = Field(None, alias="interestRate")
+    inflation_rate: float | None = Field(None, alias="inflationRate")
+    index: int
+
+
 class HubRequestDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -237,10 +255,10 @@ class HubResponseDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    hub_guid: str = Field(..., alias="hubGuid")
-    hub_name: str = Field(..., alias="hubName")
-    updated: AwareDatetime
-    created: AwareDatetime
+    hub_guid: str | None = Field(None, alias="hubGuid")
+    hub_name: str | None = Field(None, alias="hubName")
+    updated: AwareDatetime | None = None
+    created: AwareDatetime | None = None
 
 
 class ResponseDtoListFHubResponseDto(BaseModel):
@@ -249,6 +267,13 @@ class ResponseDtoListFHubResponseDto(BaseModel):
     )
     data: list[HubResponseDto] | None = None
     status: Status | None = None
+
+
+class HubRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    hub_name: str = Field(..., alias="hubName")
 
 
 class SubType(StrEnum):
@@ -324,6 +349,54 @@ class CustomSeasonalityResponseDto(BaseModel):
     value: float | None = None
 
 
+class SubtypeKey(StrEnum):
+    electricity = "ELECTRICITY"
+    electricity_renewable = "ELECTRICITY_RENEWABLE"
+    wood_chips = "WOOD_CHIPS"
+    wood_pellets = "WOOD_PELLETS"
+    coal = "COAL"
+    oil = "OIL"
+    gas = "GAS"
+    biogas = "BIOGAS"
+    hydrogen = "HYDROGEN"
+    hydrogen_pressurized = "HYDROGEN_PRESSURIZED"
+    cooling_1 = "COOLING_1"
+    cooling_2 = "COOLING_2"
+    cooling_3 = "COOLING_3"
+    cooling_4 = "COOLING_4"
+    ice = "ICE"
+    heat_1 = "HEAT_1"
+    heat_2 = "HEAT_2"
+    heat_3 = "HEAT_3"
+    heat_4 = "HEAT_4"
+    heat_5 = "HEAT_5"
+    heat_6 = "HEAT_6"
+    heat_7 = "HEAT_7"
+    heat_8 = "HEAT_8"
+    heat_9 = "HEAT_9"
+    heat_ambient = "HEAT_AMBIENT"
+    steam_low_pressure = "STEAM_LOW_PRESSURE"
+    solar_roof = "SOLAR_ROOF"
+    solar_facade = "SOLAR_FACADE"
+    solar_parapet = "SOLAR_PARAPET"
+    wind = "WIND"
+    hydro = "HYDRO"
+    biomass = "BIOMASS"
+    geothermal = "GEOTHERMAL"
+    tidal = "TIDAL"
+    process_waste_heat = "PROCESS_WASTE_HEAT"
+    custom = "CUSTOM"
+
+
+class EnergyCarrierRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    subtype_key: SubtypeKey = Field(..., alias="subtypeKey")
+    energy_carrier_name: str = Field(..., alias="energyCarrierName", max_length=100, min_length=0)
+    color_hex_code: str | None = Field(None, alias="colorHexCode")
+
+
 class MustBeInstalledInHubs(StrEnum):
     can_be_installed = "canBeInstalled"
     must_be_installed = "mustBeInstalled"
@@ -361,7 +434,13 @@ class AdvancedCostComponentRequestDto(BaseModel):
         None,
         pattern="FIXED_INVESTMENT_COSTS_CHF|VARIABLE_INVESTMENT_COSTS_CHF_KW|FIXED_OM_COSTS_CHF_YEAR|VARIABLE_OM_COSTS_CHF_KW_YEAR|VARIABLE_OM_COSTS_CHF_KWH|VARIABLE_OM_COSTS_PERCENT|NETWORK_RELATED_COST_CHF|PIPE|MEASUREMENT_CONTROL_REGULATION|PUMPS",
     )
-    lifetime: float | None = Field(None, ge=0.0)
+    lifetime: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     interest_rate: float | None = Field(None, alias="interestRate", ge=0.0, le=100.0)
     length: float | None = None
     complexity_factor: float | None = Field(None, alias="complexityFactor")
@@ -414,7 +493,13 @@ class AdvancedCostComponentResponseDto(BaseModel):
         None,
         pattern="FIXED_INVESTMENT_COSTS_CHF|VARIABLE_INVESTMENT_COSTS_CHF_KW|FIXED_OM_COSTS_CHF_YEAR|VARIABLE_OM_COSTS_CHF_KW_YEAR|VARIABLE_OM_COSTS_CHF_KWH|VARIABLE_OM_COSTS_PERCENT|NETWORK_RELATED_COST_CHF|PIPE|MEASUREMENT_CONTROL_REGULATION|PUMPS",
     )
-    lifetime: float | None = Field(None, ge=0.0)
+    lifetime: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     interest_rate: float | None = Field(None, alias="interestRate", ge=0.0, le=100.0)
     length: float | None = None
     complexity_factor: float | None = Field(None, alias="complexityFactor")
@@ -422,6 +507,42 @@ class AdvancedCostComponentResponseDto(BaseModel):
     number_of_pumps: float | None = Field(None, alias="numberOfPumps")
     guid: str | None = None
     category_id: str | None = Field(None, alias="categoryId")
+
+
+class HubRequestDtoPUTId(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    hub_guid: str = Field(..., alias="hubGuid")
+
+
+class ConversionCarrierRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
+    output_efficiency: float | None = Field(
+        None,
+        alias="outputEfficiency",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_input_share: float | None = Field(
+        None,
+        alias="fixedInputShare",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    custom_output_efficiency_activated: bool | None = Field(None, alias="customOutputEfficiencyActivated")
+    custom_input_share_activated: bool | None = Field(None, alias="customInputShareActivated")
+    custom_seasonality_values: list[CustomSeasonalityResponseDto] | None = Field(None, alias="customSeasonalityValues")
+    output_efficiency_profile_id: int | None = Field(None, alias="outputEfficiencyProfileId")
+    input_share_profile_id: int | None = Field(None, alias="inputShareProfileId")
+    primary: bool | None = None
 
 
 class TypeOfCharging(Enum):
@@ -442,10 +563,18 @@ class LocalTime(BaseModel):
     nano: int | None = None
 
 
-class MustBeInstalled(StrEnum):
+class EnergyCarrierRequestDtoPUTId(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
+
+
+class MustBeInstalled(Enum):
     can_be_installed = "canBeInstalled"
     must_be_installed = "mustBeInstalled"
     must_be_installed_in_at_least_one_hub = "mustBeInstalledInAtLeastOneHub"
+    none_type_none = None
 
 
 class TechnologyPackageRequestDtoV2(BaseModel):
@@ -454,19 +583,39 @@ class TechnologyPackageRequestDtoV2(BaseModel):
     )
     maximum_conversions: int | None = Field(None, alias="maximumConversions", ge=1)
     maximum_storages: int | None = Field(None, alias="maximumStorages", ge=1)
-    must_be_installed: MustBeInstalled = Field(..., alias="mustBeInstalled")
+    must_be_installed: MustBeInstalled | None = Field(None, alias="mustBeInstalled")
     mutually_exclusive_group: str | None = Field(None, alias="mutuallyExclusiveGroup")
     name: str
-    conversion_technologies: list[str] = Field(..., alias="conversionTechnologies")
-    storage_technologies: list[str] = Field(..., alias="storageTechnologies")
+    conversion_technologies: list[str] | None = Field(None, alias="conversionTechnologies")
+    storage_technologies: list[str] | None = Field(None, alias="storageTechnologies")
+
+
+class MustBeInstalled1(StrEnum):
+    can_be_installed = "canBeInstalled"
+    must_be_installed = "mustBeInstalled"
+    must_be_installed_in_at_least_one_hub = "mustBeInstalledInAtLeastOneHub"
 
 
 class GuidNameDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    guid: str
-    name: str
+    guid: str | None = None
+    name: str | None = None
+
+
+class MustBeInstalled2(Enum):
+    can_be_installed = "canBeInstalled"
+    must_be_installed = "mustBeInstalled"
+    must_be_installed_in_at_least_one_hub = "mustBeInstalledInAtLeastOneHub"
+    none_type_none = None
+
+
+class GuidDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    guid: str | None = None
 
 
 class TechnologyPackageResponseDto(BaseModel):
@@ -484,20 +633,111 @@ class NetworkTechnologyRequestDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    fixed_investment_cost: float | None = Field(None, alias="fixedInvestmentCost", ge=0.0)
-    variable_investment_cost: float | None = Field(None, alias="variableInvestmentCost", ge=0.0)
-    fixed_om_cost_chf: float | None = Field(None, alias="fixedOmCostChf", ge=0.0)
-    variable_om_cost_percent: float | None = Field(None, alias="variableOmCostPercent")
-    variable_om_cost_year: float | None = Field(None, alias="variableOmCostYear", ge=0.0)
-    variable_om_cost_ch_fk_wh: float | None = Field(None, alias="variableOmCostCHFkWh", ge=0.0)
-    fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2", ge=0.0)
-    variable_embodied_co2: float | None = Field(None, alias="variableEmbodiedCo2", ge=0.0)
-    fixed_replacement_cost: float | None = Field(None, alias="fixedReplacementCost")
-    variable_replacement_cost_percent: float | None = Field(None, alias="variableReplacementCostPercent")
-    variable_replacement_cost_chf: float | None = Field(None, alias="variableReplacementCostCHF")
-    fixed_salvage_value: float | None = Field(None, alias="fixedSalvageValue")
-    variable_salvage_value_percent: float | None = Field(None, alias="variableSalvageValuePercent")
-    variable_salvage_value_chf: float | None = Field(None, alias="variableSalvageValueCHF")
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_investment_cost: float | None = Field(
+        None,
+        alias="variableInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_year: float | None = Field(
+        None,
+        alias="variableOmCostYear",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_ch_fk_wh: float | None = Field(
+        None,
+        alias="variableOmCostCHFkWh",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float | None = Field(
+        None,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float | None = Field(
+        None,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     network_technology_name: str = Field(..., alias="networkTechnologyName", max_length=100, min_length=0)
     lifetime: int
     energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
@@ -509,7 +749,145 @@ class NetworkTechnologyRequestDtoV2(BaseModel):
     source: str | None = None
     comes_from_db: str | None = Field(None, alias="comesFromDb")
     exchange_currency: str | None = Field(None, alias="exchangeCurrency", max_length=3, min_length=0)
-    exchange_rate: float | None = Field(None, alias="exchangeRate", ge=0.0)
+    exchange_rate: float | None = Field(
+        None,
+        alias="exchangeRate",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    stages: list[UUID]
+
+
+class NetworkTechnologyRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_investment_cost: float | None = Field(
+        None,
+        alias="variableInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_year: float | None = Field(
+        None,
+        alias="variableOmCostYear",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_ch_fk_wh: float | None = Field(
+        None,
+        alias="variableOmCostCHFkWh",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float = Field(
+        ...,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float = Field(
+        ...,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    network_technology_name: str = Field(..., alias="networkTechnologyName")
+    exchange_currency: str = Field(..., alias="exchangeCurrency")
+    exchange_rate: float = Field(
+        ...,
+        alias="exchangeRate",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    lifetime: int
+    energy_carrier: EnergyCarrierRequestDtoPUTId = Field(..., alias="energyCarrier")
+    category: str
+    technology_category: str | None = Field(None, alias="technologyCategory")
+    notes: str | None = None
+    source: str | None = None
+    network_size: str | None = Field(None, alias="networkSize")
+    comes_from_db: str | None = Field(None, alias="comesFromDb")
+    cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
     stages: list[UUID]
 
 
@@ -522,45 +900,99 @@ class NetworkLinkRequestDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    installed_capacity: float | None = Field(None, alias="installedCapacity", ge=0.0)
-    maximum_capacity: float | None = Field(None, alias="maximumCapacity", ge=0.0)
+    installed_capacity: float | None = Field(
+        None,
+        alias="installedCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     name: str
-    length: float = Field(..., ge=0.0)
+    length: float = Field(
+        ...,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     technology_capacity: TechnologyCapacity = Field(..., alias="technologyCapacity")
-    uni_directional_flow: bool = Field(..., alias="uniDirectionalFlow")
-    must_be_installed: bool = Field(..., alias="mustBeInstalled")
+    uni_directional_flow: bool | None = Field(None, alias="uniDirectionalFlow")
+    must_be_installed: bool | None = Field(None, alias="mustBeInstalled")
     node1_guid: str = Field(..., alias="node1Guid")
     node2_guid: str = Field(..., alias="node2Guid")
     network_technology_guid: str = Field(..., alias="networkTechnologyGuid")
     cost_components: list[AdvancedCostComponentRequestDto] | None = Field(None, alias="costComponents")
-    minimum_capacity: float | None = Field(None, alias="minimumCapacity", ge=0.0)
-    network_loss: float = Field(..., alias="networkLoss", ge=0.0)
+    minimum_capacity: float | None = Field(
+        None,
+        alias="minimumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    network_loss: float | None = Field(
+        None,
+        alias="networkLoss",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     network_loss_profile_id: int | None = Field(None, alias="networkLossProfileId")
+
+
+class TechnologyCapacity1(Enum):
+    optimize = "optimize"
+    specify = "specify"
+    none_type_none = None
 
 
 class NetworkLinkResponseDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    installed_capacity: float | None = Field(None, alias="installedCapacity", ge=0.0)
-    maximum_capacity: float | None = Field(None, alias="maximumCapacity", ge=0.0)
+    installed_capacity: float | None = Field(
+        None,
+        alias="installedCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     network_link_guid: str | None = Field(None, alias="networkLinkGuid")
-    name: str
-    length: float
-    technology_capacity: TechnologyCapacity = Field(..., alias="technologyCapacity")
-    uni_directional_flow: bool = Field(..., alias="uniDirectionalFlow")
-    must_be_installed: bool = Field(..., alias="mustBeInstalled")
-    node1_guid: str = Field(..., alias="node1Guid")
-    node1_name: str = Field(..., alias="node1Name")
-    node2_guid: str = Field(..., alias="node2Guid")
-    node2_name: str = Field(..., alias="node2Name")
-    network_technology_name: str = Field(..., alias="networkTechnologyName")
-    network_technology_guid: str = Field(..., alias="networkTechnologyGuid")
-    cost_components: list[AdvancedCostComponentResponseDto] = Field(..., alias="costComponents")
+    name: str | None = None
+    length: float | None = None
+    technology_capacity: TechnologyCapacity1 | None = Field(None, alias="technologyCapacity")
+    uni_directional_flow: bool | None = Field(None, alias="uniDirectionalFlow")
+    must_be_installed: bool | None = Field(None, alias="mustBeInstalled")
+    node1_guid: str | None = Field(None, alias="node1Guid")
+    node1_name: str | None = Field(None, alias="node1Name")
+    node2_guid: str | None = Field(None, alias="node2Guid")
+    node2_name: str | None = Field(None, alias="node2Name")
+    network_technology_name: str | None = Field(None, alias="networkTechnologyName")
+    network_technology_guid: str | None = Field(None, alias="networkTechnologyGuid")
+    cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
     created: AwareDatetime | None = None
     updated: AwareDatetime | None = None
     minimum_capacity: float | None = Field(None, alias="minimumCapacity")
-    network_loss: float = Field(..., alias="networkLoss")
+    network_loss: float | None = Field(None, alias="networkLoss")
     network_loss_profile_id: int | None = Field(None, alias="networkLossProfileId")
 
 
@@ -572,7 +1004,69 @@ class ResponseDtoListNetworkLinkResponseDtoV2(BaseModel):
     status: Status | None = None
 
 
-class TechnologyCapacity2(Enum):
+class TechnologyCapacity2(StrEnum):
+    optimize = "optimize"
+    specify = "specify"
+
+
+class NetworkLinkRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    installed_capacity: float | None = Field(
+        None,
+        alias="installedCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    name: str
+    length: float = Field(
+        ...,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    technology_capacity: TechnologyCapacity2 = Field(..., alias="technologyCapacity")
+    uni_directional_flow: bool | None = Field(None, alias="uniDirectionalFlow")
+    must_be_installed: bool | None = Field(None, alias="mustBeInstalled")
+    node1_guid: str = Field(..., alias="node1Guid")
+    node1_name: str = Field(..., alias="node1Name")
+    node2_guid: str = Field(..., alias="node2Guid")
+    node2_name: str = Field(..., alias="node2Name")
+    network_technology_name: str = Field(..., alias="networkTechnologyName")
+    network_technology_guid: str = Field(..., alias="networkTechnologyGuid")
+    cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
+    minimum_capacity: float | None = Field(
+        None,
+        alias="minimumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    network_loss: float | None = Field(
+        None,
+        alias="networkLoss",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    network_loss_profile_id: int | None = Field(None, alias="networkLossProfileId")
+
+
+class TechnologyCapacity3(Enum):
     optimize = "optimize"
     specify = "specify"
     none_type_none = None
@@ -584,7 +1078,7 @@ class NetworkLinkResponseDto(BaseModel):
     )
     network_link_guid: str | None = Field(None, alias="networkLinkGuid")
     length: float | None = None
-    technology_capacity: TechnologyCapacity2 | None = Field(None, alias="technologyCapacity")
+    technology_capacity: TechnologyCapacity3 | None = Field(None, alias="technologyCapacity")
     installed_capacity: float | None = Field(None, alias="installedCapacity")
     uni_directional_flow: bool | None = Field(None, alias="uniDirectionalFlow")
     must_be_installed: bool | None = Field(None, alias="mustBeInstalled")
@@ -610,6 +1104,20 @@ class IntraHubNetworkLinkRequestDto(BaseModel):
     output_energy_carrier_guid: str = Field(..., alias="outputEnergyCarrierGuid")
     hub_guids: list[str] = Field(..., alias="hubGuids")
     advanced_cost_components: list[AdvancedCostComponentRequestDto] | None = Field(None, alias="advancedCostComponents")
+    stages: list[UUID]
+
+
+class IntraHubNetworkLinkRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    name: str
+    network_loss: float | None = Field(None, alias="networkLoss")
+    fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2")
+    input_energy_carrier: EnergyCarrierRequestDtoPUTId = Field(..., alias="inputEnergyCarrier")
+    output_energy_carrier: EnergyCarrierRequestDtoPUTId = Field(..., alias="outputEnergyCarrier")
+    hubs: list[HubRequestDtoPUTId]
+    advanced_cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="advancedCostComponents")
     stages: list[UUID]
 
 
@@ -646,20 +1154,20 @@ class Type2(Enum):
     none_type_none = None
 
 
+class PriceDimensionId(Enum):
+    energy_price_chf_kwh = "ENERGY_PRICE_CHF_KWH"
+    capacity_price_chf_kw_month = "CAPACITY_PRICE_CHF_KW_MONTH"
+    capacity_price_chf_kw_year = "CAPACITY_PRICE_CHF_KW_YEAR"
+    fixed_om_price_chf_year = "FIXED_OM_PRICE_CHF_YEAR"
+    none_type_none = None
+
+
 class PriceCategoryId(Enum):
     energy_delivery = "ENERGY_DELIVERY"
     network_use = "NETWORK_USE"
     taxes = "TAXES"
     refunds_and_rebates = "REFUNDS_AND_REBATES"
     total = "TOTAL"
-    none_type_none = None
-
-
-class PriceDimensionId(Enum):
-    energy_price_chf_kwh = "ENERGY_PRICE_CHF_KWH"
-    capacity_price_chf_kw_month = "CAPACITY_PRICE_CHF_KW_MONTH"
-    capacity_price_chf_kw_year = "CAPACITY_PRICE_CHF_KW_YEAR"
-    fixed_om_price_chf_year = "FIXED_OM_PRICE_CHF_YEAR"
     none_type_none = None
 
 
@@ -673,8 +1181,8 @@ class AdvancedPriceComponentRequestDtoV2(BaseModel):
     price_dimension: PriceDimension = Field(..., alias="priceDimension")
     type: Type2 | None = None
     time_of_uses: list[str] | None = Field(None, alias="timeOfUses")
-    price_category_id: PriceCategoryId | None = Field(None, alias="priceCategoryId")
     price_dimension_id: PriceDimensionId | None = Field(None, alias="priceDimensionId")
+    price_category_id: PriceCategoryId | None = Field(None, alias="priceCategoryId")
 
 
 class TimeOfUseRequestDto(BaseModel):
@@ -692,10 +1200,10 @@ class ImpexHubResponseDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    hub_guid: str = Field(..., alias="hubGuid")
-    hub_name: str = Field(..., alias="hubName")
-    hub_updated: AwareDatetime = Field(..., alias="hubUpdated")
-    hub_created: AwareDatetime = Field(..., alias="hubCreated")
+    hub_guid: str | None = Field(None, alias="hubGuid")
+    hub_name: str | None = Field(None, alias="hubName")
+    hub_updated: AwareDatetime | None = Field(None, alias="hubUpdated")
+    hub_created: AwareDatetime | None = Field(None, alias="hubCreated")
     impex_guid: str | None = Field(None, alias="impexGuid")
 
 
@@ -723,6 +1231,13 @@ class TimeOfUseResponseDto(BaseModel):
     days: list[str] | None = None
     start_time: str | None = Field(None, alias="startTime")
     end_time: str | None = Field(None, alias="endTime")
+
+
+class ImpexHubRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    hub_guid: str = Field(..., alias="hubGuid")
 
 
 class ResponseDtoStatus(BaseModel):
@@ -762,6 +1277,14 @@ class ProfileDetailsResponseDto(BaseModel):
         populate_by_name=True,
     )
     id: int | None = None
+    name: str
+    values: list[ProfilePeriodValueDto] | None = None
+
+
+class ProfileRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
     name: str
     values: list[ProfilePeriodValueDto]
 
@@ -914,13 +1437,13 @@ class EnergyDemandResponseDtoV2(BaseModel):
         populate_by_name=True,
     )
     energy_demand_guid: str | None = Field(None, alias="energyDemandGuid")
-    energy_carrier_name: str = Field(..., alias="energyCarrierName")
-    hubs: list[HubResponseDto]
-    energy_demand_name: str = Field(..., alias="energyDemandName")
-    energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
+    energy_carrier_name: str | None = Field(None, alias="energyCarrierName")
+    hubs: list[HubResponseDto] | None = None
+    energy_demand_name: str | None = Field(None, alias="energyDemandName")
+    energy_carrier_guid: str | None = Field(None, alias="energyCarrierGuid")
     demand_sale_price: float | None = Field(None, alias="demandSalePrice")
-    stages: list[UUID]
-    demand_profile_id: int = Field(..., alias="demandProfileId")
+    stages: list[UUID] | None = None
+    demand_profile_id: int | None = Field(None, alias="demandProfileId")
     demand_scaling_factor: float | None = Field(None, alias="demandScalingFactor")
     demand_sale_price_profile_id: int | None = Field(None, alias="demandSalePriceProfileId")
     demand_sale_price_scaling_factor: float | None = Field(None, alias="demandSalePriceScalingFactor")
@@ -942,7 +1465,7 @@ class EnergyDemandResponseDtoV2(BaseModel):
     energy_demand_metadata_total_annual_demand: float | None = Field(None, alias="energyDemandMetadataTotalAnnualDemand")
     multiplication_factor_preview: int | None = Field(None, alias="multiplicationFactorPreview")
     multiplication_factor: int | None = Field(None, alias="multiplicationFactor")
-    reverse: bool
+    reverse: bool | None = None
 
 
 class ResponseDtoListEnergyDemandResponseDtoV2(BaseModel):
@@ -965,6 +1488,41 @@ class EnergyDemandDetailResponseDtoV2(BaseModel):
     demand_sale_price: float | None = Field(None, alias="demandSalePrice")
     stages: list[UUID] | None = None
     demand_profile_id: int | None = Field(None, alias="demandProfileId")
+    demand_scaling_factor: float | None = Field(None, alias="demandScalingFactor")
+    demand_sale_price_profile_id: int | None = Field(None, alias="demandSalePriceProfileId")
+    demand_sale_price_scaling_factor: float | None = Field(None, alias="demandSalePriceScalingFactor")
+    energy_demand_user_saved_metadata_guid: str | None = Field(None, alias="energyDemandUserSavedMetadataGuid")
+    energy_demand_user_saved_metadata_name: str | None = Field(None, alias="energyDemandUserSavedMetadataName")
+    energy_demand_user_saved_metadata_reference_area: float | None = Field(None, alias="energyDemandUserSavedMetadataReferenceArea")
+    scaling_factor: float | None = Field(None, alias="scalingFactor")
+    energy_demand_metadata_guid: str | None = Field(None, alias="energyDemandMetadataGuid")
+    energy_demand_metadata_name: str | None = Field(None, alias="energyDemandMetadataName")
+    energy_demand_metadata_db_organization: str | None = Field(None, alias="energyDemandMetadataDbOrganization")
+    energy_demand_metadata_type: EnergyDemandMetadataType | None = Field(None, alias="energyDemandMetadataType")
+    energy_demand_metadata_building_type: EnergyDemandMetadataBuildingType | None = Field(None, alias="energyDemandMetadataBuildingType")
+    energy_demand_metadata_building_age: EnergyDemandMetadataBuildingAge | None = Field(None, alias="energyDemandMetadataBuildingAge")
+    energy_demand_metadata_option: EnergyDemandMetadataOption | None = Field(None, alias="energyDemandMetadataOption")
+    energy_demand_metadata_referenced_area_m2: float | None = Field(None, alias="energyDemandMetadataReferencedAreaM2")
+    energy_demand_metadata_specific_energy_demand_value_k_wh_m2: float | None = Field(
+        None, alias="energyDemandMetadataSpecificEnergyDemandValueKWhM2"
+    )
+    energy_demand_metadata_total_annual_demand: float | None = Field(None, alias="energyDemandMetadataTotalAnnualDemand")
+    multiplication_factor_preview: int | None = Field(None, alias="multiplicationFactorPreview")
+    multiplication_factor: int | None = Field(None, alias="multiplicationFactor")
+    reverse: bool | None = None
+
+
+class EnergyDemandRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    energy_carrier_name: str = Field(..., alias="energyCarrierName")
+    hubs: list[HubRequestDtoPUTId]
+    energy_demand_name: str = Field(..., alias="energyDemandName")
+    energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
+    demand_sale_price: float | None = Field(None, alias="demandSalePrice")
+    stages: list[UUID]
+    demand_profile_id: int = Field(..., alias="demandProfileId")
     demand_scaling_factor: float | None = Field(None, alias="demandScalingFactor")
     demand_sale_price_profile_id: int | None = Field(None, alias="demandSalePriceProfileId")
     demand_sale_price_scaling_factor: float | None = Field(None, alias="demandSalePriceScalingFactor")
@@ -1031,27 +1589,70 @@ class SolarOnSiteResourcesHubRequestDtoV2(BaseModel):
         populate_by_name=True,
     )
     hub_guid: str = Field(..., alias="hubGuid")
-    available_solar_collector_area: float = Field(..., alias="availableSolarCollectorArea", gt=0.0)
+    available_solar_collector_area: float = Field(
+        ...,
+        alias="availableSolarCollectorArea",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        gt=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     available_resource_type: AvailableResourceType = Field(..., alias="availableResourceType")
 
 
-class IrradianceProfileType(StrEnum):
+class IrradianceProfileType(Enum):
     generated = "GENERATED"
     uploaded = "UPLOADED"
     saved = "SAVED"
+    none_type_none = None
+
+
+class AvailableResourceType1(Enum):
+    area = "Area"
+    generic = "Generic"
+    power = "Power"
+    none_type_none = None
 
 
 class HubSolarOnSiteResourceResponseDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    hub_name: str = Field(..., alias="hubName")
+    hub_name: str | None = Field(None, alias="hubName")
+    hub_guid: str | None = Field(None, alias="hubGuid")
+    available_solar_collector_area: float | None = Field(None, alias="availableSolarCollectorArea")
+    available_resource_type: AvailableResourceType1 | None = Field(None, alias="availableResourceType")
+
+
+class IrradianceProfileType1(StrEnum):
+    generated = "GENERATED"
+    uploaded = "UPLOADED"
+    saved = "SAVED"
+
+
+class AvailableResourceType2(StrEnum):
+    area = "Area"
+    generic = "Generic"
+    power = "Power"
+
+
+class HubSolarOnSiteResourceRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
     hub_guid: str = Field(..., alias="hubGuid")
-    available_solar_collector_area: float = Field(..., alias="availableSolarCollectorArea")
-    available_resource_type: AvailableResourceType = Field(..., alias="availableResourceType")
+    available_solar_collector_area: float = Field(
+        ...,
+        alias="availableSolarCollectorArea",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        gt=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    available_resource_type: AvailableResourceType2 = Field(..., alias="availableResourceType")
 
 
-class IrradianceProfileType1(Enum):
+class IrradianceProfileType2(Enum):
     generated = "GENERATED"
     uploaded = "UPLOADED"
     saved = "SAVED"
@@ -1404,6 +2005,14 @@ class ResponseDtoScenarioResponseDto(BaseModel):
     status: Status | None = None
 
 
+class ResponseDtoScenarioFrontendUrlResponseDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: ScenarioFrontendUrlResponseDto | None = None
+    status: Status | None = None
+
+
 class ResponseDtoListFScenarioResponseDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -1432,20 +2041,20 @@ class EnergyCarrierResponseDto(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
-    type_key: str = Field(..., alias="typeKey")
-    type_display_name: str = Field(..., alias="typeDisplayName")
-    subtype_key: str = Field(..., alias="subtypeKey")
-    subtype_display_name: str = Field(..., alias="subtypeDisplayName")
-    energy_carrier_name: str = Field(..., alias="energyCarrierName")
-    color_hex_code: str = Field(..., alias="colorHexCode")
+    energy_carrier_guid: str | None = Field(None, alias="energyCarrierGuid")
+    type_key: str | None = Field(None, alias="typeKey")
+    type_display_name: str | None = Field(None, alias="typeDisplayName")
+    subtype_key: str | None = Field(None, alias="subtypeKey")
+    subtype_display_name: str | None = Field(None, alias="subtypeDisplayName")
+    energy_carrier_name: str | None = Field(None, alias="energyCarrierName")
+    color_hex_code: str | None = Field(None, alias="colorHexCode")
     fixed_input_share: float | None = Field(None, alias="fixedInputShare")
     output_efficiency: float | None = Field(None, alias="outputEfficiency")
-    custom_output_efficiency_activated: bool = Field(..., alias="customOutputEfficiencyActivated")
-    custom_input_efficiency_activated: bool = Field(..., alias="customInputEfficiencyActivated")
+    custom_output_efficiency_activated: bool | None = Field(None, alias="customOutputEfficiencyActivated")
+    custom_input_efficiency_activated: bool | None = Field(None, alias="customInputEfficiencyActivated")
     custom_seasonality_values: list[CustomSeasonalityResponseDto] | None = Field(None, alias="customSeasonalityValues")
     output_efficiency_profile_id: int | None = Field(None, alias="outputEfficiencyProfileId")
-    created: AwareDatetime
+    created: AwareDatetime | None = None
     primary: bool | None = None
 
 
@@ -1461,8 +2070,22 @@ class ConversionCarrierRequestDtoV2(BaseModel):
         populate_by_name=True,
     )
     energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
-    fixed_input_share: float = Field(..., alias="fixedInputShare", ge=0.0)
-    output_efficiency: float = Field(..., alias="outputEfficiency", ge=0.0)
+    fixed_input_share: float | None = Field(
+        None,
+        alias="fixedInputShare",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    output_efficiency: float | None = Field(
+        None,
+        alias="outputEfficiency",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     custom_input_share_activated: bool | None = Field(None, alias="customInputShareActivated")
     custom_output_efficiency_activated: bool | None = Field(None, alias="customOutputEfficiencyActivated")
     input_share_profile_id: int | None = Field(None, alias="inputShareProfileId")
@@ -1476,12 +2099,52 @@ class TechnologyModeResponseDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    capacity: float | None = Field(None, ge=0.0)
-    minimum_annual_output: float | None = Field(None, alias="minimumAnnualOutput", ge=0.0)
-    maximum_annual_output: float | None = Field(None, alias="maximumAnnualOutput", ge=0.0)
-    curtailment_limitation: float | None = Field(None, alias="curtailmentLimitation", ge=0.0)
-    peak_power: float | None = Field(None, alias="peakPower")
-    min_part_load: float | None = Field(None, alias="minPartLoad", ge=0.0, le=100.0)
+    capacity: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_annual_output: float | None = Field(
+        None,
+        alias="minimumAnnualOutput",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_annual_output: float | None = Field(
+        None,
+        alias="maximumAnnualOutput",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    curtailment_limitation: float | None = Field(
+        None,
+        alias="curtailmentLimitation",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    peak_power: float | None = Field(
+        None,
+        alias="peakPower",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    min_part_load: float | None = Field(
+        None,
+        alias="minPartLoad",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=100.0,
+        multiple_of=1e-05,
+    )
     minimum_up_time: int | None = Field(None, alias="minimumUpTime", ge=1, le=8760)
     minimum_down_time: int | None = Field(None, alias="minimumDownTime", ge=1, le=8760)
     technology_mode_guid: str | None = Field(None, alias="technologyModeGuid")
@@ -1500,74 +2163,366 @@ class ConversionTechnologyDetailResponseDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    fixed_investment_cost: float | None = Field(None, alias="fixedInvestmentCost", ge=0.0)
-    fixed_om_cost_chf: float | None = Field(None, alias="fixedOmCostChf", ge=0.0)
-    variable_om_cost_percent: float | None = Field(None, alias="variableOmCostPercent")
-    variable_om_cost_year: float | None = Field(None, alias="variableOmCostYear", ge=0.0)
-    variable_om_cost: float | None = Field(None, alias="variableOmCost", ge=0.0)
-    fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2", ge=0.0)
-    variable_embodied_co2: float | None = Field(None, alias="variableEmbodiedCo2", ge=0.0)
-    variable_emitted_co2: float | None = Field(None, alias="variableEmittedCo2", ge=0.0)
-    variable_captured_co2: float | None = Field(None, alias="variableCapturedCo2", ge=0.0)
-    fixed_replacement_cost: float | None = Field(None, alias="fixedReplacementCost", ge=0.0)
-    variable_replacement_cost_percent: float | None = Field(None, alias="variableReplacementCostPercent", ge=0.0)
-    variable_replacement_cost_chf: float | None = Field(None, alias="variableReplacementCostCHF", ge=0.0)
-    fixed_salvage_value: float | None = Field(None, alias="fixedSalvageValue", ge=0.0)
-    variable_salvage_value_percent: float | None = Field(None, alias="variableSalvageValuePercent", ge=0.0)
-    variable_salvage_value_chf: float | None = Field(None, alias="variableSalvageValueCHF", ge=0.0)
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_year: float | None = Field(
+        None,
+        alias="variableOmCostYear",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost: float | None = Field(
+        None,
+        alias="variableOmCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_emitted_co2: float | None = Field(
+        None,
+        alias="variableEmittedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_captured_co2: float | None = Field(
+        None,
+        alias="variableCapturedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float | None = Field(
+        None,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float | None = Field(
+        None,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     must_be_installed_in_hubs: MustBeInstalledInHubs2 = Field(..., alias="mustBeInstalledInHubs")
     conversion_technology_guid: str | None = Field(None, alias="conversionTechnologyGuid")
-    process_name: str = Field(..., alias="processName")
+    process_name: str | None = Field(None, alias="processName")
     exchange_currency: str | None = Field(None, alias="exchangeCurrency")
     exchange_rate: float | None = Field(None, alias="exchangeRate")
     variable_investment_cost: float | None = Field(None, alias="variableInvestmentCost")
-    lifetime: float
+    lifetime: float | None = None
     created: AwareDatetime | None = None
     updated: AwareDatetime | None = None
-    hubs: list[HubResponseDto]
+    hubs: list[HubResponseDto] | None = None
     technology_modes: list[TechnologyModeResponseDtoV2] | None = Field(None, alias="technologyModes")
     category: str | None = None
     technology_category: str | None = Field(None, alias="technologyCategory")
     mutually_exclusive_group: str | None = Field(None, alias="mutuallyExclusiveGroup")
     notes: str | None = None
-    virtual: bool
+    virtual: bool | None = None
     technology_optional: bool | None = Field(None, alias="technologyOptional")
     part_of_technology_package: bool | None = Field(None, alias="partOfTechnologyPackage")
     technology_capacity: str | None = Field(None, alias="technologyCapacity")
     cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
     comes_from_db: str | None = Field(None, alias="comesFromDb")
-    stages: list[UUID]
+    stages: list[UUID] | None = None
+
+
+class TechnologyModeRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    capacity: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_annual_output: float | None = Field(
+        None,
+        alias="minimumAnnualOutput",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_annual_output: float | None = Field(
+        None,
+        alias="maximumAnnualOutput",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    curtailment_limitation: float | None = Field(
+        None,
+        alias="curtailmentLimitation",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    peak_power: float | None = Field(
+        None,
+        alias="peakPower",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    min_part_load: float | None = Field(
+        None,
+        alias="minPartLoad",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=100.0,
+        multiple_of=1e-05,
+    )
+    minimum_up_time: int | None = Field(None, alias="minimumUpTime", ge=1, le=8760)
+    minimum_down_time: int | None = Field(None, alias="minimumDownTime", ge=1, le=8760)
+    input_energy_carriers: list[ConversionCarrierRequestDtoPUT] = Field(..., alias="inputEnergyCarriers")
+    output_energy_carriers: list[ConversionCarrierRequestDtoPUT] = Field(..., alias="outputEnergyCarriers")
+    seasonal_operation_name: str = Field(..., alias="seasonalOperationName")
+    seasonal_operation_value: str = Field(..., alias="seasonalOperationValue")
+    allowed_operation_profile_id: int | None = Field(None, alias="allowedOperationProfileId")
+    primary: bool | None = None
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_capacity: float | None = Field(
+        None,
+        alias="minimumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    simultaneous_operation: bool = Field(..., alias="simultaneousOperation")
 
 
 class StorageTechnologyRequestDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    variable_om_cost_percent: float | None = Field(None, alias="variableOmCostPercent")
-    variable_om_energy_flow_cost: float | None = Field(None, alias="variableOmEnergyFlowCost", ge=0.0)
-    capacity: float | None = Field(None, ge=0.0)
-    maximum_capacity: float | None = Field(None, alias="maximumCapacity", ge=0.0)
-    minimum_capacity: float | None = Field(None, alias="minimumCapacity", ge=0.0)
-    fixed_investment_cost: float | None = Field(None, alias="fixedInvestmentCost", ge=0.0)
-    fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2", ge=0.0)
-    variable_om_cost: float | None = Field(None, alias="variableOmCost", ge=0.0)
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_energy_flow_cost: float | None = Field(
+        None,
+        alias="variableOmEnergyFlowCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    capacity: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_capacity: float | None = Field(
+        None,
+        alias="minimumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost: float | None = Field(
+        None,
+        alias="variableOmCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     maximum_charging_rate: float | None = Field(None, alias="maximumChargingRate", ge=0.0, le=100.0)
     maximum_discharging_rate: float | None = Field(None, alias="maximumDischargingRate", ge=0.0, le=100.0)
-    variable_embodied_co2: float | None = Field(None, alias="variableEmbodiedCo2", ge=0.0)
-    fixed_replacement_cost: float | None = Field(None, alias="fixedReplacementCost")
-    variable_replacement_cost_percent: float | None = Field(None, alias="variableReplacementCostPercent")
-    variable_replacement_cost_chf: float | None = Field(None, alias="variableReplacementCostCHF")
-    fixed_salvage_value: float | None = Field(None, alias="fixedSalvageValue")
-    variable_salvage_value_percent: float | None = Field(None, alias="variableSalvageValuePercent")
-    variable_salvage_value_chf: float | None = Field(None, alias="variableSalvageValueCHF")
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float | None = Field(
+        None,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float | None = Field(
+        None,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     must_be_installed: str = Field(
         ...,
         alias="mustBeInstalled",
         pattern="canBeInstalled|mustBeInstalled|mustBeInstalledInAtLeastOneHub",
     )
     storage_name: str = Field(..., alias="storageName", max_length=100, min_length=0)
-    variable_investment_cost: float | None = Field(None, alias="variableInvestmentCost", ge=0.0)
-    fixed_om_cost_chf: float | None = Field(None, alias="fixedOmCostChf", ge=0.0)
+    variable_investment_cost: float | None = Field(
+        None,
+        alias="variableInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     lifetime: int
     standby_loss: float | None = Field(None, alias="standbyLoss", ge=0.0, le=100.0)
     stand_by_loss_profile_id: int | None = Field(None, alias="standByLossProfileId")
@@ -1584,7 +2539,14 @@ class StorageTechnologyRequestDtoV2(BaseModel):
     source: str | None = None
     comes_from_db: str | None = Field(None, alias="comesFromDb")
     exchange_currency: str | None = Field(None, alias="exchangeCurrency", max_length=3, min_length=0)
-    exchange_rate: float | None = Field(None, alias="exchangeRate", ge=0.0)
+    exchange_rate: float | None = Field(
+        None,
+        alias="exchangeRate",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     stages: list[UUID]
     ev_plug_in_time: LocalTime | None = Field(None, alias="evPlugInTime")
     ev_plug_out_time: LocalTime | None = Field(None, alias="evPlugOutTime")
@@ -1625,34 +2587,313 @@ class StorageTechnologyDetailResponseDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    variable_om_cost_percent: float | None = Field(None, alias="variableOmCostPercent")
-    variable_om_energy_flow_cost: float | None = Field(None, alias="variableOmEnergyFlowCost", ge=0.0)
-    capacity: float | None = Field(None, ge=0.0)
-    maximum_capacity: float | None = Field(None, alias="maximumCapacity", ge=0.0)
-    minimum_capacity: float | None = Field(None, alias="minimumCapacity", ge=0.0)
-    fixed_investment_cost: float | None = Field(None, alias="fixedInvestmentCost", ge=0.0)
-    fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2", ge=0.0)
-    variable_om_cost: float | None = Field(None, alias="variableOmCost", ge=0.0)
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_energy_flow_cost: float | None = Field(
+        None,
+        alias="variableOmEnergyFlowCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    capacity: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_capacity: float | None = Field(
+        None,
+        alias="minimumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost: float | None = Field(
+        None,
+        alias="variableOmCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     maximum_charging_rate: float | None = Field(None, alias="maximumChargingRate", ge=0.0, le=100.0)
     maximum_discharging_rate: float | None = Field(None, alias="maximumDischargingRate", ge=0.0, le=100.0)
-    variable_embodied_co2: float | None = Field(None, alias="variableEmbodiedCo2", ge=0.0)
-    fixed_replacement_cost: float | None = Field(None, alias="fixedReplacementCost")
-    variable_replacement_cost_percent: float = Field(..., alias="variableReplacementCostPercent")
-    variable_replacement_cost_chf: float | None = Field(None, alias="variableReplacementCostCHF")
-    fixed_salvage_value: float | None = Field(None, alias="fixedSalvageValue")
-    variable_salvage_value_percent: float = Field(..., alias="variableSalvageValuePercent")
-    variable_salvage_value_chf: float | None = Field(None, alias="variableSalvageValueCHF")
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float | None = Field(
+        None,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float | None = Field(
+        None,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     must_be_installed: str = Field(
         ...,
         alias="mustBeInstalled",
         pattern="canBeInstalled|mustBeInstalled|mustBeInstalledInAtLeastOneHub",
     )
     storage_technology_guid: str | None = Field(None, alias="storageTechnologyGuid")
-    storage_name: str = Field(..., alias="storageName")
-    exchange_currency: str = Field(..., alias="exchangeCurrency")
-    exchange_rate: float = Field(..., alias="exchangeRate")
+    storage_name: str | None = Field(None, alias="storageName")
+    exchange_currency: str | None = Field(None, alias="exchangeCurrency")
+    exchange_rate: float | None = Field(None, alias="exchangeRate")
     variable_investment_cost: float | None = Field(None, alias="variableInvestmentCost")
     fixed_om_cost_chf: float | None = Field(None, alias="fixedOmCostChf")
+    lifetime: int | None = None
+    standby_loss: float | None = Field(None, alias="standbyLoss")
+    stand_by_loss_profile_id: int | None = Field(None, alias="standByLossProfileId")
+    minimum_soc: float | None = Field(None, alias="minimumSoc")
+    storage_charging_efficiency: float | None = Field(None, alias="storageChargingEfficiency")
+    storage_discharging_efficiency: float | None = Field(None, alias="storageDischargingEfficiency")
+    technology_capacity: str | None = Field(None, alias="technologyCapacity")
+    created: AwareDatetime | None = None
+    updated: AwareDatetime | None = None
+    storage_carrier: EnergyCarrierResponseDto | None = Field(None, alias="storageCarrier")
+    hubs: list[HubResponseDto] | None = None
+    category: str | None = None
+    technology_category: str | None = Field(None, alias="technologyCategory")
+    mutually_exclusive_group: str | None = Field(None, alias="mutuallyExclusiveGroup")
+    notes: str | None = None
+    source: str | None = None
+    technology_optional: bool | None = Field(None, alias="technologyOptional")
+    cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
+    comes_from_db: str | None = Field(None, alias="comesFromDb")
+    stages: list[UUID] | None = None
+    ev_plug_in_time: LocalTime | None = Field(None, alias="evPlugInTime")
+    ev_plug_out_time: LocalTime | None = Field(None, alias="evPlugOutTime")
+    ev_plug_in_duration_hours: float | None = Field(None, alias="evPlugInDurationHours")
+    driving_distance_kms: float | None = Field(None, alias="drivingDistanceKms")
+    ev_soc_start_percent: float | None = Field(None, alias="evSocStartPercent")
+    ev_battery_size_k_wh: float | None = Field(None, alias="evBatterySizeKWh")
+    maximum_soc_percent: float | None = Field(None, alias="maximumSocPercent")
+    ev_average_k_wh_per_km: float | None = Field(None, alias="evAverageKWhPerKm")
+    ev_plug_in_power_kw: float | None = Field(None, alias="evPlugInPowerKW")
+    is_ev_battery: bool | None = Field(None, alias="isEvBattery")
+    type_of_charging: TypeOfCharging | None = Field(None, alias="typeOfCharging")
+
+
+class StorageTechnologyRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_energy_flow_cost: float | None = Field(
+        None,
+        alias="variableOmEnergyFlowCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    capacity: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_capacity: float | None = Field(
+        None,
+        alias="minimumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost: float | None = Field(
+        None,
+        alias="variableOmCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_charging_rate: float | None = Field(None, alias="maximumChargingRate", ge=0.0, le=100.0)
+    maximum_discharging_rate: float | None = Field(None, alias="maximumDischargingRate", ge=0.0, le=100.0)
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float = Field(
+        ...,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float = Field(
+        ...,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    must_be_installed: str = Field(
+        ...,
+        alias="mustBeInstalled",
+        pattern="canBeInstalled|mustBeInstalled|mustBeInstalledInAtLeastOneHub",
+    )
+    storage_name: str = Field(..., alias="storageName")
+    exchange_currency: str = Field(..., alias="exchangeCurrency")
+    exchange_rate: float = Field(
+        ...,
+        alias="exchangeRate",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_investment_cost: float | None = Field(
+        None,
+        alias="variableInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     lifetime: int
     standby_loss: float | None = Field(None, alias="standbyLoss")
     stand_by_loss_profile_id: int | None = Field(None, alias="standByLossProfileId")
@@ -1660,17 +2901,15 @@ class StorageTechnologyDetailResponseDtoV2(BaseModel):
     storage_charging_efficiency: float = Field(..., alias="storageChargingEfficiency")
     storage_discharging_efficiency: float = Field(..., alias="storageDischargingEfficiency")
     technology_capacity: str = Field(..., alias="technologyCapacity")
-    created: AwareDatetime | None = None
-    updated: AwareDatetime | None = None
-    storage_carrier: EnergyCarrierResponseDto = Field(..., alias="storageCarrier")
-    hubs: list[HubResponseDto]
+    storage_carrier: EnergyCarrierRequestDtoPUTId = Field(..., alias="storageCarrier")
+    hubs: list[HubRequestDtoPUTId]
     category: str
     technology_category: str | None = Field(None, alias="technologyCategory")
     mutually_exclusive_group: str | None = Field(None, alias="mutuallyExclusiveGroup")
     notes: str | None = None
     source: str | None = None
     technology_optional: bool | None = Field(None, alias="technologyOptional")
-    cost_components: list[AdvancedCostComponentResponseDto] = Field(..., alias="costComponents")
+    cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
     comes_from_db: str | None = Field(None, alias="comesFromDb")
     stages: list[UUID]
     ev_plug_in_time: LocalTime | None = Field(None, alias="evPlugInTime")
@@ -1692,12 +2931,12 @@ class TechnologyPackageResponseDtoV2(BaseModel):
     )
     maximum_conversions: int | None = Field(None, alias="maximumConversions", ge=1)
     maximum_storages: int | None = Field(None, alias="maximumStorages", ge=1)
-    must_be_installed: MustBeInstalled = Field(..., alias="mustBeInstalled")
+    must_be_installed: MustBeInstalled1 = Field(..., alias="mustBeInstalled")
     mutually_exclusive_group: str | None = Field(None, alias="mutuallyExclusiveGroup")
-    name: str
+    name: str | None = None
     guid: str | None = None
-    conversion_technologies: list[GuidNameDto] = Field(..., alias="conversionTechnologies")
-    storage_technologies: list[GuidNameDto] = Field(..., alias="storageTechnologies")
+    conversion_technologies: list[GuidNameDto] | None = Field(None, alias="conversionTechnologies")
+    storage_technologies: list[GuidNameDto] | None = Field(None, alias="storageTechnologies")
 
 
 class TechnologyPackageListResponseDtoV2(BaseModel):
@@ -1705,6 +2944,19 @@ class TechnologyPackageListResponseDtoV2(BaseModel):
         populate_by_name=True,
     )
     technology_packages: list[TechnologyPackageResponseDtoV2] | None = Field(None, alias="technologyPackages")
+
+
+class TechnologyPackageRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    maximum_conversions: int | None = Field(None, alias="maximumConversions", ge=1)
+    maximum_storages: int | None = Field(None, alias="maximumStorages", ge=1)
+    must_be_installed: MustBeInstalled2 | None = Field(None, alias="mustBeInstalled")
+    mutually_exclusive_group: str | None = Field(None, alias="mutuallyExclusiveGroup")
+    name: str
+    conversion_technologies: list[GuidDtoPUT] | None = Field(None, alias="conversionTechnologies")
+    storage_technologies: list[GuidDtoPUT] | None = Field(None, alias="storageTechnologies")
 
 
 class TechnologyPackageListResponseDto(BaseModel):
@@ -1718,36 +2970,127 @@ class NetworkTechnologyResponseDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    fixed_investment_cost: float | None = Field(None, alias="fixedInvestmentCost", ge=0.0)
-    variable_investment_cost: float | None = Field(None, alias="variableInvestmentCost", ge=0.0)
-    fixed_om_cost_chf: float | None = Field(None, alias="fixedOmCostChf", ge=0.0)
-    variable_om_cost_percent: float | None = Field(None, alias="variableOmCostPercent")
-    variable_om_cost_year: float | None = Field(None, alias="variableOmCostYear", ge=0.0)
-    variable_om_cost_ch_fk_wh: float | None = Field(None, alias="variableOmCostCHFkWh", ge=0.0)
-    fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2", ge=0.0)
-    variable_embodied_co2: float | None = Field(None, alias="variableEmbodiedCo2", ge=0.0)
-    fixed_replacement_cost: float | None = Field(None, alias="fixedReplacementCost")
-    variable_replacement_cost_percent: float = Field(..., alias="variableReplacementCostPercent")
-    variable_replacement_cost_chf: float | None = Field(None, alias="variableReplacementCostCHF")
-    fixed_salvage_value: float | None = Field(None, alias="fixedSalvageValue")
-    variable_salvage_value_percent: float = Field(..., alias="variableSalvageValuePercent")
-    variable_salvage_value_chf: float | None = Field(None, alias="variableSalvageValueCHF")
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_investment_cost: float | None = Field(
+        None,
+        alias="variableInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_year: float | None = Field(
+        None,
+        alias="variableOmCostYear",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_ch_fk_wh: float | None = Field(
+        None,
+        alias="variableOmCostCHFkWh",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float | None = Field(
+        None,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float | None = Field(
+        None,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     network_technology_guid: str | None = Field(None, alias="networkTechnologyGuid")
-    network_technology_name: str = Field(..., alias="networkTechnologyName")
-    exchange_currency: str = Field(..., alias="exchangeCurrency")
-    exchange_rate: float = Field(..., alias="exchangeRate")
-    lifetime: int
+    network_technology_name: str | None = Field(None, alias="networkTechnologyName")
+    exchange_currency: str | None = Field(None, alias="exchangeCurrency")
+    exchange_rate: float | None = Field(None, alias="exchangeRate")
+    lifetime: int | None = None
     created: AwareDatetime | None = None
     updated: AwareDatetime | None = None
-    energy_carrier: EnergyCarrierResponseDto = Field(..., alias="energyCarrier")
-    category: str
+    energy_carrier: EnergyCarrierResponseDto | None = Field(None, alias="energyCarrier")
+    category: str | None = None
     technology_category: str | None = Field(None, alias="technologyCategory")
     notes: str | None = None
     source: str | None = None
     network_size: str | None = Field(None, alias="networkSize")
     comes_from_db: str | None = Field(None, alias="comesFromDb")
-    cost_components: list[AdvancedCostComponentResponseDto] = Field(..., alias="costComponents")
-    stages: list[UUID]
+    cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
+    stages: list[UUID] | None = None
 
 
 class NetworkTechnologyListResponseDtoV2(BaseModel):
@@ -1777,16 +3120,16 @@ class IntraHubNetworkLinkResponseDto(BaseModel):
         populate_by_name=True,
     )
     intra_hub_network_link_guid: str | None = Field(None, alias="intraHubNetworkLinkGuid")
-    name: str
+    name: str | None = None
     network_loss: float | None = Field(None, alias="networkLoss")
     fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2")
-    input_energy_carrier: EnergyCarrierResponseDto = Field(..., alias="inputEnergyCarrier")
-    output_energy_carrier: EnergyCarrierResponseDto = Field(..., alias="outputEnergyCarrier")
-    hubs: list[HubResponseDto]
-    advanced_cost_components: list[AdvancedCostComponentResponseDto] = Field(..., alias="advancedCostComponents")
+    input_energy_carrier: EnergyCarrierResponseDto | None = Field(None, alias="inputEnergyCarrier")
+    output_energy_carrier: EnergyCarrierResponseDto | None = Field(None, alias="outputEnergyCarrier")
+    hubs: list[HubResponseDto] | None = None
+    advanced_cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="advancedCostComponents")
     created: AwareDatetime | None = None
     updated: AwareDatetime | None = None
-    stages: list[UUID]
+    stages: list[UUID] | None = None
 
 
 class IntraHubNetworkLinkListResponseDto(BaseModel):
@@ -1832,27 +3175,27 @@ class ImportExportResponseDtoV2(BaseModel):
     max_capacity_kw: float | None = Field(None, alias="maxCapacityKW")
     total_annual_energy_available_k_wh_a: float | None = Field(None, alias="totalAnnualEnergyAvailableKWhA")
     capacity_price_ch_fk_w_year: float | None = Field(None, alias="capacityPriceCHFkWYear")
-    name: str
+    name: str | None = None
     hourly_energy_price_profile_id: int | None = Field(None, alias="hourlyEnergyPriceProfileId")
     capacity_price_ch_fk_w_month: float | None = Field(None, alias="capacityPriceCHFkWMonth")
     fixed_om_price_chf_year: float | None = Field(None, alias="fixedOmPriceCHFYear")
     co2_intensity_kg_co2k_wh_co2_compensation_kg_co2k_wh: float | None = Field(None, alias="co2IntensityKgCo2kWhCo2CompensationKgCo2kWh")
     dynamic_co2_profile_id: int | None = Field(None, alias="dynamicCo2ProfileId")
     maximum_hourly_energy_available_profile_id: int | None = Field(None, alias="maximumHourlyEnergyAvailableProfileId")
-    energy_carrier: EnergyCarrierResponseDto = Field(..., alias="energyCarrier")
-    type: str
-    hubs: list[ImpexHubResponseDto]
+    energy_carrier: EnergyCarrierResponseDto | None = Field(None, alias="energyCarrier")
+    type: str | None = None
+    hubs: list[ImpexHubResponseDto] | None = None
     guid: str | None = None
     updated: AwareDatetime | None = None
     created: AwareDatetime | None = None
-    price_components: list[AdvancedPriceComponentResponseDtoV2] = Field(..., alias="priceComponents")
-    time_of_uses: list[TimeOfUseResponseDto] = Field(..., alias="timeOfUses")
+    price_components: list[AdvancedPriceComponentResponseDtoV2] | None = Field(None, alias="priceComponents")
+    time_of_uses: list[TimeOfUseResponseDto] | None = Field(None, alias="timeOfUses")
     product: str | None = None
     year: int | None = None
     notes: str | None = None
     source: str | None = None
     suggested: bool | None = None
-    stages: list[UUID]
+    stages: list[UUID] | None = None
 
 
 class ResponseDtoListImportExportResponseDtoV2(BaseModel):
@@ -1861,6 +3204,34 @@ class ResponseDtoListImportExportResponseDtoV2(BaseModel):
     )
     data: list[ImportExportResponseDtoV2] | None = None
     status: Status | None = None
+
+
+class ImportExportRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    energy_price_ch_fk_wh: float | None = Field(None, alias="energyPriceCHFkWh")
+    max_capacity_kw: float | None = Field(None, alias="maxCapacityKW")
+    total_annual_energy_available_k_wh_a: float | None = Field(None, alias="totalAnnualEnergyAvailableKWhA")
+    capacity_price_ch_fk_w_year: float | None = Field(None, alias="capacityPriceCHFkWYear")
+    name: str
+    hourly_energy_price_profile_id: int | None = Field(None, alias="hourlyEnergyPriceProfileId")
+    capacity_price_ch_fk_w_month: float | None = Field(None, alias="capacityPriceCHFkWMonth")
+    fixed_om_price_chf_year: float | None = Field(None, alias="fixedOmPriceCHFYear")
+    co2_intensity_kg_co2k_wh_co2_compensation_kg_co2k_wh: float | None = Field(None, alias="co2IntensityKgCo2kWhCo2CompensationKgCo2kWh")
+    dynamic_co2_profile_id: int | None = Field(None, alias="dynamicCo2ProfileId")
+    maximum_hourly_energy_available_profile_id: int | None = Field(None, alias="maximumHourlyEnergyAvailableProfileId")
+    energy_carrier: EnergyCarrierRequestDtoPUTId = Field(..., alias="energyCarrier")
+    type: str
+    hubs: list[ImpexHubRequestDtoPUT]
+    price_components: list[AdvancedPriceComponentResponseDtoV2] | None = Field(None, alias="priceComponents")
+    time_of_uses: list[TimeOfUseResponseDto] | None = Field(None, alias="timeOfUses")
+    product: str | None = None
+    year: int | None = None
+    notes: str | None = None
+    source: str | None = None
+    suggested: bool | None = None
+    stages: list[UUID]
 
 
 class ProfileJsonRequestDto(BaseModel):
@@ -1925,14 +3296,42 @@ class SolarOnSiteResourceResponseDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    name: str
+    name: str | None = None
     solar_resource_guid: str | None = Field(None, alias="solarResourceGuid")
-    energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
-    energy_carrier_name: str = Field(..., alias="energyCarrierName")
-    hubs: list[HubSolarOnSiteResourceResponseDtoV2]
+    energy_carrier_guid: str | None = Field(None, alias="energyCarrierGuid")
+    energy_carrier_name: str | None = Field(None, alias="energyCarrierName")
+    hubs: list[HubSolarOnSiteResourceResponseDtoV2] | None = None
     created: AwareDatetime | None = None
     updated: AwareDatetime | None = None
-    irradiance_profile_type: IrradianceProfileType = Field(..., alias="irradianceProfileType")
+    irradiance_profile_type: IrradianceProfileType | None = Field(None, alias="irradianceProfileType")
+    solar_resource_metadata_name: str | None = Field(None, alias="solarResourceMetadataName")
+    solar_resource_metadata_db_organization: str | None = Field(None, alias="solarResourceMetadataDbOrganization")
+    solar_resource_metadata_guid: str | None = Field(None, alias="solarResourceMetadataGuid")
+    solar_resource_metadata_location: str | None = Field(None, alias="solarResourceMetadataLocation")
+    solar_resource_metadata_type: str | None = Field(None, alias="solarResourceMetadataType")
+    solar_resource_metadata_slope: float | None = Field(None, alias="solarResourceMetadataSlope")
+    solar_resource_metadata_orientation: str | None = Field(None, alias="solarResourceMetadataOrientation")
+    stages: list[UUID] | None = None
+    profile_id: int | None = Field(None, alias="profileId")
+
+
+class ResponseDtoListSolarOnSiteResourceResponseDtoV2(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: list[SolarOnSiteResourceResponseDtoV2] | None = None
+    status: Status | None = None
+
+
+class SolarOnSiteResourceRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    name: str
+    energy_carrier_guid: str = Field(..., alias="energyCarrierGuid")
+    energy_carrier_name: str = Field(..., alias="energyCarrierName")
+    hubs: list[HubSolarOnSiteResourceRequestDtoPUT]
+    irradiance_profile_type: IrradianceProfileType1 = Field(..., alias="irradianceProfileType")
     solar_resource_metadata_name: str | None = Field(None, alias="solarResourceMetadataName")
     solar_resource_metadata_db_organization: str | None = Field(None, alias="solarResourceMetadataDbOrganization")
     solar_resource_metadata_guid: str | None = Field(None, alias="solarResourceMetadataGuid")
@@ -1942,14 +3341,6 @@ class SolarOnSiteResourceResponseDtoV2(BaseModel):
     solar_resource_metadata_orientation: str | None = Field(None, alias="solarResourceMetadataOrientation")
     stages: list[UUID]
     profile_id: int = Field(..., alias="profileId")
-
-
-class ResponseDtoListSolarOnSiteResourceResponseDtoV2(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-    )
-    data: list[SolarOnSiteResourceResponseDtoV2] | None = None
-    status: Status | None = None
 
 
 class SolarOnSiteResourceResponseDto(BaseModel):
@@ -1962,7 +3353,7 @@ class SolarOnSiteResourceResponseDto(BaseModel):
     hubs: list[HubSolarOnSiteResourceResponseDto] | None = None
     created: AwareDatetime | None = None
     updated: AwareDatetime | None = None
-    irradiance_profile_type: IrradianceProfileType1 | None = Field(None, alias="irradianceProfileType")
+    irradiance_profile_type: IrradianceProfileType2 | None = Field(None, alias="irradianceProfileType")
     solar_resource_metadata_name: str | None = Field(None, alias="solarResourceMetadataName")
     solar_resource_metadata_db_organization: str | None = Field(None, alias="solarResourceMetadataDbOrganization")
     solar_resource_metadata_guid: str | None = Field(None, alias="solarResourceMetadataGuid")
@@ -2198,20 +3589,74 @@ class TechnologyModeRequestDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    capacity: float | None = Field(None, ge=0.0)
-    minimum_annual_output: float | None = Field(None, alias="minimumAnnualOutput", ge=0.0)
-    maximum_annual_output: float | None = Field(None, alias="maximumAnnualOutput", ge=0.0)
-    curtailment_limitation: float | None = Field(None, alias="curtailmentLimitation", ge=0.0)
-    peak_power: float | None = Field(None, alias="peakPower")
-    min_part_load: float | None = Field(None, alias="minPartLoad", ge=0.0, le=100.0)
+    capacity: float | None = Field(
+        None,
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_annual_output: float | None = Field(
+        None,
+        alias="minimumAnnualOutput",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    maximum_annual_output: float | None = Field(
+        None,
+        alias="maximumAnnualOutput",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    curtailment_limitation: float | None = Field(
+        None,
+        alias="curtailmentLimitation",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    peak_power: float | None = Field(
+        None,
+        alias="peakPower",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    min_part_load: float | None = Field(
+        None,
+        alias="minPartLoad",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=100.0,
+        multiple_of=1e-05,
+    )
     minimum_up_time: int | None = Field(None, alias="minimumUpTime", ge=1, le=8760)
     minimum_down_time: int | None = Field(None, alias="minimumDownTime", ge=1, le=8760)
     primary: bool | None = None
     seasonal_operation: SeasonalOperation = Field(..., alias="seasonalOperation")
     allowed_operation_profile_id: int | None = Field(None, alias="allowedOperationProfileId")
     energy_carriers: list[ConversionCarrierRequestDtoV2] = Field(..., alias="energyCarriers")
-    maximum_capacity: float | None = Field(None, alias="maximumCapacity", ge=0.0)
-    minimum_capacity: float | None = Field(None, alias="minimumCapacity", ge=0.0)
+    maximum_capacity: float | None = Field(
+        None,
+        alias="maximumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    minimum_capacity: float | None = Field(
+        None,
+        alias="minimumCapacity",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     simultaneous_operation: bool | None = Field(None, alias="simultaneousOperation")
 
 
@@ -2244,6 +3689,162 @@ class ResponseDtoConversionTechnologyDetailResponseDtoV2(BaseModel):
     )
     data: ConversionTechnologyDetailResponseDtoV2 | None = None
     status: Status | None = None
+
+
+class ConversionTechnologyRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_year: float | None = Field(
+        None,
+        alias="variableOmCostYear",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost: float | None = Field(
+        None,
+        alias="variableOmCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_emitted_co2: float | None = Field(
+        None,
+        alias="variableEmittedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_captured_co2: float | None = Field(
+        None,
+        alias="variableCapturedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float | None = Field(
+        None,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float | None = Field(
+        None,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    must_be_installed_in_hubs: MustBeInstalledInHubs2 = Field(..., alias="mustBeInstalledInHubs")
+    process_name: str = Field(..., alias="processName")
+    exchange_currency: str = Field(..., alias="exchangeCurrency")
+    exchange_rate: float = Field(
+        ...,
+        alias="exchangeRate",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_investment_cost: float | None = Field(
+        None,
+        alias="variableInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    lifetime: float
+    hubs: list[HubRequestDtoPUTId]
+    technology_modes: list[TechnologyModeRequestDtoPUT] = Field(..., alias="technologyModes")
+    technology_category: str | None = Field(None, alias="technologyCategory")
+    mutually_exclusive_group: str | None = Field(None, alias="mutuallyExclusiveGroup")
+    notes: str | None = None
+    virtual: bool | None = None
+    technology_optional: bool | None = Field(None, alias="technologyOptional")
+    technology_capacity: str | None = Field(None, alias="technologyCapacity")
+    cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
+    comes_from_db: str | None = Field(None, alias="comesFromDb")
+    stages: list[UUID]
 
 
 class ResponseDtoStorageTechnologyResponseDtoV2(BaseModel):
@@ -2423,28 +4024,139 @@ class ConversionTechnologyRequestDtoV2(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
     )
-    fixed_investment_cost: float | None = Field(None, alias="fixedInvestmentCost", ge=0.0)
-    fixed_om_cost_chf: float | None = Field(None, alias="fixedOmCostChf", ge=0.0)
-    variable_om_cost_percent: float | None = Field(None, alias="variableOmCostPercent")
-    variable_om_cost_year: float | None = Field(None, alias="variableOmCostYear", ge=0.0)
-    variable_om_cost: float | None = Field(None, alias="variableOmCost", ge=0.0)
-    fixed_embodied_co2: float | None = Field(None, alias="fixedEmbodiedCo2", ge=0.0)
-    variable_embodied_co2: float | None = Field(None, alias="variableEmbodiedCo2", ge=0.0)
-    variable_emitted_co2: float | None = Field(None, alias="variableEmittedCo2", ge=0.0)
-    variable_captured_co2: float | None = Field(None, alias="variableCapturedCo2", ge=0.0)
-    fixed_replacement_cost: float | None = Field(None, alias="fixedReplacementCost", ge=0.0)
-    variable_replacement_cost_percent: float | None = Field(None, alias="variableReplacementCostPercent", ge=0.0)
-    variable_replacement_cost_chf: float | None = Field(None, alias="variableReplacementCostCHF", ge=0.0)
-    fixed_salvage_value: float | None = Field(None, alias="fixedSalvageValue", ge=0.0)
-    variable_salvage_value_percent: float | None = Field(None, alias="variableSalvageValuePercent", ge=0.0)
-    variable_salvage_value_chf: float | None = Field(None, alias="variableSalvageValueCHF", ge=0.0)
+    fixed_investment_cost: float | None = Field(
+        None,
+        alias="fixedInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_om_cost_chf: float | None = Field(
+        None,
+        alias="fixedOmCostChf",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_percent: float | None = Field(
+        None,
+        alias="variableOmCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost_year: float | None = Field(
+        None,
+        alias="variableOmCostYear",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_om_cost: float | None = Field(
+        None,
+        alias="variableOmCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_embodied_co2: float | None = Field(
+        None,
+        alias="fixedEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_embodied_co2: float | None = Field(
+        None,
+        alias="variableEmbodiedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_emitted_co2: float | None = Field(
+        None,
+        alias="variableEmittedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_captured_co2: float | None = Field(
+        None,
+        alias="variableCapturedCo2",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_replacement_cost: float | None = Field(
+        None,
+        alias="fixedReplacementCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_percent: float | None = Field(
+        None,
+        alias="variableReplacementCostPercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_replacement_cost_chf: float | None = Field(
+        None,
+        alias="variableReplacementCostCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    fixed_salvage_value: float | None = Field(
+        None,
+        alias="fixedSalvageValue",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_percent: float | None = Field(
+        None,
+        alias="variableSalvageValuePercent",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
+    variable_salvage_value_chf: float | None = Field(
+        None,
+        alias="variableSalvageValueCHF",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     must_be_installed_in_hubs: MustBeInstalledInHubs = Field(..., alias="mustBeInstalledInHubs")
     process_name: str = Field(..., alias="processName", max_length=100, min_length=0)
-    variable_investment_cost: float | None = Field(None, alias="variableInvestmentCost", ge=0.0)
+    variable_investment_cost: float | None = Field(
+        None,
+        alias="variableInvestmentCost",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     lifetime: int
     hub_guids: list[str] = Field(..., alias="hubGuids")
     conversion_technology_modes: list[TechnologyModeRequestDtoV2] = Field(..., alias="conversionTechnologyModes", max_length=3, min_length=1)
-    virtual: bool
+    virtual: bool | None = None
     cost_components: list[AdvancedCostComponentRequestDto] | None = Field(None, alias="costComponents")
     suggested: bool | None = None
     technology_category: str | None = Field(None, alias="technologyCategory")
@@ -2452,7 +4164,14 @@ class ConversionTechnologyRequestDtoV2(BaseModel):
     source: str | None = None
     comes_from_db: str | None = Field(None, alias="comesFromDb")
     exchange_currency: str = Field(..., alias="exchangeCurrency", max_length=3, min_length=0)
-    exchange_rate: float = Field(..., alias="exchangeRate", ge=0.0)
+    exchange_rate: float = Field(
+        ...,
+        alias="exchangeRate",
+        description="Invalid NUMERIC. Max precision=16, max scale=5",
+        ge=0.0,
+        le=9999999999.99999,
+        multiple_of=1e-05,
+    )
     stages: list[UUID]
 
 

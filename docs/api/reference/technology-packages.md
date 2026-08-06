@@ -190,6 +190,8 @@ POST /sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages
 
 Requires a [Bearer token](../authentication.md). SDK method: [`client.technology_packages.create()`](../../sdk/reference/technology_packages.md#method-technology_packages-create).
 
+conversionTechnologies or storageTechnologies must not be empty
+
 **Parameters**
 
 | Name | In | Type | Required | Description |
@@ -202,11 +204,11 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.technology
 | --- | --- | --- | --- |
 | `maximumConversions` | integer (int32), nullable | no |  |
 | `maximumStorages` | integer (int32), nullable | no |  |
-| `mustBeInstalled` | string | yes | One of: `canBeInstalled`, `mustBeInstalled`, `mustBeInstalledInAtLeastOneHub`. |
+| `mustBeInstalled` | string, nullable | no | One of: `canBeInstalled`, `mustBeInstalled`, `mustBeInstalledInAtLeastOneHub`, `None`. |
 | `mutuallyExclusiveGroup` | string, nullable | no |  |
 | `name` | string | yes |  |
-| `conversionTechnologies` | array of string | yes |  |
-| `storageTechnologies` | array of string | yes |  |
+| `conversionTechnologies` | array of string, nullable | no |  |
+| `storageTechnologies` | array of string, nullable | no |  |
 
 **Example request**
 
@@ -275,6 +277,8 @@ PUT /sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages/{guid}
 
 Requires a [Bearer token](../authentication.md). SDK method: [`client.technology_packages.update()`](../../sdk/reference/technology_packages.md#method-technology_packages-update).
 
+conversionTechnologies or storageTechnologies must not be empty
+
 **Parameters**
 
 | Name | In | Type | Required | Description |
@@ -282,18 +286,17 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.technology
 | `scenarioGuid` | path | string | yes |  |
 | `guid` | path | string | yes |  |
 
-**Request body** (`TechnologyPackageResponseDtoV2`)
+**Request body** (`TechnologyPackageRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `maximumConversions` | integer (int32), nullable | no |  |
 | `maximumStorages` | integer (int32), nullable | no |  |
-| `mustBeInstalled` | string | yes | One of: `canBeInstalled`, `mustBeInstalled`, `mustBeInstalledInAtLeastOneHub`. |
+| `mustBeInstalled` | string, nullable | no | One of: `canBeInstalled`, `mustBeInstalled`, `mustBeInstalledInAtLeastOneHub`, `None`. |
 | `mutuallyExclusiveGroup` | string, nullable | no |  |
 | `name` | string | yes |  |
-| `guid` | string, nullable | no |  |
-| `conversionTechnologies` | array of `GuidNameDto` | yes |  |
-| `storageTechnologies` | array of `GuidNameDto` | yes |  |
+| `conversionTechnologies` | array of `GuidDtoPUT`, nullable | no |  |
+| `storageTechnologies` | array of `GuidDtoPUT`, nullable | no |  |
 
 **Example request**
 
@@ -307,17 +310,14 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/{sc
   "mustBeInstalled": "canBeInstalled",
   "mutuallyExclusiveGroup": "string",
   "name": "string",
-  "guid": "string",
   "conversionTechnologies": [
     {
-      "guid": "string",
-      "name": "string"
+      "guid": "string"
     }
   ],
   "storageTechnologies": [
     {
-      "guid": "string",
-      "name": "string"
+      "guid": "string"
     }
   ]
 }'

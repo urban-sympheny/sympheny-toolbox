@@ -82,8 +82,8 @@ payload).
 
 ## Where to go next
 
-- [Workflows](workflows/index.md): end-to-end guides for creating a scenario from Excel,
-  running a solver job, and downloading the results.
+- [Workflows](workflows/index.md): end-to-end guides for running a solver job and
+  downloading the results.
 - [SDK reference](reference/projects.md): one page per resource group, one section per
   method, each cross-linked to the REST operation it wraps.
 - [Model reference](reference/models/common.md): the Pydantic request/response models,

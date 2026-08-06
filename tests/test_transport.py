@@ -90,20 +90,9 @@ def test_500_raises_api_error_with_body(client: Sympheny, api: MockAPI) -> None:
 
 
 def test_empty_response_body_returns_none(client: Sympheny, api: MockAPI) -> None:
-    api.add("PUT", "/sympheny-app/scenarios/scn-1/close-diagram", content=b"", status_code=204)
+    api.add("DELETE", "/sympheny-app/scenario/scn-1", content=b"", status_code=204)
 
-    assert client._transport.request_json("PUT", "/sympheny-app/scenarios/scn-1/close-diagram") is None
-
-
-def test_unauthenticated_request_sends_no_auth_header(client: Sympheny, api: MockAPI) -> None:
-    api.add("PUT", "/bucket/upload", content=b"", status_code=200)
-
-    client.unofficial.upload_to_presigned_url("https://api.sympheny.test/bucket/upload", b"file-content")
-
-    request = api.last_request
-    assert "Authorization" not in request.headers
-    assert request.content == b"file-content"
-    assert api.auth_calls == 0
+    assert client._transport.request_json("DELETE", "/sympheny-app/scenario/scn-1") is None
 
 
 async def test_async_client_authenticates_and_maps_errors(async_client: AsyncSympheny, api: MockAPI) -> None:

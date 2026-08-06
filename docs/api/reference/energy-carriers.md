@@ -208,25 +208,13 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.energy_car
 | --- | --- | --- | --- | --- |
 | `carrierGuid` | path | string | yes |  |
 
-**Request body** (`EnergyCarrierResponseDto`)
+**Request body** (`EnergyCarrierRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `energyCarrierGuid` | string | yes |  |
-| `typeKey` | string | yes |  |
-| `typeDisplayName` | string | yes |  |
-| `subtypeKey` | string | yes |  |
-| `subtypeDisplayName` | string | yes |  |
+| `subtypeKey` | string | yes | One of: `ELECTRICITY`, `ELECTRICITY_RENEWABLE`, `WOOD_CHIPS`, `WOOD_PELLETS`, `COAL`, `OIL`, `GAS`, `BIOGAS`, `HYDROGEN`, `HYDROGEN_PRESSURIZED`, `COOLING_1`, `COOLING_2`, `COOLING_3`, `COOLING_4`, `ICE`, `HEAT_1`, `HEAT_2`, `HEAT_3`, `HEAT_4`, `HEAT_5`, `HEAT_6`, `HEAT_7`, `HEAT_8`, `HEAT_9`, `HEAT_AMBIENT`, `STEAM_LOW_PRESSURE`, `SOLAR_ROOF`, `SOLAR_FACADE`, `SOLAR_PARAPET`, `WIND`, `HYDRO`, `BIOMASS`, `GEOTHERMAL`, `TIDAL`, `PROCESS_WASTE_HEAT`, `CUSTOM`. |
 | `energyCarrierName` | string | yes |  |
-| `colorHexCode` | string | yes |  |
-| `fixedInputShare` | number, nullable | no |  |
-| `outputEfficiency` | number, nullable | no |  |
-| `customOutputEfficiencyActivated` | boolean | yes |  |
-| `customInputEfficiencyActivated` | boolean | yes |  |
-| `customSeasonalityValues` | array of `CustomSeasonalityResponseDto`, nullable | no |  |
-| `outputEfficiencyProfileId` | integer (int64), nullable | no |  |
-| `created` | string (date-time) | yes |  |
-| `primary` | boolean, nullable | no |  |
+| `colorHexCode` | string, nullable | no |  |
 
 **Example request**
 
@@ -235,26 +223,9 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2/carriers/{carri
   -H "Authorization: Bearer $SYMPHENY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-  "energyCarrierGuid": "string",
-  "typeKey": "string",
-  "typeDisplayName": "string",
-  "subtypeKey": "string",
-  "subtypeDisplayName": "string",
+  "subtypeKey": "ELECTRICITY",
   "energyCarrierName": "string",
-  "colorHexCode": "string",
-  "fixedInputShare": 0.0,
-  "outputEfficiency": 0.0,
-  "customOutputEfficiencyActivated": true,
-  "customInputEfficiencyActivated": true,
-  "customSeasonalityValues": [
-    {
-      "month": "JANUARY",
-      "value": 0.0
-    }
-  ],
-  "outputEfficiencyProfileId": 0,
-  "created": "2026-01-01T00:00:00Z",
-  "primary": true
+  "colorHexCode": "string"
 }'
 ```
 

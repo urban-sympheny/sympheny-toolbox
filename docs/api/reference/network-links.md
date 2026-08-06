@@ -248,19 +248,19 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.network_li
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `installedCapacity` | number, nullable | no |  |
-| `maximumCapacity` | number, nullable | no |  |
+| `installedCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `maximumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `name` | string | yes |  |
-| `length` | number | yes |  |
+| `length` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `technologyCapacity` | string | yes | One of: `optimize`, `specify`. |
-| `uniDirectionalFlow` | boolean | yes |  |
-| `mustBeInstalled` | boolean | yes |  |
+| `uniDirectionalFlow` | boolean, nullable | no |  |
+| `mustBeInstalled` | boolean, nullable | no |  |
 | `node1Guid` | string | yes |  |
 | `node2Guid` | string | yes |  |
 | `networkTechnologyGuid` | string | yes |  |
 | `costComponents` | array of `AdvancedCostComponentRequestDto`, nullable | no |  |
-| `minimumCapacity` | number, nullable | no |  |
-| `networkLoss` | number | yes |  |
+| `minimumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `networkLoss` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `networkLossProfileId` | integer (int64), nullable | no |  |
 
 **Example request**
@@ -368,29 +368,26 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.network_li
 | `scenarioGuid` | path | string | yes |  |
 | `network-link-guid` | path | string | yes |  |
 
-**Request body** (`NetworkLinkResponseDtoV2`)
+**Request body** (`NetworkLinkRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `installedCapacity` | number, nullable | no |  |
-| `maximumCapacity` | number, nullable | no |  |
-| `networkLinkGuid` | string, nullable | no |  |
+| `installedCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `maximumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `name` | string | yes |  |
-| `length` | number | yes |  |
+| `length` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `technologyCapacity` | string | yes | One of: `optimize`, `specify`. |
-| `uniDirectionalFlow` | boolean | yes |  |
-| `mustBeInstalled` | boolean | yes |  |
+| `uniDirectionalFlow` | boolean, nullable | no |  |
+| `mustBeInstalled` | boolean, nullable | no |  |
 | `node1Guid` | string | yes |  |
 | `node1Name` | string | yes |  |
 | `node2Guid` | string | yes |  |
 | `node2Name` | string | yes |  |
 | `networkTechnologyName` | string | yes |  |
 | `networkTechnologyGuid` | string | yes |  |
-| `costComponents` | array of `AdvancedCostComponentResponseDto` | yes |  |
-| `created` | string (date-time), nullable | no |  |
-| `updated` | string (date-time), nullable | no |  |
-| `minimumCapacity` | number, nullable | no |  |
-| `networkLoss` | number | yes |  |
+| `costComponents` | array of `AdvancedCostComponentResponseDto`, nullable | no |  |
+| `minimumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `networkLoss` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `networkLossProfileId` | integer (int64), nullable | no |  |
 
 **Example request**
@@ -402,7 +399,6 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_2/scenarios/{sc
   -d '{
   "installedCapacity": 0.0,
   "maximumCapacity": 0.0,
-  "networkLinkGuid": "string",
   "name": "string",
   "length": 0.0,
   "technologyCapacity": "optimize",
@@ -429,8 +425,6 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_2/scenarios/{sc
       "categoryId": "string"
     }
   ],
-  "created": "2026-01-01T00:00:00Z",
-  "updated": "2026-01-01T00:00:00Z",
   "minimumCapacity": 0.0,
   "networkLoss": 0.0,
   "networkLossProfileId": 0

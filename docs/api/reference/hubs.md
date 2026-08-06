@@ -211,14 +211,11 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.hubs.updat
 | --- | --- | --- | --- | --- |
 | `guid` | path | string | yes |  |
 
-**Request body** (`HubResponseDto`)
+**Request body** (`HubRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `hubGuid` | string | yes |  |
 | `hubName` | string | yes |  |
-| `updated` | string (date-time) | yes |  |
-| `created` | string (date-time) | yes |  |
 
 **Example request**
 
@@ -227,10 +224,7 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2/scenarios/hubs/
   -H "Authorization: Bearer $SYMPHENY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-  "hubGuid": "string",
-  "hubName": "string",
-  "updated": "2026-01-01T00:00:00Z",
-  "created": "2026-01-01T00:00:00Z"
+  "hubName": "string"
 }'
 ```
 

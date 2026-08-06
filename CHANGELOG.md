@@ -7,91 +7,86 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Docs
-- Copy-editing pass over the whole web app section: sentence fragments joined or given a verb,
-  stray and missing commas fixed, subject/verb agreement corrected, and repeated wording removed.
-  Covers the overview, Getting started, the step-by-step guide, Concepts, Parameters, Advanced
-  workflows, FAQs, and the historical release notes.
-- US English is now the single spelling convention in the docs, matching the existing
-  "optimization"/"organization": "modelling"/"modelled" → "modeling"/"modeled", "labelled" →
-  "labeled", and "Reinitialise" → "Reinitialize". Also normalized "geojson" → "GeoJSON",
-  "Stand-by" → "Standby", "Time varying" → "Time-varying", "at log in" → "at login", and
-  "10kWh"/"10kW" → "10 kWh"/"10 kW".
-- Numbered instructions on the Energy demands step, Supply technologies step, and RAMP tool suite
-  pages render as one continuous list again. Their images and sub-lists were indented by three
-  spaces, which split each list into several `<ol>` elements that restarted the numbering at 1.
-- The Generate profile instructions on the Energy demands step page now follow the three steps the
-  dialog actually has (Select Type, Select Profile, Preview Profile) instead of four items, and
-  each screenshot sits under the step it shows.
-- The web app documentation is restructured, and the rewritten tree now replaces the previous
-  `docs/web-app/` content. Getting started keeps only Sign up and log in, Structure, and Quick
-  start; a new flat **Step-by-step guide** section holds the project and analysis pages, the eight
-  scenario steps, Execution, and the Results dashboard; the standalone Glossary is folded into
-  **Concepts** as two definition tables; Parameters stays its own section; FAQs and support merge
-  into one **Support** section; and Advanced becomes **Advanced workflows**. Page URLs under
-  `/web-app/` change accordingly (for example `/web-app/how-to/executing-scenarios/` is now
-  `/web-app/step-by-step-guide/execution/`), and the inbound links from the SDK workflow guides
-  were repointed.
-- One name for the product surface across the site: **web app** (previously a mix of "web app",
-  "web application", and "Web Application"). Applied to page titles, prose, and the nav labels in
-  `zensical.toml`.
-- Page file names now match their titles (kebab-case) across every section:
-  `ai/mcp.md` → `ai/mcp-server-setup.md`,
-  `sdk/workflows/scenario-from-excel.md` → `create-scenario-from-excel.md`, and a set of renames
-  inside the restructured web app tree. Surface roots (`api/`, `sdk/`, `ai/`, `web-app/`), the site
-  home, and release-note file names are documented exceptions.
-- New writing conventions in the docs skill, and the whole corpus swept to match them: no em-dashes
-  or en-dashes in page content, direct language with no hedges or marketing adjectives, filenames as
-  the kebab-case of their nav title with a matching H1, and a closed tag vocabulary of one surface
-  tag plus one topic tag that follows the page's section.
-- Empty cells in the generated REST API response tables now read `n/a` instead of a dash, and the
-  unofficial-endpoint docstrings are prefixed `UNOFFICIAL:` instead of `UNOFFICIAL —`, which changes
-  the corresponding SDK reference pages.
-- The documentation site now lives at [docs.sympheny.com](https://docs.sympheny.com): `site_url`
-  and all hardcoded links updated from the github.io URL, and a `Documentation` URL added to the
-  PyPI project metadata. Deployment still goes through GitHub Pages (the custom domain is
-  configured in the repository's Pages settings).
+## [3.0.0] - 2026-08-06
 
-## [3.0.0b1] - 2026-07-10
+The v3 release: the SDK now wraps exactly the endpoints of the official OpenAPI export, regenerated
+from the current webapp spec, and the documentation moves to a full site at
+[docs.sympheny.com](https://docs.sympheny.com). Changes below are relative to 2.1.0.
 
-First beta of v3: the documentation site, plus one breaking error-handling change in the client.
+### Removed
+- **Breaking:** `client.unofficial` and every endpoint it exposed. The SDK now wraps only
+  endpoints present in the official OpenAPI export; the missing ones (scenario-Excel upload,
+  specs generation) have been requested from the backend team.
+- **Breaking:** the workflows built on those endpoints — `create_scenario_from_excel`,
+  `create_variants_from_excel`, `create_variants_from_dict`, `get_variants_dict`,
+  `generate_input_file`, `create_enymap_scenario`, `get_demand_profile` — and their constants
+  (`VARIANTS_SHEET`, `PROFILES_SHEET`, `ENYMAP_*`).
+- **Breaking:** the Excel helpers that only served those workflows: `excel.build_variants_workbook`,
+  `excel.read_profile_input_sheet`, and `excel.PROFILE_LENGTH`.
+- `KNOWN_ISSUES.md` (added in 2.1.0): every tracked API issue is fixed upstream (verified against
+  the API on 2026-08-06), and the corresponding client-side workarounds are gone from the SDK.
+- The manual `renameScenario`/`copyScenario` path patching in `scripts/merge_openapi.py`: both
+  operations are present in the upstream webapp export.
 
 ### Changed
+- **Breaking:** the public spec and models are regenerated from the current webapp OpenAPI export,
+  in which every body-carrying PUT endpoint has a dedicated request DTO (no server-owned audit
+  timestamps or other response-only fields). Every `update()` method now takes the matching model —
+  for example `Hubs.update` takes `HubRequestDtoPUT` (was `HubResponseDto`), `Stages.update` takes
+  `StageCore`, and the remaining updates take their respective `*RequestDtoPUT` DTOs.
 - **Breaking:** HTTP 403 responses now raise the new `PermissionDeniedError` (the authenticated
   user may not perform the action) instead of `AuthenticationError`, which is now raised only for
   HTTP 401 (missing/invalid/expired token). Both remain `APIError` subclasses; code catching
   `AuthenticationError` for 403s must switch to `PermissionDeniedError`.
+- Response fields the API can legitimately return as null (for example
+  `NetworkLinkResponseDtoV2.network_loss` and `EnergyCarrierResponseDto.color_hex_code`) are now
+  optional in the generated models, so strictly validated reads no longer fail on scenarios with
+  unset values. Cost/CO2/capacity numerics document the backend's 5-decimal limit
+  (`multipleOf: 1e-05`) in the spec.
+- `Scenarios.copy` now documents that `name` is honoured with and without
+  `analysis_destination_guid`, matching the fixed backend behavior.
 - Moved the OpenAPI specs (`sympheny_openapi.json` and the git-ignored upstream exports) from
-  `docs/` to `specs/`, and `KNOWN_ISSUES.md` from `docs/` to the repo root — `docs/` now holds only
-  documentation-site content.
+  `docs/` to `specs/` — `docs/` now holds only documentation-site content.
+- Internal client modules are flattened to one file per resource (for example `_async/energy.py`
+  becomes `energy_carriers.py`, `impex.py`, `profiles.py`, `energy_demands.py`, and
+  `solar_resources.py`). Purely a code-layout change — the resource groups on the client and every
+  public import are unchanged.
+- Agent tooling: the repo's process rules are split into skills under `.agents/skills/`
+  (`docs`, `sdk-change`, `release`), with `AGENTS.md` reduced to the binding rules and an index.
+
+### Added
+- `scripts/fetch_webapp_openapi.py` (maintainer-only): downloads the current webapp OpenAPI export
+  and prints the operations and schemas that changed against the one on disk.
 
 ### Docs
-- Added the documentation site (Zensical, `docs/` + `zensical.toml`), with four surfaces: Web
-  Application, REST API, Python SDK, and Use with AI. Built strict (`--clean --strict`, broken
-  links fail) as a PR check and deployed to GitHub Pages on push to `main`
-  (`.github/workflows/docs.yml`).
-- Migrated the entire Sympheny Help Center (Confluence) into the Web Application tab: all 76 pages
+- Added the documentation site (Zensical, `docs/` + `zensical.toml`) at
+  [docs.sympheny.com](https://docs.sympheny.com), with four surfaces: Web app, REST API, Python
+  SDK, and Use with AI. Built strict (`--clean --strict`, broken links fail) as a PR check and
+  deployed to GitHub Pages on push to `main` (`.github/workflows/docs.yml`). A `Documentation` URL
+  was added to the PyPI metadata.
+- Migrated the entire Sympheny Help Center (Confluence) into the Web app tab: all 76 pages
   accounted for, rewritten to the docs style guide — 169 images optimized, the 18 screencasts the
   export had dropped plus all spreadsheet/data attachments re-hosted on S3, every dead V2/Confluence
   link purged, quickstart completed, glossary rebuilt as a linked index, outdated tutorials
-  deliberately dropped. Full page-by-page account in `migration-report.md`.
-- Added the generated REST API reference (`scripts/generate_api_reference.py`: 19 pages, 87
-  operations from `specs/sympheny_openapi.json`, plus a served spec copy for the Scalar-based API
-  explorer) and the generated SDK reference (19 resource pages, 104 methods, grouped model pages,
-  from the async client source) — cross-linked both ways via `docs/_data/sdk_map.yml`, with
-  stale-generation and drift checks (`check_sdk_docs_drift.py`) run on every PR. The sync client is
-  deliberately not documented separately; every example carries linked Sync/Async tabs.
+  deliberately dropped. The section is organized as Getting started, a flat Step-by-step guide
+  (project and analysis pages, the eight scenario steps, Execution, Results dashboard), Concepts,
+  Parameters, Advanced workflows, and Support.
+- Added the generated REST API reference (`scripts/generate_api_reference.py`, one page per tag
+  from `specs/sympheny_openapi.json`) and the generated SDK reference (one page per resource group
+  plus grouped model pages, from the async client source) — cross-linked both ways via
+  `docs/_data/sdk_map.yml`, with stale-generation and drift checks
+  (`scripts/check_sdk_docs_drift.py`) run on every PR. The sync client is deliberately not
+  documented separately; every example carries linked Sync/Async tabs.
 - Hand-wrote the REST API overview and authentication guide, the SDK index (install, quickstart,
-  error hierarchy, sync-vs-async explainer), and three end-to-end SDK workflow guides (scenario
-  from Excel, run and poll a solver job, download results).
+  error hierarchy, sync-vs-async explainer), and the end-to-end SDK workflow guides.
+- Added the AI surface: `llms.txt`/`llms-full.txt` generated into the built site
+  (`scripts/generate_llms_txt.py`), an MCP setup page (placeholder until the server ships), the
+  Scalar API explorer (`docs/api/explorer.html`, its own nav entry under REST API), a dismissible
+  beta banner pointing to the legacy docs, cookie-consent config, and footer Support/Privacy links.
 - Branded the site with the Sympheny palette and wordmark (system/light/dark schemes), added the
   icon-card landing page, deduplicated the sidebar via `navigation.indexes`, and tagged every
   hand-written page with a small controlled search-tag vocabulary.
-- Added the AI surface: `llms.txt`/`llms-full.txt` generated into the built site
-  (`scripts/generate_llms_txt.py`), an MCP setup page (placeholder until the server ships), the
-  Scalar API explorer (`docs/api/explorer.html`, not in nav, no third-party proxy), a dismissible
-  beta banner pointing to the legacy docs, cookie-consent config (no analytics wired yet), and
-  footer Support/Privacy links.
+- Condensed `README.md` to install, quick start, and pointers into the documentation site.
 
 ## [2.1.0] - 2026-07-04
 
@@ -120,5 +115,5 @@ First beta of v3: the documentation site, plus one breaking error-handling chang
 
 - Rewritten as a typed API client generated from the OpenAPI spec, with parallel async/sync clients.
 
-[3.0.0b1]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v3.0.0b1
+[3.0.0]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v3.0.0
 [2.1.0]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v2.1.0

@@ -1,0 +1,65 @@
+"""Operations on technology packages of the Sympheny platform API (``technology-package-controller``)."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from sympheny_toolbox._envelope import dump, unwrap
+from sympheny_toolbox.models import (
+    ResponseDtoTechnologyPackageListResponseDto,
+    ResponseDtoTechnologyPackageListResponseDtoV2,
+    ResponseDtoTechnologyPackageResponseDtoV2,
+    TechnologyPackageListResponseDto,
+    TechnologyPackageListResponseDtoV2,
+    TechnologyPackageRequestDtoPUT,
+    TechnologyPackageRequestDtoV2,
+    TechnologyPackageResponseDtoV2,
+)
+
+
+if TYPE_CHECKING:
+    from sympheny_toolbox._async._transport import AsyncTransport
+
+
+class AsyncTechnologyPackages:
+    """Operations on technology packages (``technology-package-controller``)."""
+
+    def __init__(self, transport: AsyncTransport) -> None:
+        self._t = transport
+
+    async def create(self, scenario_guid: str, request: TechnologyPackageRequestDtoV2) -> TechnologyPackageResponseDtoV2:
+        """Create a technology package in a scenario. ``POST /sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages``"""
+        raw = await self._t.request_json("POST", f"/sympheny-app/v2_1/scenarios/{scenario_guid}/technology-packages", json=dump(request))
+        envelope = ResponseDtoTechnologyPackageResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def list(self, scenario_guid: str) -> TechnologyPackageListResponseDtoV2:
+        """List the technology packages of a scenario. ``GET /sympheny-app/v2/scenarios/{scenarioGuid}/technology-packages``"""
+        raw = await self._t.request_json("GET", f"/sympheny-app/v2/scenarios/{scenario_guid}/technology-packages")
+        envelope = ResponseDtoTechnologyPackageListResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def get(self, scenario_guid: str, package_guid: str) -> TechnologyPackageResponseDtoV2:
+        """Get technology package details. ``GET /sympheny-app/v2/scenarios/{scenarioGuid}/technology-packages/{guid}``"""
+        raw = await self._t.request_json("GET", f"/sympheny-app/v2/scenarios/{scenario_guid}/technology-packages/{package_guid}")
+        envelope = ResponseDtoTechnologyPackageResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def update(self, scenario_guid: str, package_guid: str, request: TechnologyPackageRequestDtoPUT) -> TechnologyPackageResponseDtoV2:
+        """Update a technology package. ``PUT /sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages/{guid}``"""
+        raw = await self._t.request_json(
+            "PUT", f"/sympheny-app/v2_1/scenarios/{scenario_guid}/technology-packages/{package_guid}", json=dump(request)
+        )
+        envelope = ResponseDtoTechnologyPackageResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def delete(self, scenario_guid: str, package_guid: str, *, delete_techs: bool | None = None) -> TechnologyPackageListResponseDto:
+        """Delete a technology package. ``DELETE /sympheny-app/scenarios/{scenarioGuid}/technology-packages/{guid}``"""
+        params: dict[str, bool] = {}
+        if delete_techs is not None:
+            params["deleteTechs"] = delete_techs
+        raw = await self._t.request_json(
+            "DELETE", f"/sympheny-app/scenarios/{scenario_guid}/technology-packages/{package_guid}", params=params or None
+        )
+        envelope = ResponseDtoTechnologyPackageListResponseDto.model_validate(raw)
+        return unwrap(envelope.data)

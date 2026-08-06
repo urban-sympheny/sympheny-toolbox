@@ -283,8 +283,8 @@ curl -X GET "https://eu-north-1-api.sympheny.com/sympheny-app/v2/scenarios/{scen
           "customInputEfficiencyActivated": true,
           "customSeasonalityValues": [
             {
-              "month": "JANUARY",
-              "value": 0.0
+              "month": null,
+              "value": null
             }
           ],
           "outputEfficiencyProfileId": 0,
@@ -340,39 +340,36 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.network_te
 | --- | --- | --- | --- | --- |
 | `guid` | path | string | yes |  |
 
-**Request body** (`NetworkTechnologyResponseDtoV2`)
+**Request body** (`NetworkTechnologyRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fixedInvestmentCost` | number, nullable | no |  |
-| `variableInvestmentCost` | number, nullable | no |  |
-| `fixedOmCostChf` | number, nullable | no |  |
-| `variableOmCostPercent` | number, nullable | no |  |
-| `variableOmCostYear` | number, nullable | no |  |
-| `variableOmCostCHFkWh` | number, nullable | no |  |
-| `fixedEmbodiedCo2` | number, nullable | no |  |
-| `variableEmbodiedCo2` | number, nullable | no |  |
-| `fixedReplacementCost` | number, nullable | no |  |
-| `variableReplacementCostPercent` | number | yes |  |
-| `variableReplacementCostCHF` | number, nullable | no |  |
-| `fixedSalvageValue` | number, nullable | no |  |
-| `variableSalvageValuePercent` | number | yes |  |
-| `variableSalvageValueCHF` | number, nullable | no |  |
-| `networkTechnologyGuid` | string, nullable | no |  |
+| `fixedInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedOmCostChf` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostYear` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostCHFkWh` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedReplacementCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostPercent` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedSalvageValue` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValuePercent` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValueCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `networkTechnologyName` | string | yes |  |
 | `exchangeCurrency` | string | yes |  |
-| `exchangeRate` | number | yes |  |
+| `exchangeRate` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `lifetime` | integer (int32) | yes |  |
-| `created` | string (date-time), nullable | no |  |
-| `updated` | string (date-time), nullable | no |  |
-| `energyCarrier` | `EnergyCarrierResponseDto` | yes |  |
+| `energyCarrier` | `EnergyCarrierRequestDtoPUTId` | yes |  |
 | `category` | string | yes |  |
 | `technologyCategory` | string, nullable | no |  |
 | `notes` | string, nullable | no |  |
 | `source` | string, nullable | no |  |
 | `networkSize` | string, nullable | no |  |
 | `comesFromDb` | string, nullable | no |  |
-| `costComponents` | array of `AdvancedCostComponentResponseDto` | yes |  |
+| `costComponents` | array of `AdvancedCostComponentResponseDto`, nullable | no |  |
 | `stages` | array of string (uuid) | yes |  |
 
 **Example request**
@@ -396,34 +393,12 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_1/scenarios/net
   "fixedSalvageValue": 0.0,
   "variableSalvageValuePercent": 0.0,
   "variableSalvageValueCHF": 0.0,
-  "networkTechnologyGuid": "string",
   "networkTechnologyName": "string",
   "exchangeCurrency": "string",
   "exchangeRate": 0.0,
   "lifetime": 0,
-  "created": "2026-01-01T00:00:00Z",
-  "updated": "2026-01-01T00:00:00Z",
   "energyCarrier": {
-    "energyCarrierGuid": "string",
-    "typeKey": "string",
-    "typeDisplayName": "string",
-    "subtypeKey": "string",
-    "subtypeDisplayName": "string",
-    "energyCarrierName": "string",
-    "colorHexCode": "string",
-    "fixedInputShare": 0.0,
-    "outputEfficiency": 0.0,
-    "customOutputEfficiencyActivated": true,
-    "customInputEfficiencyActivated": true,
-    "customSeasonalityValues": [
-      {
-        "month": "JANUARY",
-        "value": 0.0
-      }
-    ],
-    "outputEfficiencyProfileId": 0,
-    "created": "2026-01-01T00:00:00Z",
-    "primary": true
+    "energyCarrierGuid": "string"
   },
   "category": "string",
   "technologyCategory": "string",
@@ -557,20 +532,20 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.network_te
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `fixedInvestmentCost` | number, nullable | no |  |
-| `variableInvestmentCost` | number, nullable | no |  |
-| `fixedOmCostChf` | number, nullable | no |  |
-| `variableOmCostPercent` | number, nullable | no |  |
-| `variableOmCostYear` | number, nullable | no |  |
-| `variableOmCostCHFkWh` | number, nullable | no |  |
-| `fixedEmbodiedCo2` | number, nullable | no |  |
-| `variableEmbodiedCo2` | number, nullable | no |  |
-| `fixedReplacementCost` | number, nullable | no |  |
-| `variableReplacementCostPercent` | number, nullable | no |  |
-| `variableReplacementCostCHF` | number, nullable | no |  |
-| `fixedSalvageValue` | number, nullable | no |  |
-| `variableSalvageValuePercent` | number, nullable | no |  |
-| `variableSalvageValueCHF` | number, nullable | no |  |
+| `fixedInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedOmCostChf` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostYear` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCostCHFkWh` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedReplacementCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedSalvageValue` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValuePercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValueCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `networkTechnologyName` | string | yes |  |
 | `lifetime` | integer (int32) | yes |  |
 | `energyCarrierGuid` | string | yes |  |
@@ -582,7 +557,7 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.network_te
 | `source` | string, nullable | no |  |
 | `comesFromDb` | string, nullable | no |  |
 | `exchangeCurrency` | string, nullable | no |  |
-| `exchangeRate` | number, nullable | no |  |
+| `exchangeRate` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `stages` | array of string (uuid) | yes |  |
 
 **Example request**

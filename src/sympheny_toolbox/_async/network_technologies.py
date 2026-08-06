@@ -1,0 +1,58 @@
+"""Operations on network technologies of the Sympheny platform API (``network-technology-controller``)."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from sympheny_toolbox._envelope import dump, unwrap
+from sympheny_toolbox.models import (
+    NetworkTechnologyListResponseDto,
+    NetworkTechnologyListResponseDtoV2,
+    NetworkTechnologyRequestDtoPUT,
+    NetworkTechnologyRequestDtoV2,
+    NetworkTechnologyResponseDtoV2,
+    ResponseDtoNetworkTechnologyListResponseDto,
+    ResponseDtoNetworkTechnologyListResponseDtoV2,
+    ResponseDtoNetworkTechnologyResponseDtoV2,
+)
+
+
+if TYPE_CHECKING:
+    from sympheny_toolbox._async._transport import AsyncTransport
+
+
+class AsyncNetworkTechnologies:
+    """Operations on network technologies (``network-technology-controller``)."""
+
+    def __init__(self, transport: AsyncTransport) -> None:
+        self._t = transport
+
+    async def create(self, scenario_guid: str, request: NetworkTechnologyRequestDtoV2) -> NetworkTechnologyResponseDtoV2:
+        """Create a network technology in a scenario. ``POST /sympheny-app/v2_1/scenarios/{scenarioGuid}/network-technologies``"""
+        raw = await self._t.request_json("POST", f"/sympheny-app/v2_1/scenarios/{scenario_guid}/network-technologies", json=dump(request))
+        envelope = ResponseDtoNetworkTechnologyResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def list(self, scenario_guid: str) -> NetworkTechnologyListResponseDtoV2:
+        """List the network technologies of a scenario. ``GET /sympheny-app/v2/scenarios/{scenarioGuid}/network-technologies``"""
+        raw = await self._t.request_json("GET", f"/sympheny-app/v2/scenarios/{scenario_guid}/network-technologies")
+        envelope = ResponseDtoNetworkTechnologyListResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def get(self, technology_guid: str) -> NetworkTechnologyResponseDtoV2:
+        """Get network technology details. ``GET /sympheny-app/v2/scenarios/network-technologies/{guid}``"""
+        raw = await self._t.request_json("GET", f"/sympheny-app/v2/scenarios/network-technologies/{technology_guid}")
+        envelope = ResponseDtoNetworkTechnologyResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def update(self, technology_guid: str, request: NetworkTechnologyRequestDtoPUT) -> NetworkTechnologyResponseDtoV2:
+        """Update a network technology. ``PUT /sympheny-app/v2_1/scenarios/network-technologies/{guid}``"""
+        raw = await self._t.request_json("PUT", f"/sympheny-app/v2_1/scenarios/network-technologies/{technology_guid}", json=dump(request))
+        envelope = ResponseDtoNetworkTechnologyResponseDtoV2.model_validate(raw)
+        return unwrap(envelope.data)
+
+    async def delete(self, technology_guid: str) -> NetworkTechnologyListResponseDto:
+        """Delete a network technology; returns the remaining network technologies. ``DELETE /sympheny-app/scenarios/network-technologies/{guid}``"""
+        raw = await self._t.request_json("DELETE", f"/sympheny-app/scenarios/network-technologies/{technology_guid}")
+        envelope = ResponseDtoNetworkTechnologyListResponseDto.model_validate(raw)
+        return unwrap(envelope.data)
