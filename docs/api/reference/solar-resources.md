@@ -315,17 +315,14 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.solar_reso
 | --- | --- | --- | --- | --- |
 | `guid` | path | string | yes |  |
 
-**Request body** (`SolarOnSiteResourceResponseDtoV2`)
+**Request body** (`SolarOnSiteResourceRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `name` | string | yes |  |
-| `solarResourceGuid` | string, nullable | no |  |
 | `energyCarrierGuid` | string | yes |  |
 | `energyCarrierName` | string | yes |  |
-| `hubs` | array of `HubSolarOnSiteResourceResponseDtoV2` | yes |  |
-| `created` | string (date-time), nullable | no |  |
-| `updated` | string (date-time), nullable | no |  |
+| `hubs` | array of `HubSolarOnSiteResourceRequestDtoPUT` | yes |  |
 | `irradianceProfileType` | string | yes | One of: `GENERATED`, `UPLOADED`, `SAVED`. |
 | `solarResourceMetadataName` | string, nullable | no |  |
 | `solarResourceMetadataDbOrganization` | string, nullable | no |  |
@@ -345,19 +342,15 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_2/scenarios/sol
   -H "Content-Type: application/json" \
   -d '{
   "name": "string",
-  "solarResourceGuid": "string",
   "energyCarrierGuid": "string",
   "energyCarrierName": "string",
   "hubs": [
     {
-      "hubName": "string",
       "hubGuid": "string",
       "availableSolarCollectorArea": 0.0,
       "availableResourceType": "Area"
     }
   ],
-  "created": "2026-01-01T00:00:00Z",
-  "updated": "2026-01-01T00:00:00Z",
   "irradianceProfileType": "GENERATED",
   "solarResourceMetadataName": "string",
   "solarResourceMetadataDbOrganization": "string",

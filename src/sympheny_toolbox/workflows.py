@@ -1,8 +1,8 @@
 """High-level Sympheny workflows built on top of the synchronous client.
 
-These helpers combine multiple API calls into common automation flows (scenario
-creation from Excel, execution with polling, result download, ...). They operate
-on a [Sympheny][sympheny_toolbox._sync.client.Sympheny] client instance and are synchronous only.
+These helpers combine multiple API calls into common automation flows (lookups by
+name, execution with polling, result download, ...). They operate on a
+[Sympheny][sympheny_toolbox._sync.client.Sympheny] client instance and are synchronous only.
 """
 
 from __future__ import annotations
@@ -32,7 +32,6 @@ from sympheny_toolbox.models import (
 
 if TYPE_CHECKING:
     from collections.abc import Callable
-    from pathlib import Path
     from uuid import UUID
 
     from sympheny_toolbox import Sympheny
@@ -40,9 +39,6 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
-
-VARIANTS_SHEET = "Variants"
-PROFILES_SHEET = "Profiles"
 
 INPUT_FILE_SHEETS = [
     "Stages",
@@ -58,11 +54,6 @@ INPUT_FILE_SHEETS = [
     "Network Techs",
     "Network Links",
 ]
-
-ENYMAP_TECH_OPTIONS = ["PV", "HEAT_PUMP", "GAS_BOILER", "CHILLER", "BATTERY", "HOT_WATER_STORAGE"]
-ENYMAP_DEMAND_OPTIONS = ["HOT_WATER", "SPACE_HEATING", "ELECTRICITY", "COOLING"]
-ENYMAP_IMPORT_OPTIONS = ["ELECTRICITY"]
-ENYMAP_EXPORT_OPTIONS = ["HEAT_AMBIENT", "COOLING"]
 
 _DOWNLOAD_TIMEOUT_SEC = 60.0
 _DOWNLOAD_RETRIES = 3
@@ -127,51 +118,6 @@ def dashboard_url(client: Sympheny, scenario_guid: str) -> str | None:
     if hubs and stages and hubs[0].hub_name and stages[0].name:
         url += "?" + urlencode({"hub": hubs[0].hub_name, "stage": stages[0].name}, quote_via=quote)
     return url
-
-
-# -- scenario creation from Excel ---------------------------------------------
-
-
-def create_scenario_from_excel(client: Sympheny, excel_path: str | Path, scenario_name: str, analysis_guid: str) -> str:
-    """Upload a scenario Excel file and create a scenario from it; returns the scenario GUID."""
-    upload_url = client.unofficial.get_upload_url()
-    with open(excel_path, "rb") as file:
-        client.unofficial.upload_to_presigned_url(upload_url, file.read())
-    return client.unofficial.create_scenario_from_excel_url(upload_url, scenario_name, analysis_guid)
-
-
-def create_variants_from_excel(client: Sympheny, excel_path: str | Path, master_scenario_guid: str) -> Any:
-    """Upload a variants Excel file and (re)create the scenario variants of a master scenario."""
-    upload_url = client.unofficial.get_upload_url()
-    with open(excel_path, "rb") as file:
-        client.unofficial.upload_to_presigned_url(upload_url, file.read())
-    return client.unofficial.create_variants_from_excel_url(upload_url, master_scenario_guid)
-
-
-def create_variants_from_dict(client: Sympheny, variants: dict[str, Any] | list[dict[str, Any]], master_scenario_guid: str) -> Any:
-    """Create scenario variants from in-memory data instead of an Excel file.
-
-    ``variants`` is either a plain list of variant records, or a dict with keys
-    ``"Variants"`` (list of records) and ``"Profiles"`` (mapping of profile name
-    to 8760 hourly values).
-    """
-    if isinstance(variants, dict):
-        content = excel.build_variants_workbook(variants[VARIANTS_SHEET], variants.get(PROFILES_SHEET) or None)
-    else:
-        content = excel.build_variants_workbook(variants)
-    upload_url = client.unofficial.get_upload_url()
-    client.unofficial.upload_to_presigned_url(upload_url, content)
-    return client.unofficial.create_variants_from_excel_url(upload_url, master_scenario_guid)
-
-
-def get_variants_dict(client: Sympheny, master_scenario_guid: str) -> dict[str, Any]:
-    """Download the variants Excel of a master scenario as ``{"Variants": [...], "Profiles": {...}}``."""
-    content = _download(client.unofficial.get_variants_excel_url(master_scenario_guid))
-    variants = excel.read_records(content, [VARIANTS_SHEET])[VARIANTS_SHEET]
-    profiles: dict[str, list[float]] = {}
-    if PROFILES_SHEET in excel.sheet_names(content):
-        profiles = excel.read_profile_input_sheet(content, PROFILES_SHEET)
-    return {VARIANTS_SHEET: variants, PROFILES_SHEET: profiles}
 
 
 # -- execution ----------------------------------------------------------------
@@ -293,20 +239,6 @@ def execute_scenario(
     return execute_scenarios(client, [request], poll_interval_sec=poll_interval_sec)[0]
 
 
-def generate_input_file(client: Sympheny, scenario_guid: str, *, poll_interval_sec: float = 5.0, timeout_sec: float = 100.0) -> str:
-    """Trigger input-file generation for a scenario and return the file URL once available."""
-    client.unofficial.generate_specs([scenario_guid])
-    scenario = client.scenarios.get(scenario_guid)
-
-    def fetch_input_filepath() -> str | None:
-        analysis = client.unofficial.get_analysis(str(scenario.analysis_guid))
-        results = analysis["results"]["scenarios"]
-        result = next((s for s in results if s["scenarioName"] == scenario.scenario_name), None)
-        return result["inputFilepath"] if result and result["inputFilepath"] else None
-
-    return wait_until(fetch_input_filepath, wait_sec=poll_interval_sec, timeout_sec=timeout_sec)
-
-
 def get_input_file_dict(client: Sympheny, job_id: str | UUID) -> dict[str, list[dict[str, Any]]]:
     """Download the input Excel file of a solver job as ``{sheet: [row dicts]}``."""
     job = client.solver_jobs.get(job_id)
@@ -334,81 +266,6 @@ def get_output_file_dict(client: Sympheny, job_id: str | UUID, solution_num: int
     mode_sheets = [name for name in excel.sheet_names(content) if name.startswith("Mode ")]
     result.update(excel.read_profile_sheets(content, mode_sheets))
     return result
-
-
-# -- enymap ---------------------------------------------------------------------
-
-
-def create_enymap_scenario(
-    client: Sympheny,
-    scenario_name: str,
-    analysis_guid: str,
-    techs: list[str],
-    demands: list[str],
-    imports: list[str],
-    exports: list[str],
-    polygon: list[Any],
-    *,
-    poll_interval_sec: float = 5.0,
-    timeout_sec: float = 500.0,
-) -> str:
-    """Create an enymap scenario with GIS hub, demands, and solar resources; returns the scenario GUID."""
-    for values, options in [
-        (techs, ENYMAP_TECH_OPTIONS),
-        (demands, ENYMAP_DEMAND_OPTIONS),
-        (imports, ENYMAP_IMPORT_OPTIONS),
-        (exports, ENYMAP_EXPORT_OPTIONS),
-    ]:
-        _validate_choices(values, options)
-
-    payload = {
-        "scenarioName": scenario_name,
-        "length": 4,
-        "interestRate": 8.4,
-        "exchangeCurrency": "CHF",
-        "exchangeRate": 1.6,
-        "scope": "REGIONAL_NATIONAL",
-        "technologies": techs,
-        "demands": demands,
-        "imports": imports,
-        "exports": exports,
-    }
-    scenario_guid = str(client.unofficial.create_scenario_enymap(analysis_guid, payload)["scenarioGuid"])
-
-    client.unofficial.create_gis_hub(scenario_guid, polygon)
-
-    def gis_hub_ready() -> bool | None:
-        jobs = client.unofficial.gis_background_jobs()
-        return True if jobs and jobs[0]["is_done"] else None
-
-    wait_until(gis_hub_ready, wait_sec=poll_interval_sec, timeout_sec=timeout_sec)
-    client.unofficial.create_demand_solar(scenario_guid)
-    client.unofficial.generate_scenario_specs(scenario_guid)
-    return scenario_guid
-
-
-def _validate_choices(values: list[str], options: list[str]) -> None:
-    if len(set(values)) != len(values):
-        raise ValueError(f"Duplicate values in: {values}")
-    invalid = set(values) - set(options)
-    if invalid:
-        raise ValueError(f"Invalid values found: {invalid}. Acceptable values are: {options}")
-
-
-# -- demand profiles --------------------------------------------------------------
-
-
-def get_demand_profile(client: Sympheny, demand_type: str, building_type: str, construction_end: int, building_area_m2: float) -> list[float]:
-    """Estimate a building's hourly demand profile (8760 values) from the Sympheny demand database."""
-    estimates = client.unofficial.hub_demand(
-        demand_type,
-        building_type,
-        [{"construction_end": construction_end, "building_ground_area": building_area_m2, "nbr_floor": 1}],
-    )
-    total_demand = estimates[0]["totalAnnualDemand"]
-    demand_guid = estimates[0]["energyDemandMetadataGuid"]
-    profile = client.unofficial.get_database_demand_profile(demand_guid)
-    return [entry["demandValue"] * total_demand for entry in profile]
 
 
 # -- polling -----------------------------------------------------------------------

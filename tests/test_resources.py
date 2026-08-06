@@ -170,12 +170,6 @@ def test_solver_jobs_get_parses_file_urls(client: Sympheny, api: MockAPI) -> Non
     assert str(job.output_file.root) == "https://files.test/output.zip"
 
 
-def test_unofficial_get_upload_url(client: Sympheny, api: MockAPI) -> None:
-    api.add("GET", "/sympheny-app/db-update/s3-presigned-url", {"data": {"s3PresignedUrl": "https://s3.test/upload?sig=abc"}})
-
-    assert client.unofficial.get_upload_url() == "https://s3.test/upload?sig=abc"
-
-
 def test_get_scenario_guids_page_default_limit() -> None:
     request = GetScenarioGuidsPage.model_validate({"scenarioGuids": ["scn-1"]})
     assert request.limit == 200

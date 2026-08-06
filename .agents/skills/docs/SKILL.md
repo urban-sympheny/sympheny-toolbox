@@ -48,8 +48,8 @@ is hand-written prose that follows the conventions below.
    the `copyright` footer string and the `extra.consent` description — is
    permitted for their links (Support / Privacy policy / Change cookie
    settings, and the privacy-policy link). One `docs/api/explorer.html` is a
-   standalone non-Markdown page (the Scalar API explorer, kept 2026-07-10,
-   not in the nav) copied verbatim, not Markdown content. There is NO
+   standalone non-Markdown page (the Scalar API explorer, listed in the nav
+   under REST API) copied verbatim, not Markdown content. There is NO
    `extra_javascript` — a snippet was tried 2026-07-10 and reverted after it
    interfered with content tabs. None of these relax the Markdown-only rule
    for pages.
@@ -71,7 +71,15 @@ is hand-written prose that follows the conventions below.
 5. **Don't invent product facts.** If you're unsure how the product behaves,
    write `<!-- TODO(review): <your question> -->` and move on. A gap flagged
    for a human beats a confident hallucination in customer-facing docs.
-6. **Verify before you finish.** Every task ends with the Verification section
+6. **Never silently break a rule, and never just refuse.** When the maintainer
+   asks for something these ground rules or the authoring whitelist forbid (raw
+   HTML, a new markdown extension, hand-editing a generated page, …), stop and
+   ask which they want: **adjust the rule** — extend the whitelist or reword the
+   ground rule in the same change, so the request becomes sanctioned — or a
+   **one-time exception**, done as asked with a small comment at the site marking
+   it as maintainer-sanctioned (in the style of the existing "sanctioned (Phase
+   5c)" notes). Never do either without asking.
+7. **Verify before you finish.** Every task ends with the Verification section
    at the bottom of this file.
 
 ## Looking up Zensical behavior (context7 MCP)
@@ -358,8 +366,8 @@ validate them.
    Zensical's page cache is pre-1.0 and stale cache entries mask or invent
    warnings (CI builds with `--clean` too, per upstream guidance). Everything in `docs/` ends up in the
    built site (Zensical has no `exclude_docs`), which is why `docs/` holds
-   only site content — the OpenAPI specs live in `specs/`, `KNOWN_ISSUES.md`
-   at the repo root. Never add non-documentation files to `docs/`.
+   only site content — the OpenAPI specs live in `specs/`. Never add
+   non-documentation files to `docs/`.
 2. Serve locally and check the touched pages render: tabs toggle, tables fit,
    nav entry appears, search finds the page by its title.
 3. For generated content: `git diff --stat` matches expectations (no churn in

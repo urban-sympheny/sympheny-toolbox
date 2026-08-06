@@ -172,8 +172,8 @@ curl -X DELETE "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/intra
           "customInputEfficiencyActivated": true,
           "customSeasonalityValues": [
             {
-              "month": "JANUARY",
-              "value": 0.0
+              "month": null,
+              "value": null
             }
           ],
           "outputEfficiencyProfileId": 0,
@@ -194,8 +194,8 @@ curl -X DELETE "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/intra
           "customInputEfficiencyActivated": true,
           "customSeasonalityValues": [
             {
-              "month": "JANUARY",
-              "value": 0.0
+              "month": null,
+              "value": null
             }
           ],
           "outputEfficiencyProfileId": 0,
@@ -293,8 +293,8 @@ curl -X GET "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/{scenari
           "customInputEfficiencyActivated": true,
           "customSeasonalityValues": [
             {
-              "month": "JANUARY",
-              "value": 0.0
+              "month": null,
+              "value": null
             }
           ],
           "outputEfficiencyProfileId": 0,
@@ -315,8 +315,8 @@ curl -X GET "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/{scenari
           "customInputEfficiencyActivated": true,
           "customSeasonalityValues": [
             {
-              "month": "JANUARY",
-              "value": 0.0
+              "month": null,
+              "value": null
             }
           ],
           "outputEfficiencyProfileId": 0,
@@ -376,20 +376,17 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.intra_hub_
 | --- | --- | --- | --- | --- |
 | `guid` | path | string | yes |  |
 
-**Request body** (`IntraHubNetworkLinkResponseDto`)
+**Request body** (`IntraHubNetworkLinkRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `intraHubNetworkLinkGuid` | string, nullable | no |  |
 | `name` | string | yes |  |
 | `networkLoss` | number, nullable | no |  |
 | `fixedEmbodiedCo2` | number, nullable | no |  |
-| `inputEnergyCarrier` | `EnergyCarrierResponseDto` | yes |  |
-| `outputEnergyCarrier` | `EnergyCarrierResponseDto` | yes |  |
-| `hubs` | array of `HubResponseDto` | yes |  |
-| `advancedCostComponents` | array of `AdvancedCostComponentResponseDto` | yes |  |
-| `created` | string (date-time), nullable | no |  |
-| `updated` | string (date-time), nullable | no |  |
+| `inputEnergyCarrier` | `EnergyCarrierRequestDtoPUTId` | yes |  |
+| `outputEnergyCarrier` | `EnergyCarrierRequestDtoPUTId` | yes |  |
+| `hubs` | array of `HubRequestDtoPUTId` | yes |  |
+| `advancedCostComponents` | array of `AdvancedCostComponentResponseDto`, nullable | no |  |
 | `stages` | array of string (uuid) | yes |  |
 
 **Example request**
@@ -399,60 +396,18 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2/scenarios/intra
   -H "Authorization: Bearer $SYMPHENY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-  "intraHubNetworkLinkGuid": "string",
   "name": "string",
   "networkLoss": 0.0,
   "fixedEmbodiedCo2": 0.0,
   "inputEnergyCarrier": {
-    "energyCarrierGuid": "string",
-    "typeKey": "string",
-    "typeDisplayName": "string",
-    "subtypeKey": "string",
-    "subtypeDisplayName": "string",
-    "energyCarrierName": "string",
-    "colorHexCode": "string",
-    "fixedInputShare": 0.0,
-    "outputEfficiency": 0.0,
-    "customOutputEfficiencyActivated": true,
-    "customInputEfficiencyActivated": true,
-    "customSeasonalityValues": [
-      {
-        "month": "JANUARY",
-        "value": 0.0
-      }
-    ],
-    "outputEfficiencyProfileId": 0,
-    "created": "2026-01-01T00:00:00Z",
-    "primary": true
+    "energyCarrierGuid": "string"
   },
   "outputEnergyCarrier": {
-    "energyCarrierGuid": "string",
-    "typeKey": "string",
-    "typeDisplayName": "string",
-    "subtypeKey": "string",
-    "subtypeDisplayName": "string",
-    "energyCarrierName": "string",
-    "colorHexCode": "string",
-    "fixedInputShare": 0.0,
-    "outputEfficiency": 0.0,
-    "customOutputEfficiencyActivated": true,
-    "customInputEfficiencyActivated": true,
-    "customSeasonalityValues": [
-      {
-        "month": "JANUARY",
-        "value": 0.0
-      }
-    ],
-    "outputEfficiencyProfileId": 0,
-    "created": "2026-01-01T00:00:00Z",
-    "primary": true
+    "energyCarrierGuid": "string"
   },
   "hubs": [
     {
-      "hubGuid": "string",
-      "hubName": "string",
-      "updated": "2026-01-01T00:00:00Z",
-      "created": "2026-01-01T00:00:00Z"
+      "hubGuid": "string"
     }
   ],
   "advancedCostComponents": [
@@ -470,8 +425,6 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2/scenarios/intra
       "categoryId": "string"
     }
   ],
-  "created": "2026-01-01T00:00:00Z",
-  "updated": "2026-01-01T00:00:00Z",
   "stages": [
     "00000000-0000-0000-0000-000000000000"
   ]

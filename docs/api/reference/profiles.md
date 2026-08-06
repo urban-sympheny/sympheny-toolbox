@@ -56,7 +56,7 @@ POST /sympheny-app/scenarios/{scenarioGuid}/profiles-json
 
 Requires a [Bearer token](../authentication.md). SDK method: [`client.profiles.create()`](../../sdk/reference/profiles.md#method-profiles-create).
 
-requestDto.values list size must be exactly 8760, with period from 1 to 8760, and positive demandValue
+values array size must be exactly 8760, with period from 1 to 8760, and positive demandValue
 
 **Parameters**
 
@@ -203,11 +203,10 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.profiles.u
 | `scenarioGuid` | path | string | yes |  |
 | `profileId` | path | integer (int64) | yes |  |
 
-**Request body** (`ProfileDetailsResponseDto`)
+**Request body** (`ProfileRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `id` | integer (int64), nullable | no |  |
 | `name` | string | yes |  |
 | `values` | array of `ProfilePeriodValueDto` | yes |  |
 
@@ -218,7 +217,6 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2/scenarios/{scen
   -H "Authorization: Bearer $SYMPHENY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-  "id": 0,
   "name": "string",
   "values": [
     {

@@ -275,6 +275,48 @@ curl -X DELETE "https://eu-north-1-api.sympheny.com/sympheny-app/scenario/{scena
 }
 ```
 
+## Get scenario frontend url { #operation-getScenarioFrontendUrl }
+
+```
+GET /sympheny-app/scenario/{scenarioGuid}/frontend-url
+```
+
+Requires a [Bearer token](../authentication.md).
+
+**Parameters**
+
+| Name | In | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| `scenarioGuid` | path | string | yes |  |
+
+**Example request**
+
+```bash
+curl -X GET "https://eu-north-1-api.sympheny.com/sympheny-app/scenario/{scenarioGuid}/frontend-url" \
+  -H "Authorization: Bearer $SYMPHENY_TOKEN"
+```
+
+**Responses**
+
+| Status | Description | Schema |
+| --- | --- | --- |
+| 200 | OK | `ResponseDtoScenarioFrontendUrlResponseDto` |
+
+**Example response** (200)
+
+```json
+{
+  "data": {
+    "frontendUrl": "string"
+  },
+  "status": {
+    "code": "string",
+    "desc": "string",
+    "message": "string"
+  }
+}
+```
+
 ## Copy scenario { #operation-copyScenario }
 
 ```
@@ -288,8 +330,8 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.scenarios.
 | Name | In | Type | Required | Description |
 | --- | --- | --- | --- | --- |
 | `scenarioGuid` | path | string | yes |  |
-| `analysisDestinationGuid` | query | string | no |  |
 | `name` | query | string | no |  |
+| `analysisDestinationGuid` | query | string | no |  |
 
 **Example request**
 

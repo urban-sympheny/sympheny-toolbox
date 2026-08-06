@@ -5,19 +5,24 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from sympheny_toolbox._async._transport import DEFAULT_BASE_URL, DEV_BASE_URL, AsyncTransport
-from sympheny_toolbox._async.energy import AsyncEnergyCarriers, AsyncEnergyDemands, AsyncImpex, AsyncProfiles, AsyncSolarResources
-from sympheny_toolbox._async.projects import AsyncAnalyses, AsyncProjects
-from sympheny_toolbox._async.scenarios import AsyncHubs, AsyncScenarios, AsyncStages
-from sympheny_toolbox._async.solver import AsyncSolverJobs, AsyncUsers
-from sympheny_toolbox._async.technologies import (
-    AsyncConversionTechnologies,
-    AsyncIntraHubNetworkLinks,
-    AsyncNetworkLinks,
-    AsyncNetworkTechnologies,
-    AsyncStorageTechnologies,
-    AsyncTechnologyPackages,
-)
-from sympheny_toolbox._async.unofficial import AsyncUnofficial
+from sympheny_toolbox._async.analyses import AsyncAnalyses
+from sympheny_toolbox._async.conversion_technologies import AsyncConversionTechnologies
+from sympheny_toolbox._async.energy_carriers import AsyncEnergyCarriers
+from sympheny_toolbox._async.energy_demands import AsyncEnergyDemands
+from sympheny_toolbox._async.hubs import AsyncHubs
+from sympheny_toolbox._async.impex import AsyncImpex
+from sympheny_toolbox._async.intra_hub_network_links import AsyncIntraHubNetworkLinks
+from sympheny_toolbox._async.network_links import AsyncNetworkLinks
+from sympheny_toolbox._async.network_technologies import AsyncNetworkTechnologies
+from sympheny_toolbox._async.profiles import AsyncProfiles
+from sympheny_toolbox._async.projects import AsyncProjects
+from sympheny_toolbox._async.scenarios import AsyncScenarios
+from sympheny_toolbox._async.solar_resources import AsyncSolarResources
+from sympheny_toolbox._async.solver_jobs import AsyncSolverJobs
+from sympheny_toolbox._async.stages import AsyncStages
+from sympheny_toolbox._async.storage_technologies import AsyncStorageTechnologies
+from sympheny_toolbox._async.technology_packages import AsyncTechnologyPackages
+from sympheny_toolbox._async.users import AsyncUsers
 
 
 if TYPE_CHECKING:
@@ -29,8 +34,7 @@ class AsyncSympheny:
 
     Authenticates with email/password credentials against the Sympheny API and
     exposes the documented endpoints as typed resource groups, e.g.
-    ``client.projects.list()``. Undocumented endpoints live under
-    ``client.unofficial``.
+    ``client.projects.list()``.
 
     Args:
         username: Sympheny account email address.
@@ -72,7 +76,6 @@ class AsyncSympheny:
         self.intra_hub_network_links = AsyncIntraHubNetworkLinks(self._transport)
         self.solver_jobs = AsyncSolverJobs(self._transport)
         self.users = AsyncUsers(self._transport)
-        self.unofficial = AsyncUnofficial(self._transport)
 
     @property
     def base_url(self) -> str:

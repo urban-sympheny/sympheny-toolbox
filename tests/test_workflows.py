@@ -1,4 +1,4 @@
-"""Tests for the high-level workflows (submit + poll, lookups, Excel flows)."""
+"""Tests for the high-level workflows (submit + poll, lookups, result files)."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Any
 import pytest
 from openpyxl import Workbook
 
-from sympheny_toolbox import excel, workflows
+from sympheny_toolbox import workflows
 from sympheny_toolbox.errors import SymphenyError
 from sympheny_toolbox.models import JobStatus
 
@@ -182,88 +182,6 @@ def test_dashboard_url_returns_none_without_done_job(client: Sympheny, api: Mock
     api.add("POST", "/sense-api/ext/solver/jobs/get-scenarios", [RUNNING_JOB])
 
     assert workflows.dashboard_url(client, "scn-1") is None
-
-
-# -- variants ------------------------------------------------------------------
-
-
-def test_create_variants_from_dict_uploads_workbook(client: Sympheny, api: MockAPI) -> None:
-    api.add("GET", "/sympheny-app/db-update/s3-presigned-url", {"data": {"s3PresignedUrl": "https://s3.test/upload?sig=abc"}})
-    api.add("PUT", "/upload", content=b"")
-    api.add("PUT", "/sympheny-app/scenario-variants-excel", {"data": {"created": 2}})
-
-    result = workflows.create_variants_from_dict(client, [{"Variant name": "V1"}, {"Variant name": "V2"}], "master-1")
-
-    assert result == {"created": 2}
-    upload = next(request for request in api.requests if request.url.host == "s3.test")
-    records = excel.read_records(upload.content, [workflows.VARIANTS_SHEET])[workflows.VARIANTS_SHEET]
-    assert records == [{"Variant name": "V1"}, {"Variant name": "V2"}]
-    assert api.last_json == {"s3PresignedUrl": "https://s3.test/upload?sig=abc", "masterScenarioGuid": "master-1", "deleteExisting": True}
-
-
-def _variants_workbook(*, with_profiles: bool) -> bytes:
-    profiles = {"P1": [1.0, 2.0]} if with_profiles else None
-    return excel.build_variants_workbook([{"Variant name": "V1"}], profiles)
-
-
-def test_get_variants_dict_reads_variants_and_profiles(client: Sympheny, api: MockAPI, monkeypatch: pytest.MonkeyPatch) -> None:
-    api.add("GET", "/sympheny-app/master-scenario/master-1/scenario-variants-excel", {"data": {"s3PresignedUrl": "https://s3.test/dl"}})
-    monkeypatch.setattr(workflows, "_download", lambda url: _variants_workbook(with_profiles=True))
-
-    result = workflows.get_variants_dict(client, "master-1")
-
-    assert result["Variants"] == [{"Variant name": "V1"}]
-    assert result["Profiles"]["P1"][:2] == [1.0, 2.0]
-
-
-def test_get_variants_dict_returns_empty_profiles_when_sheet_absent(client: Sympheny, api: MockAPI, monkeypatch: pytest.MonkeyPatch) -> None:
-    api.add("GET", "/sympheny-app/master-scenario/master-1/scenario-variants-excel", {"data": {"s3PresignedUrl": "https://s3.test/dl"}})
-    monkeypatch.setattr(workflows, "_download", lambda url: _variants_workbook(with_profiles=False))
-
-    result = workflows.get_variants_dict(client, "master-1")
-
-    assert result["Profiles"] == {}
-
-
-# -- input files ---------------------------------------------------------------
-
-
-def test_generate_input_file_polls_until_ready(client: Sympheny, api: MockAPI) -> None:
-    api.add("PUT", "/sympheny-app/v2/specs", None)
-    api.add("GET", "/sympheny-app/scenario/scn-1", SCENARIO_BODY)
-    api.add("GET", "/sympheny-app/analysis/ana-1", {"data": {"results": {"scenarios": [{"scenarioName": "Test scenario", "inputFilepath": None}]}}})
-    api.add(
-        "GET",
-        "/sympheny-app/analysis/ana-1",
-        {"data": {"results": {"scenarios": [{"scenarioName": "Test scenario", "inputFilepath": "https://files.test/input.xlsx"}]}}},
-    )
-
-    url = workflows.generate_input_file(client, "scn-1", poll_interval_sec=0.0)
-
-    assert url == "https://files.test/input.xlsx"
-
-
-# -- enymap --------------------------------------------------------------------
-
-
-def test_create_enymap_scenario_times_out_when_no_gis_job(client: Sympheny, api: MockAPI) -> None:
-    api.add("POST", "/sympheny-app/analysis/ana-1/scenario-enymap", {"data": {"scenarioGuid": "scn-1"}})
-    api.add("POST", "/sympheny-app/scenario-enymap/scn-1/create-gis-hub", {"data": {}})
-    api.add("GET", "/api-services/gis/background", [])
-
-    with pytest.raises(TimeoutError):
-        workflows.create_enymap_scenario(
-            client,
-            "S",
-            "ana-1",
-            techs=["PV"],
-            demands=["ELECTRICITY"],
-            imports=["ELECTRICITY"],
-            exports=["COOLING"],
-            polygon=[],
-            poll_interval_sec=0.0,
-            timeout_sec=0.0,
-        )
 
 
 # -- result files --------------------------------------------------------------

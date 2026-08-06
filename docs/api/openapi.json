@@ -370,6 +370,147 @@
         ]
       }
     },
+    "/sympheny-app/scenarios/{scenarioGuid}": {
+      "put": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "renameScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenario/{scenarioGuid}/frontend-url": {
+      "get": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "getScenarioFrontendUrl",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioFrontendUrlResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/copy/{scenarioGuid}": {
+      "put": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "copyScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "analysisDestinationGuid",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/sympheny-app/scenario/{scenarioGuid}": {
       "get": {
         "tags": [
@@ -594,7 +735,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StageResponseDto"
+                "$ref": "#/components/schemas/StageCore"
               }
             }
           },
@@ -834,7 +975,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/HubResponseDto"
+                "$ref": "#/components/schemas/HubRequestDtoPUT"
               }
             }
           },
@@ -1002,7 +1143,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+                "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUT"
               }
             }
           },
@@ -1199,7 +1340,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ConversionTechnologyDetailResponseDtoV2"
+                "$ref": "#/components/schemas/ConversionTechnologyRequestDtoPUT"
               }
             }
           },
@@ -1367,7 +1508,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StorageTechnologyDetailResponseDtoV2"
+                "$ref": "#/components/schemas/StorageTechnologyRequestDtoPUT"
               }
             }
           },
@@ -1397,6 +1538,7 @@
         "tags": [
           "technology-package-controller"
         ],
+        "description": "conversionTechnologies or storageTechnologies must not be empty",
         "operationId": "specifyTechnologyPackageV2_1",
         "parameters": [
           {
@@ -1528,6 +1670,7 @@
         "tags": [
           "technology-package-controller"
         ],
+        "description": "conversionTechnologies or storageTechnologies must not be empty",
         "operationId": "updateTechnologyPackageV2_1",
         "parameters": [
           {
@@ -1555,7 +1698,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TechnologyPackageResponseDtoV2"
+                "$ref": "#/components/schemas/TechnologyPackageRequestDtoPUT"
               }
             }
           },
@@ -1781,7 +1924,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NetworkTechnologyResponseDtoV2"
+                "$ref": "#/components/schemas/NetworkTechnologyRequestDtoPUT"
               }
             }
           },
@@ -1959,7 +2102,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NetworkLinkResponseDtoV2"
+                "$ref": "#/components/schemas/NetworkLinkRequestDtoPUT"
               }
             }
           },
@@ -2209,7 +2352,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/IntraHubNetworkLinkResponseDto"
+                "$ref": "#/components/schemas/IntraHubNetworkLinkRequestDtoPUT"
               }
             }
           },
@@ -2401,7 +2544,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ImportExportResponseDtoV2"
+                "$ref": "#/components/schemas/ImportExportRequestDtoPUT"
               }
             }
           },
@@ -2482,7 +2625,7 @@
         "tags": [
           "profile-controller"
         ],
-        "description": "requestDto.values list size must be exactly 8760, with period from 1 to 8760, and positive demandValue",
+        "description": "values array size must be exactly 8760, with period from 1 to 8760, and positive demandValue",
         "operationId": "createJson",
         "parameters": [
           {
@@ -2682,7 +2825,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProfileDetailsResponseDto"
+                "$ref": "#/components/schemas/ProfileRequestDtoPUT"
               }
             }
           },
@@ -2871,7 +3014,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EnergyDemandResponseDtoV2"
+                "$ref": "#/components/schemas/EnergyDemandRequestDtoPUT"
               }
             }
           },
@@ -3077,7 +3220,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SolarOnSiteResourceResponseDtoV2"
+                "$ref": "#/components/schemas/SolarOnSiteResourceRequestDtoPUT"
               }
             }
           },
@@ -3275,110 +3418,6 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDtoStatus"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/copy/{scenarioGuid}": {
-      "put": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "copyScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "analysisDestinationGuid",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}": {
-      "put": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "renameScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScenarioRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
                 }
               }
             }
@@ -5362,6 +5401,42 @@
           }
         }
       },
+      "ResponseDtoScenarioFrontendUrlResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ScenarioFrontendUrlResponseDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Status"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "ScenarioFrontendUrlResponseDto": {
+        "type": "object",
+        "properties": {
+          "frontendUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
       "ResponseDtoListFScenarioResponseDto": {
         "type": "object",
         "properties": {
@@ -5446,17 +5521,21 @@
       },
       "StageResponseDto": {
         "required": [
-          "index",
-          "length",
-          "name"
+          "index"
         ],
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "length": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int32"
           },
           "interestRate": {
@@ -5508,6 +5587,39 @@
           }
         }
       },
+      "StageCore": {
+        "required": [
+          "index",
+          "length",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "length": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "interestRate": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "inflationRate": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "HubRequestDto": {
         "required": [
           "hubName"
@@ -5547,26 +5659,32 @@
         }
       },
       "HubResponseDto": {
-        "required": [
-          "created",
-          "hubGuid",
-          "hubName",
-          "updated"
-        ],
         "type": "object",
         "properties": {
           "hubGuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "hubName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "updated": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time"
           },
           "created": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time"
           }
         }
@@ -5592,6 +5710,17 @@
                 "type": "null"
               }
             ]
+          }
+        }
+      },
+      "HubRequestDtoPUT": {
+        "required": [
+          "hubName"
+        ],
+        "type": "object",
+        "properties": {
+          "hubName": {
+            "type": "string"
           }
         }
       },
@@ -5688,40 +5817,49 @@
         }
       },
       "EnergyCarrierResponseDto": {
-        "required": [
-          "colorHexCode",
-          "created",
-          "customInputEfficiencyActivated",
-          "customOutputEfficiencyActivated",
-          "energyCarrierGuid",
-          "energyCarrierName",
-          "subtypeDisplayName",
-          "subtypeKey",
-          "typeDisplayName",
-          "typeKey"
-        ],
         "type": "object",
         "properties": {
           "energyCarrierGuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "typeKey": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "typeDisplayName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "subtypeKey": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "subtypeDisplayName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "energyCarrierName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "colorHexCode": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "fixedInputShare": {
             "type": [
@@ -5736,10 +5874,16 @@
             ]
           },
           "customOutputEfficiencyActivated": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "customInputEfficiencyActivated": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "customSeasonalityValues": {
             "type": [
@@ -5758,7 +5902,10 @@
             "format": "int64"
           },
           "created": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time"
           },
           "primary": {
@@ -5840,6 +5987,67 @@
           }
         }
       },
+      "EnergyCarrierRequestDtoPUT": {
+        "required": [
+          "energyCarrierName",
+          "subtypeKey"
+        ],
+        "type": "object",
+        "properties": {
+          "subtypeKey": {
+            "type": "string",
+            "enum": [
+              "ELECTRICITY",
+              "ELECTRICITY_RENEWABLE",
+              "WOOD_CHIPS",
+              "WOOD_PELLETS",
+              "COAL",
+              "OIL",
+              "GAS",
+              "BIOGAS",
+              "HYDROGEN",
+              "HYDROGEN_PRESSURIZED",
+              "COOLING_1",
+              "COOLING_2",
+              "COOLING_3",
+              "COOLING_4",
+              "ICE",
+              "HEAT_1",
+              "HEAT_2",
+              "HEAT_3",
+              "HEAT_4",
+              "HEAT_5",
+              "HEAT_6",
+              "HEAT_7",
+              "HEAT_8",
+              "HEAT_9",
+              "HEAT_AMBIENT",
+              "STEAM_LOW_PRESSURE",
+              "SOLAR_ROOF",
+              "SOLAR_FACADE",
+              "SOLAR_PARAPET",
+              "WIND",
+              "HYDRO",
+              "BIOMASS",
+              "GEOTHERMAL",
+              "TIDAL",
+              "PROCESS_WASTE_HEAT",
+              "CUSTOM"
+            ]
+          },
+          "energyCarrierName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "colorHexCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
       "ConversionTechnologyRequestDtoV2": {
         "required": [
           "conversionTechnologyModes",
@@ -5849,114 +6057,158 @@
           "lifetime",
           "mustBeInstalledInHubs",
           "processName",
-          "stages",
-          "virtual"
+          "stages"
         ],
         "type": "object",
         "properties": {
           "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostYear": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableEmittedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableCapturedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValuePercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "mustBeInstalledInHubs": {
             "type": "string",
@@ -5972,11 +6224,14 @@
             "type": "string"
           },
           "variableInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "lifetime": {
             "type": "integer",
@@ -5998,7 +6253,10 @@
             }
           },
           "virtual": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "costComponents": {
             "type": [
@@ -6045,8 +6303,11 @@
             "type": "string"
           },
           "exchangeRate": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
-            "type": "number"
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "stages": {
             "type": "array",
@@ -6065,46 +6326,63 @@
         "type": "object",
         "properties": {
           "capacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minimumAnnualOutput": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumAnnualOutput": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "curtailmentLimitation": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "peakPower": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minPartLoad": {
+            "multipleOf": 1e-05,
             "maximum": 100.0,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minimumUpTime": {
             "maximum": 8760,
@@ -6154,18 +6432,24 @@
             }
           },
           "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minimumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "simultaneousOperation": {
             "type": [
@@ -6178,8 +6462,6 @@
       "ConversionCarrierRequestDtoV2": {
         "required": [
           "energyCarrierGuid",
-          "fixedInputShare",
-          "outputEfficiency",
           "primary",
           "type"
         ],
@@ -6189,12 +6471,24 @@
             "type": "string"
           },
           "fixedInputShare": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "outputEfficiency": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "customInputShareActivated": {
             "type": [
@@ -6298,11 +6592,14 @@
             ]
           },
           "lifetime": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "interestRate": {
             "maximum": 100,
@@ -6451,46 +6748,63 @@
         "type": "object",
         "properties": {
           "capacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minimumAnnualOutput": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumAnnualOutput": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "curtailmentLimitation": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "peakPower": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minPartLoad": {
+            "multipleOf": 1e-05,
             "maximum": 100.0,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minimumUpTime": {
             "maximum": 8760,
@@ -6752,119 +7066,158 @@
       },
       "ConversionTechnologyDetailResponseDtoV2": {
         "required": [
-          "conversionTechnologyModes",
-          "hubs",
-          "lifetime",
-          "mustBeInstalledInHubs",
-          "processName",
-          "stages",
-          "virtual"
+          "mustBeInstalledInHubs"
         ],
         "type": "object",
         "properties": {
           "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostYear": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableEmittedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableCapturedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValuePercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "mustBeInstalledInHubs": {
             "type": "string",
@@ -6881,7 +7234,10 @@
             ]
           },
           "processName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "exchangeCurrency": {
             "type": [
@@ -6902,7 +7258,10 @@
             ]
           },
           "lifetime": {
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ]
           },
           "created": {
             "type": [
@@ -6919,7 +7278,10 @@
             "format": "date-time"
           },
           "hubs": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/HubResponseDto"
             }
@@ -6958,7 +7320,10 @@
             ]
           },
           "virtual": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "technologyOptional": {
             "type": [
@@ -6994,7 +7359,10 @@
             ]
           },
           "stages": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "type": "string",
               "format": "uuid"
@@ -7025,11 +7393,14 @@
             ]
           },
           "lifetime": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "interestRate": {
             "maximum": 100,
@@ -7077,6 +7448,500 @@
           }
         }
       },
+      "ConversionTechnologyRequestDtoPUT": {
+        "required": [
+          "exchangeCurrency",
+          "exchangeRate",
+          "hubs",
+          "lifetime",
+          "mustBeInstalledInHubs",
+          "processName",
+          "stages",
+          "technologyModes"
+        ],
+        "type": "object",
+        "properties": {
+          "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmCostYear": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableEmittedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableCapturedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableReplacementCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValuePercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "mustBeInstalledInHubs": {
+            "type": "string",
+            "enum": [
+              "canBeInstalled",
+              "mustBeInstalled",
+              "mustBeInstalledInAtLeastOneHub"
+            ]
+          },
+          "processName": {
+            "type": "string"
+          },
+          "exchangeCurrency": {
+            "type": "string"
+          },
+          "exchangeRate": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "lifetime": {
+            "type": "number"
+          },
+          "hubs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HubRequestDtoPUTId"
+            }
+          },
+          "technologyModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TechnologyModeRequestDtoPUT"
+            }
+          },
+          "technologyCategory": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "mutuallyExclusiveGroup": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "virtual": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "technologyOptional": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "technologyCapacity": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "costComponents": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
+            }
+          },
+          "comesFromDb": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "HubRequestDtoPUTId": {
+        "required": [
+          "hubGuid"
+        ],
+        "type": "object",
+        "properties": {
+          "hubGuid": {
+            "type": "string"
+          }
+        }
+      },
+      "TechnologyModeRequestDtoPUT": {
+        "required": [
+          "inputEnergyCarriers",
+          "outputEnergyCarriers",
+          "seasonalOperationName",
+          "seasonalOperationValue",
+          "simultaneousOperation"
+        ],
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "minimumAnnualOutput": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "maximumAnnualOutput": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "curtailmentLimitation": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "peakPower": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "minPartLoad": {
+            "multipleOf": 1e-05,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "minimumUpTime": {
+            "maximum": 8760,
+            "minimum": 1,
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "minimumDownTime": {
+            "maximum": 8760,
+            "minimum": 1,
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "inputEnergyCarriers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversionCarrierRequestDtoPUT"
+            }
+          },
+          "outputEnergyCarriers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConversionCarrierRequestDtoPUT"
+            }
+          },
+          "seasonalOperationName": {
+            "type": "string"
+          },
+          "seasonalOperationValue": {
+            "type": "string"
+          },
+          "allowedOperationProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "primary": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "minimumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "simultaneousOperation": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ConversionCarrierRequestDtoPUT": {
+        "required": [
+          "energyCarrierGuid"
+        ],
+        "type": "object",
+        "properties": {
+          "energyCarrierGuid": {
+            "type": "string"
+          },
+          "outputEfficiency": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedInputShare": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "customOutputEfficiencyActivated": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "customInputShareActivated": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "customSeasonalityValues": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/CustomSeasonalityResponseDto"
+            }
+          },
+          "outputEfficiencyProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "inputShareProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "primary": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      },
       "StorageTechnologyRequestDtoV2": {
         "required": [
           "energyCarrierGuid",
@@ -7087,66 +7952,88 @@
           "storageChargingEfficiency",
           "storageDischargingEfficiency",
           "storageName",
-          "storageOptional",
-          "technologyCapacity",
-          "unit"
+          "technologyCapacity"
         ],
         "type": "object",
         "properties": {
           "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmEnergyFlowCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "capacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minimumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumChargingRate": {
             "maximum": 100,
@@ -7165,47 +8052,68 @@
             ]
           },
           "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValuePercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "mustBeInstalled": {
             "pattern": "canBeInstalled|mustBeInstalled|mustBeInstalledInAtLeastOneHub",
@@ -7217,18 +8125,24 @@
             "type": "string"
           },
           "variableInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "lifetime": {
             "type": "integer",
@@ -7329,11 +8243,14 @@
             ]
           },
           "exchangeRate": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "stages": {
             "type": "array",
@@ -7623,78 +8540,88 @@
       },
       "StorageTechnologyDetailResponseDtoV2": {
         "required": [
-          "category",
-          "costComponents",
-          "exchangeCurrency",
-          "exchangeRate",
-          "hubs",
-          "lifetime",
-          "mustBeInstalled",
-          "stages",
-          "storageCarrier",
-          "storageChargingEfficiency",
-          "storageDischargingEfficiency",
-          "storageName",
-          "technologyCapacity",
-          "variableReplacementCostPercent",
-          "variableSalvageValuePercent"
+          "mustBeInstalled"
         ],
         "type": "object",
         "properties": {
           "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmEnergyFlowCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "capacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "minimumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumChargingRate": {
             "maximum": 100,
@@ -7713,41 +8640,68 @@
             ]
           },
           "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostPercent": {
-            "type": "number"
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValuePercent": {
-            "type": "number"
-          },
-          "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "mustBeInstalled": {
             "pattern": "canBeInstalled|mustBeInstalled|mustBeInstalledInAtLeastOneHub",
@@ -7760,13 +8714,22 @@
             ]
           },
           "storageName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "exchangeCurrency": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "exchangeRate": {
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ]
           },
           "variableInvestmentCost": {
             "type": [
@@ -7779,6 +8742,436 @@
               "number",
               "null"
             ]
+          },
+          "lifetime": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "standbyLoss": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "standByLossProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "minimumSoc": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "storageChargingEfficiency": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "storageDischargingEfficiency": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "technologyCapacity": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "updated": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "storageCarrier": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hubs": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/HubResponseDto"
+            }
+          },
+          "category": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "technologyCategory": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "mutuallyExclusiveGroup": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "technologyOptional": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "costComponents": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
+            }
+          },
+          "comesFromDb": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stages": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "evPlugInTime": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LocalTime"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evPlugOutTime": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LocalTime"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evPlugInDurationHours": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "drivingDistanceKms": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "evSocStartPercent": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "evBatterySizeKWh": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "maximumSocPercent": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "evAverageKWhPerKm": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "evPlugInPowerKW": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "isEvBattery": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "typeOfCharging": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "Smart",
+              "Dump",
+              "V2G",
+              "None",
+              null
+            ]
+          }
+        }
+      },
+      "StorageTechnologyRequestDtoPUT": {
+        "required": [
+          "category",
+          "exchangeCurrency",
+          "exchangeRate",
+          "hubs",
+          "lifetime",
+          "mustBeInstalled",
+          "stages",
+          "storageCarrier",
+          "storageChargingEfficiency",
+          "storageDischargingEfficiency",
+          "storageName",
+          "technologyCapacity",
+          "variableReplacementCostPercent",
+          "variableSalvageValuePercent"
+        ],
+        "type": "object",
+        "properties": {
+          "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmEnergyFlowCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "capacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "minimumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "maximumChargingRate": {
+            "maximum": 100,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "maximumDischargingRate": {
+            "maximum": 100,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableReplacementCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValuePercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "mustBeInstalled": {
+            "pattern": "canBeInstalled|mustBeInstalled|mustBeInstalledInAtLeastOneHub",
+            "type": "string"
+          },
+          "storageName": {
+            "type": "string"
+          },
+          "exchangeCurrency": {
+            "type": "string"
+          },
+          "exchangeRate": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "lifetime": {
             "type": "integer",
@@ -7812,27 +9205,13 @@
           "technologyCapacity": {
             "type": "string"
           },
-          "created": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "updated": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
           "storageCarrier": {
-            "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+            "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUTId"
           },
           "hubs": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/HubResponseDto"
+              "$ref": "#/components/schemas/HubRequestDtoPUTId"
             }
           },
           "category": {
@@ -7869,7 +9248,10 @@
             ]
           },
           "costComponents": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
             }
@@ -7970,12 +9352,20 @@
           }
         }
       },
+      "EnergyCarrierRequestDtoPUTId": {
+        "required": [
+          "energyCarrierGuid"
+        ],
+        "type": "object",
+        "properties": {
+          "energyCarrierGuid": {
+            "type": "string"
+          }
+        }
+      },
       "TechnologyPackageRequestDtoV2": {
         "required": [
-          "conversionTechnologies",
-          "mustBeInstalled",
-          "name",
-          "storageTechnologies"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -7996,11 +9386,15 @@
             "format": "int32"
           },
           "mustBeInstalled": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "canBeInstalled",
               "mustBeInstalled",
-              "mustBeInstalledInAtLeastOneHub"
+              "mustBeInstalledInAtLeastOneHub",
+              null
             ]
           },
           "mutuallyExclusiveGroup": {
@@ -8013,13 +9407,19 @@
             "type": "string"
           },
           "conversionTechnologies": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "type": "string"
             }
           },
           "storageTechnologies": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "type": "string"
             }
@@ -8053,10 +9453,7 @@
       },
       "TechnologyPackageResponseDtoV2": {
         "required": [
-          "conversionTechnologies",
-          "mustBeInstalled",
-          "name",
-          "storageTechnologies"
+          "mustBeInstalled"
         ],
         "type": "object",
         "properties": {
@@ -8091,7 +9488,10 @@
             ]
           },
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "guid": {
             "type": [
@@ -8100,13 +9500,19 @@
             ]
           },
           "conversionTechnologies": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/GuidNameDto"
             }
           },
           "storageTechnologies": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/GuidNameDto"
             }
@@ -8114,17 +9520,19 @@
         }
       },
       "GuidNameDto": {
-        "required": [
-          "guid",
-          "name"
-        ],
         "type": "object",
         "properties": {
           "guid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -8164,6 +9572,80 @@
             "items": {
               "$ref": "#/components/schemas/TechnologyPackageResponseDtoV2"
             }
+          }
+        }
+      },
+      "TechnologyPackageRequestDtoPUT": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "maximumConversions": {
+            "minimum": 1,
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "maximumStorages": {
+            "minimum": 1,
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "mustBeInstalled": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "canBeInstalled",
+              "mustBeInstalled",
+              "mustBeInstalledInAtLeastOneHub",
+              null
+            ]
+          },
+          "mutuallyExclusiveGroup": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "conversionTechnologies": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/GuidDtoPUT"
+            }
+          },
+          "storageTechnologies": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/GuidDtoPUT"
+            }
+          }
+        }
+      },
+      "GuidDtoPUT": {
+        "type": "object",
+        "properties": {
+          "guid": {
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       },
@@ -8257,95 +9739,137 @@
         "type": "object",
         "properties": {
           "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostYear": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostCHFkWh": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValuePercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "networkTechnologyName": {
             "maxLength": 100,
@@ -8413,11 +9937,14 @@
             ]
           },
           "exchangeRate": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "stages": {
             "type": "array",
@@ -8454,104 +9981,140 @@
         }
       },
       "NetworkTechnologyResponseDtoV2": {
-        "required": [
-          "category",
-          "costComponents",
-          "energyCarrier",
-          "exchangeCurrency",
-          "exchangeRate",
-          "lifetime",
-          "networkTechnologyName",
-          "stages",
-          "variableReplacementCostPercent",
-          "variableSalvageValuePercent"
-        ],
         "type": "object",
         "properties": {
           "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostYear": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableOmCostCHFkWh": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostPercent": {
-            "type": "number"
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "variableSalvageValuePercent": {
-            "type": "number"
-          },
-          "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "networkTechnologyGuid": {
             "type": [
@@ -8560,16 +10123,28 @@
             ]
           },
           "networkTechnologyName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "exchangeCurrency": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "exchangeRate": {
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ]
           },
           "lifetime": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int32"
           },
           "created": {
@@ -8587,10 +10162,20 @@
             "format": "date-time"
           },
           "energyCarrier": {
-            "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "category": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "technologyCategory": {
             "type": [
@@ -8623,13 +10208,19 @@
             ]
           },
           "costComponents": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
             }
           },
           "stages": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "type": "string",
               "format": "uuid"
@@ -8676,40 +10267,258 @@
           }
         }
       },
+      "NetworkTechnologyRequestDtoPUT": {
+        "required": [
+          "category",
+          "energyCarrier",
+          "exchangeCurrency",
+          "exchangeRate",
+          "lifetime",
+          "networkTechnologyName",
+          "stages",
+          "variableReplacementCostPercent",
+          "variableSalvageValuePercent"
+        ],
+        "type": "object",
+        "properties": {
+          "fixedInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableInvestmentCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedOmCostChf": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmCostYear": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableOmCostCHFkWh": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableEmbodiedCo2": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedReplacementCost": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableReplacementCostPercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableReplacementCostCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "fixedSalvageValue": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValuePercent": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "variableSalvageValueCHF": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "networkTechnologyName": {
+            "type": "string"
+          },
+          "exchangeCurrency": {
+            "type": "string"
+          },
+          "exchangeRate": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "lifetime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "energyCarrier": {
+            "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUTId"
+          },
+          "category": {
+            "type": "string"
+          },
+          "technologyCategory": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "networkSize": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "comesFromDb": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "costComponents": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
+            }
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
       "NetworkLinkRequestDtoV2": {
         "required": [
           "length",
-          "mustBeInstalled",
           "name",
-          "networkLoss",
           "networkTechnologyGuid",
           "node1Guid",
           "node2Guid",
-          "technologyCapacity",
-          "uniDirectionalFlow"
+          "technologyCapacity"
         ],
         "type": "object",
         "properties": {
           "installedCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "name": {
             "type": "string"
           },
           "length": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
-            "type": "number"
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "technologyCapacity": {
             "type": "string",
@@ -8719,10 +10528,16 @@
             ]
           },
           "uniDirectionalFlow": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "mustBeInstalled": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "node1Guid": {
             "type": "string"
@@ -8743,15 +10558,24 @@
             }
           },
           "minimumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "networkLoss": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "networkLossProfileId": {
             "type": [
@@ -8788,36 +10612,27 @@
         }
       },
       "NetworkLinkResponseDtoV2": {
-        "required": [
-          "costComponents",
-          "length",
-          "mustBeInstalled",
-          "name",
-          "networkLoss",
-          "networkTechnologyGuid",
-          "networkTechnologyName",
-          "node1Guid",
-          "node1Name",
-          "node2Guid",
-          "node2Name",
-          "technologyCapacity",
-          "uniDirectionalFlow"
-        ],
         "type": "object",
         "properties": {
           "installedCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "minimum": 0.0,
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "networkLinkGuid": {
             "type": [
@@ -8826,44 +10641,81 @@
             ]
           },
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "length": {
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ]
           },
           "technologyCapacity": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "enum": [
               "optimize",
-              "specify"
+              "specify",
+              null
             ]
           },
           "uniDirectionalFlow": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "mustBeInstalled": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           },
           "node1Guid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "node1Name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "node2Guid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "node2Name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "networkTechnologyName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "networkTechnologyGuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "costComponents": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
             }
@@ -8889,7 +10741,10 @@
             ]
           },
           "networkLoss": {
-            "type": "number"
+            "type": [
+              "number",
+              "null"
+            ]
           },
           "networkLossProfileId": {
             "type": [
@@ -8921,6 +10776,125 @@
                 "type": "null"
               }
             ]
+          }
+        }
+      },
+      "NetworkLinkRequestDtoPUT": {
+        "required": [
+          "length",
+          "name",
+          "networkTechnologyGuid",
+          "networkTechnologyName",
+          "node1Guid",
+          "node1Name",
+          "node2Guid",
+          "node2Name",
+          "technologyCapacity"
+        ],
+        "type": "object",
+        "properties": {
+          "installedCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "maximumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "name": {
+            "type": "string"
+          },
+          "length": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "technologyCapacity": {
+            "type": "string",
+            "enum": [
+              "optimize",
+              "specify"
+            ]
+          },
+          "uniDirectionalFlow": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "mustBeInstalled": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "node1Guid": {
+            "type": "string"
+          },
+          "node1Name": {
+            "type": "string"
+          },
+          "node2Guid": {
+            "type": "string"
+          },
+          "node2Name": {
+            "type": "string"
+          },
+          "networkTechnologyName": {
+            "type": "string"
+          },
+          "networkTechnologyGuid": {
+            "type": "string"
+          },
+          "costComponents": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
+            }
+          },
+          "minimumCapacity": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "networkLoss": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "minimum": 0.0,
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
+          },
+          "networkLossProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
           }
         }
       },
@@ -9150,14 +11124,6 @@
         }
       },
       "IntraHubNetworkLinkResponseDto": {
-        "required": [
-          "advancedCostComponents",
-          "hubs",
-          "inputEnergyCarrier",
-          "name",
-          "outputEnergyCarrier",
-          "stages"
-        ],
         "type": "object",
         "properties": {
           "intraHubNetworkLinkGuid": {
@@ -9167,7 +11133,10 @@
             ]
           },
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "networkLoss": {
             "type": [
@@ -9182,19 +11151,39 @@
             ]
           },
           "inputEnergyCarrier": {
-            "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "outputEnergyCarrier": {
-            "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "hubs": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/HubResponseDto"
             }
           },
           "advancedCostComponents": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
             }
@@ -9214,7 +11203,10 @@
             "format": "date-time"
           },
           "stages": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "type": "string",
               "format": "uuid"
@@ -9257,6 +11249,61 @@
             ],
             "items": {
               "$ref": "#/components/schemas/IntraHubNetworkLinkResponseDto"
+            }
+          }
+        }
+      },
+      "IntraHubNetworkLinkRequestDtoPUT": {
+        "required": [
+          "hubs",
+          "inputEnergyCarrier",
+          "name",
+          "outputEnergyCarrier",
+          "stages"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "networkLoss": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "fixedEmbodiedCo2": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "inputEnergyCarrier": {
+            "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUTId"
+          },
+          "outputEnergyCarrier": {
+            "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUTId"
+          },
+          "hubs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HubRequestDtoPUTId"
+            }
+          },
+          "advancedCostComponents": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AdvancedCostComponentResponseDto"
+            }
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
             }
           }
         }
@@ -9479,6 +11526,19 @@
               "type": "string"
             }
           },
+          "priceDimensionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "ENERGY_PRICE_CHF_KWH",
+              "CAPACITY_PRICE_CHF_KW_MONTH",
+              "CAPACITY_PRICE_CHF_KW_YEAR",
+              "FIXED_OM_PRICE_CHF_YEAR",
+              null
+            ]
+          },
           "priceCategoryId": {
             "type": [
               "string",
@@ -9490,19 +11550,6 @@
               "TAXES",
               "REFUNDS_AND_REBATES",
               "TOTAL",
-              null
-            ]
-          },
-          "priceDimensionId": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "enum": [
-              "ENERGY_PRICE_CHF_KWH",
-              "CAPACITY_PRICE_CHF_KW_MONTH",
-              "CAPACITY_PRICE_CHF_KW_YEAR",
-              "FIXED_OM_PRICE_CHF_YEAR",
               null
             ]
           }
@@ -9575,15 +11622,6 @@
         }
       },
       "ImportExportResponseDtoV2": {
-        "required": [
-          "energyCarrier",
-          "hubs",
-          "name",
-          "priceComponents",
-          "stages",
-          "timeOfUses",
-          "type"
-        ],
         "type": "object",
         "properties": {
           "energyPriceCHFkWh": {
@@ -9611,7 +11649,10 @@
             ]
           },
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "hourlyEnergyPriceProfileId": {
             "type": [
@@ -9653,13 +11694,26 @@
             "format": "int64"
           },
           "energyCarrier": {
-            "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EnergyCarrierResponseDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "type": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "hubs": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/ImpexHubResponseDto"
             }
@@ -9685,13 +11739,19 @@
             "format": "date-time"
           },
           "priceComponents": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/AdvancedPriceComponentResponseDtoV2"
             }
           },
           "timeOfUses": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/TimeOfUseResponseDto"
             }
@@ -9728,7 +11788,10 @@
             ]
           },
           "stages": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "type": "string",
               "format": "uuid"
@@ -9737,26 +11800,32 @@
         }
       },
       "ImpexHubResponseDto": {
-        "required": [
-          "hubCreated",
-          "hubGuid",
-          "hubName",
-          "hubUpdated"
-        ],
         "type": "object",
         "properties": {
           "hubGuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "hubName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "hubUpdated": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time"
           },
           "hubCreated": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "date-time"
           },
           "impexGuid": {
@@ -9915,6 +11984,163 @@
           }
         }
       },
+      "ImportExportRequestDtoPUT": {
+        "required": [
+          "energyCarrier",
+          "hubs",
+          "name",
+          "stages",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "energyPriceCHFkWh": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "maxCapacityKW": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalAnnualEnergyAvailableKWhA": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "capacityPriceCHFkWYear": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "hourlyEnergyPriceProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "capacityPriceCHFkWMonth": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "fixedOmPriceCHFYear": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "co2IntensityKgCo2kWhCo2CompensationKgCo2kWh": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "dynamicCo2ProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "maximumHourlyEnergyAvailableProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "energyCarrier": {
+            "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUTId"
+          },
+          "type": {
+            "type": "string"
+          },
+          "hubs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImpexHubRequestDtoPUT"
+            }
+          },
+          "priceComponents": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/AdvancedPriceComponentResponseDtoV2"
+            }
+          },
+          "timeOfUses": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/TimeOfUseResponseDto"
+            }
+          },
+          "product": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "year": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "suggested": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "ImpexHubRequestDtoPUT": {
+        "required": [
+          "hubGuid"
+        ],
+        "type": "object",
+        "properties": {
+          "hubGuid": {
+            "type": "string"
+          }
+        }
+      },
       "ResponseDtoStatus": {
         "type": "object",
         "properties": {
@@ -10068,8 +12294,7 @@
       },
       "ProfileDetailsResponseDto": {
         "required": [
-          "name",
-          "values"
+          "name"
         ],
         "type": "object",
         "properties": {
@@ -10080,6 +12305,27 @@
             ],
             "format": "int64"
           },
+          "name": {
+            "type": "string"
+          },
+          "values": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ProfilePeriodValueDto"
+            }
+          }
+        }
+      },
+      "ProfileRequestDtoPUT": {
+        "required": [
+          "name",
+          "values"
+        ],
+        "type": "object",
+        "properties": {
           "name": {
             "type": "string"
           },
@@ -10193,15 +12439,6 @@
         }
       },
       "EnergyDemandResponseDtoV2": {
-        "required": [
-          "demandProfileId",
-          "energyCarrierGuid",
-          "energyCarrierName",
-          "energyDemandName",
-          "hubs",
-          "reverse",
-          "stages"
-        ],
         "type": "object",
         "properties": {
           "energyDemandGuid": {
@@ -10211,19 +12448,31 @@
             ]
           },
           "energyCarrierName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "hubs": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/HubResponseDto"
             }
           },
           "energyDemandName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "energyCarrierGuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "demandSalePrice": {
             "type": [
@@ -10232,14 +12481,20 @@
             ]
           },
           "stages": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "type": "string",
               "format": "uuid"
             }
           },
           "demandProfileId": {
-            "type": "integer",
+            "type": [
+              "integer",
+              "null"
+            ],
             "format": "int64"
           },
           "demandScalingFactor": {
@@ -10482,7 +12737,10 @@
             "format": "int32"
           },
           "reverse": {
-            "type": "boolean"
+            "type": [
+              "boolean",
+              "null"
+            ]
           }
         }
       },
@@ -10592,6 +12850,296 @@
               "integer",
               "null"
             ],
+            "format": "int64"
+          },
+          "demandScalingFactor": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "demandSalePriceProfileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          },
+          "demandSalePriceScalingFactor": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "energyDemandUserSavedMetadataGuid": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "energyDemandUserSavedMetadataName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "energyDemandUserSavedMetadataReferenceArea": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "scalingFactor": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "energyDemandMetadataGuid": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "energyDemandMetadataName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "energyDemandMetadataDbOrganization": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "energyDemandMetadataType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "ELECTRICITY",
+              "SPACE_HEATING",
+              "HOT_WATER",
+              "COOLING",
+              null
+            ]
+          },
+          "energyDemandMetadataBuildingType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "RESIDENCE_MFH",
+              "RESIDENCE_SFH",
+              "ADMINISTRATION",
+              "OFFICES",
+              "SCHOOLS",
+              "RETAIL",
+              "RESTAURANT",
+              "ASSEMBLY",
+              "HOSPITALS",
+              "INDUSTRY",
+              "WAREHOUSE",
+              "SPORTS_CENTER",
+              "INDOOR_POOL",
+              "HOTEL",
+              "INDUSTRY_1_SHIFT_FABRICATED_METALS",
+              "INDUSTRY_2_SHIFT_FABRICATED_METALS",
+              "INDUSTRY_FOOD_PROCESSING",
+              "INDUSTRY_GENERAL_MANUFACTURER",
+              "INDUSTRY_PHARMACEUTICAL",
+              "INDUSTRY_PLASTIC_MANUFACTURER",
+              "INDUSTRY_SERVICES",
+              "INDUSTRY_WAREHOUSE",
+              null
+            ]
+          },
+          "energyDemandMetadataBuildingAge": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "AGE_UNDER_1970",
+              "AGE_1970_1980",
+              "AGE_1980_1995",
+              "AGE_1995_2005",
+              "AGE_2005_2015",
+              "AGE_OVER_2015",
+              "SIA_2024_EXISTING_MFH",
+              "SIA_2024_EXISTING_SFH",
+              "SIA_2024_EXISTING_HOTEL_ROOM",
+              "SIA_2024_EXISTING_LOBBY",
+              "SIA_2024_EXISTING_SINGLE_GROUP_OFFICE",
+              "SIA_2024_EXISTING_OPEN_PLAN_OFFICE",
+              "SIA_2024_EXISTING_MEETING_ROOM",
+              "SIA_2024_EXISTING_COUNTER_HALL",
+              "SIA_2024_EXISTING_CLASS_ROOM",
+              "SIA_2024_EXISTING_TEACHERS_LOUNGE",
+              "SIA_2024_EXISTING_LIBRARY",
+              "SIA_2024_EXISTING_AUDITORIUM",
+              "SIA_2024_EXISTING_SCHOOL_SUBJECT_ROOM",
+              "SIA_2024_EXISTING_FOOD_SALE_STORE",
+              "SIA_2024_EXISTING_SPECIALTY_STORE",
+              "SIA_2024_EXISTING_SALES_FURNITURE_DIY_GARDEN",
+              "SIA_2024_EXISTING_PATIENT_ROOM",
+              "SIA_2024_EXISTING_WARD_ROOM",
+              "SIA_2024_EXISTING_TREATMENT_ROOM",
+              "SIA_2024_EXISTING_WAREHOUSE",
+              "SIA_2024_EXISTING_GYMNASIUM",
+              "SIA_2024_EXISTING_FITNESS_ROOM",
+              "SIA_2024_EXISTING_INDOOR_SWIMMING_POOL",
+              "SIA_2024_STANDARD_MFH",
+              "SIA_2024_STANDARD_SFH",
+              "SIA_2024_STANDARD_HOTEL_ROOM",
+              "SIA_2024_STANDARD_LOBBY",
+              "SIA_2024_STANDARD_SINGLE_GROUP_OFFICE",
+              "SIA_2024_STANDARD_OPEN_PLAN_OFFICE",
+              "SIA_2024_STANDARD_MEETING_ROOM",
+              "SIA_2024_STANDARD_COUNTER_HALL",
+              "SIA_2024_STANDARD_CLASS_ROOM",
+              "SIA_2024_STANDARD_TEACHERS_LOUNGE",
+              "SIA_2024_STANDARD_LIBRARY",
+              "SIA_2024_STANDARD_AUDITORIUM",
+              "SIA_2024_STANDARD_SCHOOL_SUBJECT_ROOM",
+              "SIA_2024_STANDARD_FOOD_SALE_STORE",
+              "SIA_2024_STANDARD_SPECIALTY_STORE",
+              "SIA_2024_STANDARD_SALES_FURNITURE_DIY_GARDEN",
+              "SIA_2024_STANDARD_PATIENT_ROOM",
+              "SIA_2024_STANDARD_WARD_ROOM",
+              "SIA_2024_STANDARD_TREATMENT_ROOM",
+              "SIA_2024_STANDARD_WAREHOUSE",
+              "SIA_2024_STANDARD_GYMNASIUM",
+              "SIA_2024_STANDARD_FITNESS_ROOM",
+              "SIA_2024_STANDARD_INDOOR_SWIMMING_POOL",
+              "SIA_2024_TARGET_MFH",
+              "SIA_2024_TARGET_SFH",
+              "SIA_2024_TARGET_HOTEL_ROOM",
+              "SIA_2024_TARGET_LOBBY",
+              "SIA_2024_TARGET_SINGLE_GROUP_OFFICE",
+              "SIA_2024_TARGET_OPEN_PLAN_OFFICE",
+              "SIA_2024_TARGET_MEETING_ROOM",
+              "SIA_2024_TARGET_COUNTER_HALL",
+              "SIA_2024_TARGET_CLASS_ROOM",
+              "SIA_2024_TARGET_TEACHERS_LOUNGE",
+              "SIA_2024_TARGET_LIBRARY",
+              "SIA_2024_TARGET_AUDITORIUM",
+              "SIA_2024_TARGET_SCHOOL_SUBJECT_ROOM",
+              "SIA_2024_TARGET_FOOD_SALE_STORE",
+              "SIA_2024_TARGET_SPECIALTY_STORE",
+              "SIA_2024_TARGET_SALES_FURNITURE_DIY_GARDEN",
+              "SIA_2024_TARGET_PATIENT_ROOM",
+              "SIA_2024_TARGET_WARD_ROOM",
+              "SIA_2024_TARGET_TREATMENT_ROOM",
+              "SIA_2024_TARGET_WAREHOUSE",
+              "SIA_2024_TARGET_GYMNASIUM",
+              "SIA_2024_TARGET_FITNESS_ROOM",
+              "SIA_2024_TARGET_INDOOR_SWIMMING_POOL",
+              "MINERGIE_NEW_CONSTRUCTION",
+              "MINERGIE_RENOVATION",
+              "MINERGIE_A",
+              "MINERGIE_P_NEW_CONSTRUCTION",
+              "MINERGIE_P_RENOVATION",
+              "OTHERS",
+              null
+            ]
+          },
+          "energyDemandMetadataOption": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "OPTION_1",
+              "OPTION_2",
+              "OPTION_3",
+              null
+            ]
+          },
+          "energyDemandMetadataReferencedAreaM2": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "energyDemandMetadataSpecificEnergyDemandValueKWhM2": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "energyDemandMetadataTotalAnnualDemand": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "multiplicationFactorPreview": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "multiplicationFactor": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "reverse": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      },
+      "EnergyDemandRequestDtoPUT": {
+        "required": [
+          "demandProfileId",
+          "energyCarrierGuid",
+          "energyCarrierName",
+          "energyDemandName",
+          "hubs",
+          "stages"
+        ],
+        "type": "object",
+        "properties": {
+          "energyCarrierName": {
+            "type": "string"
+          },
+          "hubs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HubRequestDtoPUTId"
+            }
+          },
+          "energyDemandName": {
+            "type": "string"
+          },
+          "energyCarrierGuid": {
+            "type": "string"
+          },
+          "demandSalePrice": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "demandProfileId": {
+            "type": "integer",
             "format": "int64"
           },
           "demandScalingFactor": {
@@ -11195,8 +13743,11 @@
             "type": "string"
           },
           "availableSolarCollectorArea": {
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
             "exclusiveMinimum": 0.0,
-            "type": "number"
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "availableResourceType": {
             "type": "string",
@@ -11234,19 +13785,13 @@
         }
       },
       "SolarOnSiteResourceResponseDtoV2": {
-        "required": [
-          "energyCarrierGuid",
-          "energyCarrierName",
-          "hubs",
-          "irradianceProfileType",
-          "name",
-          "profileId",
-          "stages"
-        ],
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "solarResourceGuid": {
             "type": [
@@ -11255,13 +13800,22 @@
             ]
           },
           "energyCarrierGuid": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "energyCarrierName": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "hubs": {
-            "type": "array",
+            "type": [
+              "array",
+              "null"
+            ],
             "items": {
               "$ref": "#/components/schemas/HubSolarOnSiteResourceResponseDtoV2"
             }
@@ -11279,6 +13833,165 @@
               "null"
             ],
             "format": "date-time"
+          },
+          "irradianceProfileType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "GENERATED",
+              "UPLOADED",
+              "SAVED",
+              null
+            ]
+          },
+          "solarResourceMetadataName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "solarResourceMetadataDbOrganization": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "solarResourceMetadataGuid": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "solarResourceMetadataLocation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "solarResourceMetadataType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "solarResourceMetadataSlope": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "solarResourceMetadataOrientation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stages": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "profileId": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int64"
+          }
+        }
+      },
+      "HubSolarOnSiteResourceResponseDtoV2": {
+        "type": "object",
+        "properties": {
+          "hubName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "hubGuid": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "availableSolarCollectorArea": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "availableResourceType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "Area",
+              "Generic",
+              "Power",
+              null
+            ]
+          }
+        }
+      },
+      "ResponseDtoListSolarOnSiteResourceResponseDtoV2": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SolarOnSiteResourceResponseDtoV2"
+            }
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Status"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SolarOnSiteResourceRequestDtoPUT": {
+        "required": [
+          "energyCarrierGuid",
+          "energyCarrierName",
+          "hubs",
+          "irradianceProfileType",
+          "name",
+          "profileId",
+          "stages"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "energyCarrierGuid": {
+            "type": "string"
+          },
+          "energyCarrierName": {
+            "type": "string"
+          },
+          "hubs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HubSolarOnSiteResourceRequestDtoPUT"
+            }
           },
           "irradianceProfileType": {
             "type": "string",
@@ -11343,23 +14056,23 @@
           }
         }
       },
-      "HubSolarOnSiteResourceResponseDtoV2": {
+      "HubSolarOnSiteResourceRequestDtoPUT": {
         "required": [
           "availableResourceType",
           "availableSolarCollectorArea",
-          "hubGuid",
-          "hubName"
+          "hubGuid"
         ],
         "type": "object",
         "properties": {
-          "hubName": {
-            "type": "string"
-          },
           "hubGuid": {
             "type": "string"
           },
           "availableSolarCollectorArea": {
-            "type": "number"
+            "multipleOf": 1e-05,
+            "maximum": 9999999999.99999,
+            "exclusiveMinimum": 0.0,
+            "type": "number",
+            "description": "Invalid NUMERIC. Max precision=16, max scale=5"
           },
           "availableResourceType": {
             "type": "string",
@@ -11367,30 +14080,6 @@
               "Area",
               "Generic",
               "Power"
-            ]
-          }
-        }
-      },
-      "ResponseDtoListSolarOnSiteResourceResponseDtoV2": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": [
-              "array",
-              "null"
-            ],
-            "items": {
-              "$ref": "#/components/schemas/SolarOnSiteResourceResponseDtoV2"
-            }
-          },
-          "status": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/Status"
-              },
-              {
-                "type": "null"
-              }
             ]
           }
         }

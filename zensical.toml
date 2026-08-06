@@ -105,6 +105,7 @@ nav = [
   { "REST API" = [
     "api/index.md",
     "api/authentication.md",
+    { "API Explorer" = "api/explorer.html" },
     { "Reference" = [
       "api/reference/projects.md",
       "api/reference/analyses.md",
@@ -131,7 +132,6 @@ nav = [
     "sdk/index.md",
     { "Workflows" = [
       "sdk/workflows/index.md",
-      "sdk/workflows/create-scenario-from-excel.md",
       "sdk/workflows/run-solver-job.md",
       "sdk/workflows/download-results.md",
     ] },
@@ -154,7 +154,6 @@ nav = [
       "sdk/reference/impex.md",
       "sdk/reference/solver_jobs.md",
       "sdk/reference/users.md",
-      "sdk/reference/unofficial.md",
       { "Models" = [
         "sdk/reference/models/common.md",
         "sdk/reference/models/projects.md",

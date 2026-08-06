@@ -179,7 +179,7 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.stages.upd
 | `scenarioGuid` | path | string | yes |  |
 | `stageGuid` | path | string (uuid) | yes |  |
 
-**Request body** (`StageResponseDto`)
+**Request body** (`StageCore`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
@@ -188,7 +188,6 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.stages.upd
 | `interestRate` | number, nullable | no |  |
 | `inflationRate` | number, nullable | no |  |
 | `index` | integer (int32) | yes |  |
-| `guid` | string (uuid), nullable | no |  |
 
 **Example request**
 
@@ -201,8 +200,7 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/{scenari
   "length": 0,
   "interestRate": 0.0,
   "inflationRate": 0.0,
-  "index": 0,
-  "guid": "00000000-0000-0000-0000-000000000000"
+  "index": 0
 }'
 ```
 

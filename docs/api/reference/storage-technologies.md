@@ -335,27 +335,27 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.storage_te
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `variableOmCostPercent` | number, nullable | no |  |
-| `variableOmEnergyFlowCost` | number, nullable | no |  |
-| `capacity` | number, nullable | no |  |
-| `maximumCapacity` | number, nullable | no |  |
-| `minimumCapacity` | number, nullable | no |  |
-| `fixedInvestmentCost` | number, nullable | no |  |
-| `fixedEmbodiedCo2` | number, nullable | no |  |
-| `variableOmCost` | number, nullable | no |  |
+| `variableOmCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmEnergyFlowCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `capacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `maximumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `minimumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `maximumChargingRate` | number, nullable | no |  |
 | `maximumDischargingRate` | number, nullable | no |  |
-| `variableEmbodiedCo2` | number, nullable | no |  |
-| `fixedReplacementCost` | number, nullable | no |  |
-| `variableReplacementCostPercent` | number, nullable | no |  |
-| `variableReplacementCostCHF` | number, nullable | no |  |
-| `fixedSalvageValue` | number, nullable | no |  |
-| `variableSalvageValuePercent` | number, nullable | no |  |
-| `variableSalvageValueCHF` | number, nullable | no |  |
+| `variableEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedReplacementCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedSalvageValue` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValuePercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValueCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `mustBeInstalled` | string | yes |  |
 | `storageName` | string | yes |  |
-| `variableInvestmentCost` | number, nullable | no |  |
-| `fixedOmCostChf` | number, nullable | no |  |
+| `variableInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedOmCostChf` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `lifetime` | integer (int32) | yes |  |
 | `standbyLoss` | number, nullable | no |  |
 | `standByLossProfileId` | integer (int64), nullable | no |  |
@@ -372,7 +372,7 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.storage_te
 | `source` | string, nullable | no |  |
 | `comesFromDb` | string, nullable | no |  |
 | `exchangeCurrency` | string, nullable | no |  |
-| `exchangeRate` | number, nullable | no |  |
+| `exchangeRate` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `stages` | array of string (uuid) | yes |  |
 | `evPlugInTime` | `LocalTime`, nullable | no |  |
 | `evPlugOutTime` | `LocalTime`, nullable | no |  |
@@ -545,34 +545,33 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.storage_te
 | --- | --- | --- | --- | --- |
 | `guid` | path | string | yes |  |
 
-**Request body** (`StorageTechnologyDetailResponseDtoV2`)
+**Request body** (`StorageTechnologyRequestDtoPUT`)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `variableOmCostPercent` | number, nullable | no |  |
-| `variableOmEnergyFlowCost` | number, nullable | no |  |
-| `capacity` | number, nullable | no |  |
-| `maximumCapacity` | number, nullable | no |  |
-| `minimumCapacity` | number, nullable | no |  |
-| `fixedInvestmentCost` | number, nullable | no |  |
-| `fixedEmbodiedCo2` | number, nullable | no |  |
-| `variableOmCost` | number, nullable | no |  |
+| `variableOmCostPercent` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmEnergyFlowCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `capacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `maximumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `minimumCapacity` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableOmCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `maximumChargingRate` | number, nullable | no |  |
 | `maximumDischargingRate` | number, nullable | no |  |
-| `variableEmbodiedCo2` | number, nullable | no |  |
-| `fixedReplacementCost` | number, nullable | no |  |
-| `variableReplacementCostPercent` | number | yes |  |
-| `variableReplacementCostCHF` | number, nullable | no |  |
-| `fixedSalvageValue` | number, nullable | no |  |
-| `variableSalvageValuePercent` | number | yes |  |
-| `variableSalvageValueCHF` | number, nullable | no |  |
+| `variableEmbodiedCo2` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedReplacementCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostPercent` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableReplacementCostCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedSalvageValue` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValuePercent` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableSalvageValueCHF` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `mustBeInstalled` | string | yes |  |
-| `storageTechnologyGuid` | string, nullable | no |  |
 | `storageName` | string | yes |  |
 | `exchangeCurrency` | string | yes |  |
-| `exchangeRate` | number | yes |  |
-| `variableInvestmentCost` | number, nullable | no |  |
-| `fixedOmCostChf` | number, nullable | no |  |
+| `exchangeRate` | number | yes | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `variableInvestmentCost` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
+| `fixedOmCostChf` | number, nullable | no | Invalid NUMERIC. Max precision=16, max scale=5. |
 | `lifetime` | integer (int32) | yes |  |
 | `standbyLoss` | number, nullable | no |  |
 | `standByLossProfileId` | integer (int64), nullable | no |  |
@@ -580,17 +579,15 @@ Requires a [Bearer token](../authentication.md). SDK method: [`client.storage_te
 | `storageChargingEfficiency` | number | yes |  |
 | `storageDischargingEfficiency` | number | yes |  |
 | `technologyCapacity` | string | yes |  |
-| `created` | string (date-time), nullable | no |  |
-| `updated` | string (date-time), nullable | no |  |
-| `storageCarrier` | `EnergyCarrierResponseDto` | yes |  |
-| `hubs` | array of `HubResponseDto` | yes |  |
+| `storageCarrier` | `EnergyCarrierRequestDtoPUTId` | yes |  |
+| `hubs` | array of `HubRequestDtoPUTId` | yes |  |
 | `category` | string | yes |  |
 | `technologyCategory` | string, nullable | no |  |
 | `mutuallyExclusiveGroup` | string, nullable | no |  |
 | `notes` | string, nullable | no |  |
 | `source` | string, nullable | no |  |
 | `technologyOptional` | boolean, nullable | no |  |
-| `costComponents` | array of `AdvancedCostComponentResponseDto` | yes |  |
+| `costComponents` | array of `AdvancedCostComponentResponseDto`, nullable | no |  |
 | `comesFromDb` | string, nullable | no |  |
 | `stages` | array of string (uuid) | yes |  |
 | `evPlugInTime` | `LocalTime`, nullable | no |  |
@@ -630,7 +627,6 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_2/scenarios/sto
   "variableSalvageValuePercent": 0.0,
   "variableSalvageValueCHF": 0.0,
   "mustBeInstalled": "string",
-  "storageTechnologyGuid": "string",
   "storageName": "string",
   "exchangeCurrency": "string",
   "exchangeRate": 0.0,
@@ -643,36 +639,12 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2_2/scenarios/sto
   "storageChargingEfficiency": 0.0,
   "storageDischargingEfficiency": 0.0,
   "technologyCapacity": "string",
-  "created": "2026-01-01T00:00:00Z",
-  "updated": "2026-01-01T00:00:00Z",
   "storageCarrier": {
-    "energyCarrierGuid": "string",
-    "typeKey": "string",
-    "typeDisplayName": "string",
-    "subtypeKey": "string",
-    "subtypeDisplayName": "string",
-    "energyCarrierName": "string",
-    "colorHexCode": "string",
-    "fixedInputShare": 0.0,
-    "outputEfficiency": 0.0,
-    "customOutputEfficiencyActivated": true,
-    "customInputEfficiencyActivated": true,
-    "customSeasonalityValues": [
-      {
-        "month": "JANUARY",
-        "value": 0.0
-      }
-    ],
-    "outputEfficiencyProfileId": 0,
-    "created": "2026-01-01T00:00:00Z",
-    "primary": true
+    "energyCarrierGuid": "string"
   },
   "hubs": [
     {
-      "hubGuid": "string",
-      "hubName": "string",
-      "updated": "2026-01-01T00:00:00Z",
-      "created": "2026-01-01T00:00:00Z"
+      "hubGuid": "string"
     }
   ],
   "category": "string",

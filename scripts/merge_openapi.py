@@ -5,18 +5,27 @@ Only the merged output, ``specs/sympheny_openapi.json``, is committed and public
 below are **internal Sympheny artifacts, git-ignored** (see ``specs/.gitignore``); a fresh clone will
 not have them, so this script is a **maintainer-only** step for regenerating the public spec.
 
-Private source inputs (in docs/, git-ignored):
+The nullability contract (agreed with the webapp backend team)
+--------------------------------------------------------------
+In the upstream webapp export, a property listed in a schema's ``required`` must be **present and
+non-null**; every other property **may be null**. The export marks nothing ``nullable``, so
+``mark_non_required_nullable`` below applies the second half of the rule when producing the public
+spec: every property absent from its schema's ``required`` gains ``"null"`` in its type. Required
+properties keep their declared type, and a ``null`` returned for one of them is an API bug.
+
+Refresh the export with ``scripts/fetch_webapp_openapi.py`` (``GET
+{base_url}sympheny-app/v3/api-docs?select=essential``); it saves ``specs/webapp_openapi_latest.json``
+and prints the diff — review it, then copy it over ``specs/webapp_openapi.json`` and rerun this
+script. Since the 2026-08-06 export, every operation the SDK uses (including ``renameScenario`` and
+``copyScenario``, which used to be patched in manually) is present upstream, so no manual additions
+remain.
+
+Private source inputs (in specs/, git-ignored):
 - webapp_openapi.json     (OpenAPI 3.0.1) : all endpoints, upgraded to 3.1,
                                             non-required fields marked nullable
 - backoffice_openapi.json (OpenAPI 3.1.0) : only POST /backoffice/auth/ext/token
                                             and GET /backoffice/ext/users/profile
 - sense_openapi.json      (OpenAPI 3.1.0) : only "External Solver Jobs" endpoints
-
-Manual additions to webapp_openapi.json (extracted from specs/webapp_legacy_openapi.json,
-the legacy Swagger 2.0 export, and converted to OpenAPI 3.0, because they are missing
-from the current export):
-- PUT /scenarios/copy/{scenarioGuid}    (copyScenario)
-- PUT /scenarios/{scenarioGuid}         (renameScenario)
 
 Output (committed, public): specs/sympheny_openapi.json
 

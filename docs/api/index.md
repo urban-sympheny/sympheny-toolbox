@@ -64,13 +64,6 @@ for your account, `404` for an unknown resource, `409` for conflicts (for
 example a duplicate name), and `422` for request validation failures on
 account and solver endpoints.
 
-## Known issues
-
-Some endpoints have surprising behaviors with client-side workarounds. They
-are tracked in
-[KNOWN_ISSUES.md](https://github.com/urban-sympheny/sympheny-toolbox/blob/main/KNOWN_ISSUES.md)
-in the SDK repository.
-
 ## Reference
 
 The [API reference](reference/projects.md) documents all operations, grouped
@@ -79,8 +72,6 @@ schemas, and example requests.
 
 ## API Explorer
 
-Prefer trying requests as you read? The
-[API Explorer](explorer.html){ target="_blank" rel="noopener" } renders the
-same specification interactively with live "try it" support. Paste a
-[bearer token](authentication.md) and send requests straight from the browser.
-It opens in a new tab; this reference stays the canonical documentation.
+The [API Explorer](explorer.html){ target="_blank" rel="noopener" } renders the
+same specification interactively. Paste a [bearer token](authentication.md) and
+send requests straight from your browser.

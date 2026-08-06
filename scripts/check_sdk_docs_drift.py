@@ -33,10 +33,6 @@ SPEC = REPO_ROOT / "specs" / "sympheny_openapi.json"
 SDK_MAP = REPO_ROOT / "docs" / "_data" / "sdk_map.yml"
 REFERENCE_DIR = REPO_ROOT / "docs" / "sdk" / "reference"
 
-# client.unofficial wraps endpoints outside the committed spec: it gets a
-# reference page and anchors, but no operationId mapping.
-UNMAPPED_RESOURCES = {"unofficial"}
-
 _REST_CALL = re.compile(r"``(GET|POST|PUT|PATCH|DELETE) (/[^`\s]+)``")
 _ANCHOR = re.compile(r"\{ #(method-[A-Za-z0-9_-]+) \}")
 
@@ -76,8 +72,6 @@ def build_sdk_map(resources: dict[str, list[str]], errors: list[str]) -> dict[st
     client = AsyncSympheny("drift-check", "drift-check")
     mapping: dict[str, str] = {}
     for resource, methods in resources.items():
-        if resource in UNMAPPED_RESOURCES:
-            continue
         for method_name in methods:
             qualified = f"{resource}.{method_name}"
             docstring = inspect.getdoc(getattr(type(vars(client)[resource]), method_name)) or ""

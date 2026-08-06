@@ -8,21 +8,20 @@ tags:
 
 The [SDK reference](../reference/projects.md) documents one method at a time. These
 guides string those methods together into the end-to-end flows you actually run: take a
-scenario from an Excel workbook, optimize it, and read the results back.
+scenario, optimize it, and read the results back.
 
 ## The end-to-end flow
 
-Most automation follows the same three steps, each covered by one guide:
+Most automation follows the same two steps, each covered by one guide:
 
-1. **[Create a scenario from Excel](create-scenario-from-excel.md)**: upload a filled-in
-   scenario workbook and turn it into a scenario you can execute.
-2. **[Run a solver job](run-solver-job.md)**: submit the scenario to the solver and
+1. **[Run a solver job](run-solver-job.md)**: submit the scenario to the solver and
    poll until the optimization finishes.
-3. **[Download the results](download-results.md)**: fetch the result file of a finished
+2. **[Download the results](download-results.md)**: fetch the result file of a finished
    job, or link straight to its results dashboard.
 
-You can also start in the middle: if you already modeled a scenario in the
-[web app](../../web-app/index.md), skip to step 2 with its scenario GUID.
+Both start from a scenario GUID. Build the scenario with the resource groups on the
+client (`client.scenarios`, `client.hubs`, `client.conversion_technologies`, …), or model
+it in the [web app](../../web-app/index.md) and take the GUID from there.
 
 ## Prerequisites
 
