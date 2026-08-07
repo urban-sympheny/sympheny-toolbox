@@ -30,11 +30,28 @@ The agent prepares it; the maintainer pushes and tags.
      removed again before the final release does not belong in the entry.
 3. **Bump `version` in `pyproject.toml`** to the same `X.Y.Z`, in the same
    change. The publish workflow refuses a tag that disagrees with it.
-4. **Verify** (below).
-5. **Hand off.** Report that the release is staged and that the maintainer
-   pushes and tags `vX.Y.Z` to trigger the PyPI publish; the workflow re-checks
-   that the tag matches the project version and runs `./scripts/check.sh --ci`.
-   Do not tag, do not push, and do not commit unless asked.
+4. **Run `uv lock`** after the bump, so `uv.lock`'s pinned `sympheny-toolbox`
+   version matches. Both `ci.yml` and `docs.yml` install with
+   `uv sync --locked`, which hard-fails on drift instead of re-locking — a
+   stale lock breaks the install step on every pipeline, including ones
+   unrelated to the release. `uv.lock` is part of the release change, not a
+   follow-up: it belongs beside `CHANGELOG.md` and `pyproject.toml` in the same
+   commit whenever a commit is asked for.
+5. **Verify** (below).
+6. **Hand off.** Report that the release is staged in the working tree and give
+   the maintainer the commands to run themselves — commit the release files,
+   merge/push `main`, then tag the release commit and push the tag:
+   ```sh
+   git add CHANGELOG.md pyproject.toml uv.lock
+   git commit -m "chore: release vX.Y.Z"
+   git push origin main
+   git tag -a vX.Y.Z -m "vX.Y.Z"
+   git push origin vX.Y.Z
+   ```
+   Pushing the tag triggers `publish.yml`, which runs the full CI job, re-checks
+   that the tag matches `uv version --short`, then builds and publishes. The tag
+   must point at the commit that carries the bump. Do not tag, do not push, and
+   do not commit unless asked — give the commands, don't run them.
 
 ## Verification (end every release prep with this)
 
@@ -43,5 +60,10 @@ The agent prepares it; the maintainer pushes and tags.
    (full docs rules: `.agents/skills/docs/SKILL.md`).
 3. Grep for stale version strings — old or pre-release numbers left in
    `README.md`, `docs/`, or elsewhere — and fix them.
-4. Confirm the working tree contains only the intended files: never stage local
-   environment files (`.claude/`, scratch files, editor config).
+4. Confirm the lock was regenerated: `git diff uv.lock` must show the
+   `sympheny-toolbox` version line moving to `X.Y.Z`. An unchanged `uv.lock`
+   means step 4 was skipped and CI will fail on `uv sync --locked`.
+5. `git status` — the working tree should carry `CHANGELOG.md`,
+   `pyproject.toml`, `uv.lock`, and nothing else beyond the release's own
+   changes. Never include local environment files (`.claude/`, scratch files,
+   editor config).
