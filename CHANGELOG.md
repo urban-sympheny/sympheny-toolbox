@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-08-07
+
+### Changed
+- CI workflow (`.github/workflows/ci.yml`) permissions are scoped to `contents: read`, and runs are
+  grouped by ref with in-progress pull-request runs cancelled on new pushes.
+
 ## [3.0.0] - 2026-08-06
 
 The v3 release: the SDK now wraps exactly the endpoints of the official OpenAPI export, regenerated
@@ -115,5 +121,6 @@ from the current webapp spec, and the documentation moves to a full site at
 
 - Rewritten as a typed API client generated from the OpenAPI spec, with parallel async/sync clients.
 
+[3.0.1]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v3.0.1
 [3.0.0]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v3.0.0
 [2.1.0]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v2.1.0
