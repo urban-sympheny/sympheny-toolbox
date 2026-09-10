@@ -12,11 +12,11 @@ Upload an energy demand profile as an aggregation of several profiles and perfor
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/peak-shaving-demand.mp4"></video>
 
-## Control granularity (and speed) of the optimization
+## Control granularity (and speed) of the optimisation
 
-Choose between three different speeds for the execution of your optimization. The granularity/precision of the optimization results changes depending on the speed selected. [Learn more](../step-by-step-guide/execution.md)
+Choose between three different speeds for the execution of your optimisation. The granularity/precision of the optimisation results changes depending on the speed selected. [Learn more](../step-by-step-guide/execution.md)
 
-![Optimization speed selection](img/2023-january-1.png)
+![Optimisation speed selection](img/2023-january-1.png)
 
 ## Hourly efficiencies for Conversion Technologies
 
@@ -30,11 +30,11 @@ EV batteries can now be plugged in and out overnight, from one day to the next.
 
 ## Updated API to execute and get results outside the Sympheny web app
 
-Execute, monitor, and get the results of your energy system optimization externally using your own software/platform instead of using the Sympheny web app.
+Execute, monitor, and get the results of your energy system optimisation externally using your own software/platform instead of using the Sympheny web app.
 
 ## Receive example projects in your account
 
-The Sympheny team can send you project examples relevant to your type of project to help you understand the modeling possibilities for your specific case.
+The Sympheny team can send you project examples relevant to your type of project to help you understand the modelling possibilities for your specific case.
 
 ## New plots of total investments in results dashboard
 

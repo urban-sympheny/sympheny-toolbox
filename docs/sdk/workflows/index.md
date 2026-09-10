@@ -8,14 +8,14 @@ tags:
 
 The [SDK reference](../reference/projects.md) documents one method at a time. These
 guides string those methods together into the end-to-end flows you actually run: take a
-scenario, optimize it, and read the results back.
+scenario, optimise it, and read the results back.
 
 ## The end-to-end flow
 
 Most automation follows the same two steps, each covered by one guide:
 
 1. **[Run a solver job](run-solver-job.md)**: submit the scenario to the solver and
-   poll until the optimization finishes.
+   poll until the optimisation finishes.
 2. **[Download the results](download-results.md)**: fetch the result file of a finished
    job, or link straight to its results dashboard.
 

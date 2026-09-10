@@ -1,6 +1,6 @@
 # Sympheny documentation
 
-Sympheny helps you design and optimize multi-energy systems. Work with it through any of these four surfaces.
+Sympheny helps you design and optimise multi-energy systems. Work with it through any of these four surfaces.
 
 <div class="grid cards" markdown>
 
@@ -8,7 +8,7 @@ Sympheny helps you design and optimize multi-energy systems. Work with it throug
 
     ---
 
-    Model and optimize multi-energy systems in the browser: projects, scenarios, and results.
+    Model and optimise multi-energy systems in the browser: projects, scenarios, and results.
 
     [:octicons-arrow-right-24: Open the guides](web-app/index.md)
 

@@ -8,7 +8,7 @@ tags:
 
 **Sympheny: energy-model faster. See more. Share better.**
 
-Sympheny deployed a set of upgrades that make it easier to prepare data, run focused optimizations, and communicate results at building, site, and district scales.
+Sympheny deployed a set of upgrades that make it easier to prepare data, run focused optimisations, and communicate results at building, site, and district scales.
 
 ## What's new at a glance
 
@@ -25,9 +25,9 @@ Sympheny deployed a set of upgrades that make it easier to prepare data, run foc
 
   ![Global OpenStreetMap query results](img/2025-november-4.png)
 
-- **Network visualization + KPIs (Dashboard v3).** See optimized networks on the map and track headline KPIs (e.g., cost, CO₂, capacities) at a glance.
+- **Network visualisation + KPIs (Dashboard v3).** See optimised networks on the map and track headline KPIs (e.g., cost, CO₂, capacities) at a glance.
 
-  ![Dashboard v3 network visualization and KPIs](img/2025-november-5.png)
+  ![Dashboard v3 network visualisation and KPIs](img/2025-november-5.png)
 
 - **EnyMap (light mode).** Create scenarios from a simple Excel input file. This is a fast way to try "what-if" variants without authoring a full model.
 

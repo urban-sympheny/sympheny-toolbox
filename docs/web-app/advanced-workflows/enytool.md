@@ -14,7 +14,7 @@ Sympheny EnyTool is a software package that provides direct access to services a
 
 This integration lets planners, researchers, and decision-makers access consistent, high-quality data and services for building, district, and city-scale energy planning.
 
-EnyTool acts as a gateway, linking simulation, optimization, and data layers across partners such as GeoImpact, Esri, Gilytics, Empa, Planeto, Ramp, JRC Solar, and [geo.admin.ch](https://www.geo.admin.ch/) (GWR).
+EnyTool acts as a gateway, linking simulation, optimisation, and data layers across partners such as GeoImpact, Esri, Gilytics, Empa, Planeto, Ramp, JRC Solar, and [geo.admin.ch](https://www.geo.admin.ch/) (GWR).
 
 ## Ecosystem overview
 
@@ -26,13 +26,13 @@ EnyTool acts as a gateway, linking simulation, optimization, and data layers acr
 | Empa | R&D partner | Research & development in digital twins, energy systems | Integration of R&D data models (for example, Digicities, GOES) | [empa.ch](https://www.empa.ch/) |
 | Planeto SA | Partner / software platform | District heating & cooling network design | Scenario generation for thermal networks | [planeto-energy.ch](https://planeto-energy.ch/) |
 | Ramp | Open-source tool | Synthetic multi-energy demand generation | Generate demand profiles where measured data is missing | [rampdemand.org](https://rampdemand.org/) |
-| Ramp Mobility | Open-source extension | Mobility & EV demand modeling | Integrate EV loads and transport demand | [rampdemand.org/mobility](https://rampdemand.org/) |
+| Ramp Mobility | Open-source extension | Mobility & EV demand modelling | Integrate EV loads and transport demand | [rampdemand.org/mobility](https://rampdemand.org/) |
 | JRC Solar (PVGIS) | Open data / research | Solar irradiation & PV potential data | Assess renewable generation potential | [joint-research-centre.ec.europa.eu](https://joint-research-centre.ec.europa.eu/) |
 | GeoAdmin (GWR data) | Open government data | Swiss federal geo & building data | Geospatial base data for Swiss projects | [data.geo.admin.ch](https://data.geo.admin.ch/) |
 
 ## EnyTool resource architecture
 
-EnyTool integrates external services through standardized API connections and data connectors. These resources fall into three categories:
+EnyTool integrates external services through standardised API connections and data connectors. These resources fall into three categories:
 
 ### Data resources
 
@@ -40,11 +40,11 @@ EnyTool integrates external services through standardized API connections and da
 - **GeoAdmin / GWR**: official geodata, cadastral and building registers
 - **JRC Solar**: European solar potential datasets
 
-### Modeling & simulation tools
+### Modelling & simulation tools
 
 - **Ramp / Ramp Mobility**: energy and mobility demand generation. See [RAMP tool suite](ramp-tool-suite.md).
 - **Planeto**: district heating & cooling network simulation
-- **Gilytics**: energy infrastructure routing and optimization
+- **Gilytics**: energy infrastructure routing and optimisation
 
 ### Research & GIS frameworks
 
@@ -56,7 +56,7 @@ EnyTool integrates external services through standardized API connections and da
 | Use case | Involved services | Description |
 | --- | --- | --- |
 | Building energy retrofit planning | GeoImpact, GeoAdmin, Ramp | Combine building data with synthetic energy demand to identify retrofit potential |
-| District heating network design | Planeto, GeoImpact, GeoAdmin | Use building data and network simulation to optimize district systems |
+| District heating network design | Planeto, GeoImpact, GeoAdmin | Use building data and network simulation to optimise district systems |
 | Mobility integration in energy planning | Ramp Mobility, Gilytics | Model EV charging demand and assess grid or infrastructure impact |
 | Solar potential assessment | JRC Solar, Esri | Use PVGIS data with spatial layers for renewable potential mapping |
 | Digital twin research integration | Empa (Digicities, GOES) | Apply Empa-developed semantic and digital twin data models |

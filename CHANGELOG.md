@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Docs
+- Removed the beta announcement banner and the `overrides/main.html` theme override it lived in
+  (with `custom_dir` and the `announce.dismiss` theme feature): the legacy documentation at
+  support.app.sympheny.com is being retired and redirected to
+  [docs.sympheny.com](https://docs.sympheny.com), so the banner's pointer to it no longer holds.
+- Added the quick-start tutorial video to
+  [Quick start](https://docs.sympheny.com/web-app/getting-started/quick-start/), with an English
+  caption track served from the site (`docs/web-app/getting-started/quick-start-tutorial.en.vtt`);
+  browsers reject a cross-origin caption track, so it ships with the docs rather than with the
+  video on S3.
+- Quick start now lazy-loads its screenshots (`{ loading=lazy }` on all but the first two of 52
+  images, 11.3 MB in total), so the page no longer fetches every screenshot up front.
+- Documentation prose is now British English with the `-ise` convention (`optimise`, `organisation`,
+  `colour`, `centre`, `modelling`, `analyse`, `licence`), applied across 47 hand-written pages. UI
+  strings (**Database Center**, **Organization Database**, the **Optimize** sizing option),
+  code identifiers and enum values (`organizationId`, `colorHexCode`, `SPORTS_CENTER`), the
+  generated reference pages, and filenames keep their source spelling. The rule and its four
+  exemptions are recorded in `AGENTS.md` and the `docs` skill.
+
 ## [3.0.1] - 2026-08-07
 
 ### Changed

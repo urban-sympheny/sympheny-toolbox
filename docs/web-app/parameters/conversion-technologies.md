@@ -9,7 +9,7 @@ tags:
 | Parameter | Definition | Unit | Default |
 | --- | --- | --- | --- |
 | Technology Name | The name of the technology; must be unique within the scenario. | n/a | n/a |
-| Virtual Technology | A virtual technology is a technology used purely for accounting purposes in the optimization. It converts one energy carrier to another at zero cost and with 100% efficiency. If set to true, the efficiency, costs, and other values are automatically fixed to these values. | n/a | n/a |
+| Virtual Technology | A virtual technology is a technology used purely for accounting purposes in the optimisation. It converts one energy carrier to another at zero cost and with 100% efficiency. If set to true, the efficiency, costs, and other values are automatically fixed to these values. | n/a | n/a |
 | Stages | List of stages where the installation and operation of this technology are permitted. | n/a | n/a |
 | Hubs | List of hubs where the installation and operation of this technology are permitted. | n/a | n/a |
 | Installation Options | These options are mutually exclusive, meaning only one can be selected at a time. Options: Can be installed, Must be installed, Must be installed in at least one hub. | n/a | Can be installed |
@@ -45,4 +45,4 @@ tags:
 | Variable Embodied CO2 | Variable embodied CO2 emitted, based on installed kW or total production. | kg-CO2/kW, kg-CO2/kWh/year | n/a |
 | Variable Captured CO2 | CO2 captured during operation, expressed per kWh of total input energy carrier of primary modes. | kg-CO2/kWh/year | n/a |
 
-Certain **advanced parameters** are not available to users on all plans, but can be added through our add-on options. Contact our customer support team for a demo and to discuss how we could customize these options to your needs.
+Certain **advanced parameters** are not available to users on all plans, but can be added through our add-on options. Contact our customer support team for a demo and to discuss how we could customise these options to your needs.

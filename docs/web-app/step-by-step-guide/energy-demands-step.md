@@ -14,24 +14,24 @@ In this step, you define all energy demands included in your scenario. Each dema
 
 You have several options for creating energy demand profiles:
 
-- **Generate Profile**: automatically generate a profile based on building use types, standard norms, and your organization's internal database.
+- **Generate Profile**: automatically generate a profile based on building use types, standard norms, and your organisation's internal database.
 - **Upload Profile**: upload a custom profile file directly.
 - **Select Saved**: choose an existing profile from your personal database.
 
 ![Add new energy demand dialog with profile options](img/energy-demands-step-2.png)
 
 !!! tip
-    Integrate via the API to upload or modify multiple profiles in a single operation. If your license includes API access, contact support to get a template, code samples, and guidance.
+    Integrate via the API to upload or modify multiple profiles in a single operation. If your licence includes API access, contact support to get a template, code samples, and guidance.
 
 ## Generate profile
 
 Generate standard hourly energy demand profiles for buildings of different types. After clicking **Generate Profile**, a dialog opens where you specify the parameters of the profile. The process has three steps:
 
-1. **Select Type**: select the database to use, either Sympheny's database or your organization's database, then select a combination of demand type and building use to define the shape of the profile. This profile is normalized, meaning its total sum is 1 kWh/year. For more information on databases, see [Database Center](../advanced-workflows/database-center.md).
+1. **Select Type**: select the database to use, either Sympheny's database or your organisation's database, then select a combination of demand type and building use to define the shape of the profile. This profile is normalised, meaning its total sum is 1 kWh/year. For more information on databases, see [Database Center](../advanced-workflows/database-center.md).
 
     ![Select Type step of the Generate profile dialog](img/energy-demands-step-3.png)
 
-2. **Select Profile**: the normalized profile is multiplied by the annual energy demand in kWh/year. Enter this value directly as **Total Annual Demand**, or select a **Building Age or Standard** to get an estimated **Energy Intensity** in kWh/year/m², and specify the **Energy Reference Area** in m².
+2. **Select Profile**: the normalised profile is multiplied by the annual energy demand in kWh/year. Enter this value directly as **Total Annual Demand**, or select a **Building Age or Standard** to get an estimated **Energy Intensity** in kWh/year/m², and specify the **Energy Reference Area** in m².
 
     ![Select Profile step of the Generate profile dialog](img/energy-demands-step-4.png)
 
@@ -54,9 +54,9 @@ Download and edit this template (or any Sympheny demand profile) to make sure yo
 
 When you upload or generate a profile, you can save it for future use. Use **Select Saved** to load an energy profile you saved previously.
 
-## Visualization of demand data
+## Visualisation of demand data
 
-Once a demand is added and connected, a box representing it appears on the energy hub diagram. You can download the added demand profile as an Excel file. For each energy demand in the scenario, you can visualize hourly energy demand profiles and load duration curves.
+Once a demand is added and connected, a box representing it appears on the energy hub diagram. You can download the added demand profile as an Excel file. For each energy demand in the scenario, you can visualise hourly energy demand profiles and load duration curves.
 
-![Hourly demand profile visualization](img/energy-demands-step-7.png)
-![Load duration curve visualization](img/energy-demands-step-8.png)
+![Hourly demand profile visualisation](img/energy-demands-step-7.png)
+![Load duration curve visualisation](img/energy-demands-step-8.png)

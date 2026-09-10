@@ -6,7 +6,7 @@ tags:
 
 # Supply technologies step
 
-In this step you define the technology candidates the optimizer can install: conversion technologies that turn one energy carrier into another, and storage technologies that hold an energy carrier for later use.
+In this step you define the technology candidates the optimiser can install: conversion technologies that turn one energy carrier into another, and storage technologies that hold an energy carrier for later use.
 
 ![Supply technologies step in the scenario editor](img/supply-technologies-step-1.png)
 
@@ -21,7 +21,7 @@ In the dialog that appears, follow these steps:
 1. Select the database to load your data from. In most cases, the options are:
 
     - Sympheny Global database
-    - Organization database (linked to your organization)
+    - Organization database (linked to your organisation)
     - My User database (linked to your personal account)
 
 2. Choose a technology category.
@@ -35,7 +35,7 @@ In the dialog that appears, follow these steps:
     ![Optimization options and Add button](img/supply-technologies-step-3.png)
 
 !!! tip
-    You can also build a customized technology database for the Sympheny web app. See [Database Center](../advanced-workflows/database-center.md).
+    You can also build a customised technology database for the Sympheny web app. See [Database Center](../advanced-workflows/database-center.md).
 
 ### Create Custom
 

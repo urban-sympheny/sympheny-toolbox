@@ -11,7 +11,7 @@ tags:
 Sympheny offers several workflows to create [on-site resources](../concepts/on-site-resources.md):
 
 - **Add new > Generate profile > Available Resource Area (m²)**: generate a solar profile using the Sympheny database. This is an easy way to create profiles across multiple hubs.
-- **Add new > Upload profile > Available Peak Load (kWp)**: upload your own normalized profile. This is an easy way to create profiles across multiple hubs.
+- **Add new > Upload profile > Available Peak Load (kWp)**: upload your own normalised profile. This is an easy way to create profiles across multiple hubs.
 - **Add new > Upload profile > Generic Availability (kWh/h)**: upload your own profile.
 - **Add from map > Solar Resource > Optimize slope and azimuth**: explore the optimal orientation of solar panels relative to the demand profile.
 - **Add from map > Solar Resource > Custom slope and azimuth**: accurately estimate the solar profile for a specific location, surface, and orientation.
@@ -30,7 +30,7 @@ When sizing a new solar PV field, the only available information may be the **Av
 
 ![Available Resource Area configuration](img/on-site-resources-step-4.png)
 
-The **Available Resource Area (m²)** is the maximum available irradiance profile. The optimization result determines the optimal size of solar technology to install. Since curtailment may occur, the installed capacity isn't always equal to the maximal operational capacity.
+The **Available Resource Area (m²)** is the maximum available irradiance profile. The optimisation result determines the optimal size of solar technology to install. Since curtailment may occur, the installed capacity isn't always equal to the maximal operational capacity.
 
 ![Available Resource Area result](img/on-site-resources-step-5.png)
 
@@ -66,7 +66,7 @@ Add a new on-site resource to your scenario from the map.
 
 ## Solar Resource > Optimize slope and azimuth
 
-Click **Select Surface from Map** to select a surface, like the outline of a hub, and get the surface area (m²) and geographic location of the geometry. The optimizer defines the optimal **Slope** and **Azimuth**.
+Click **Select Surface from Map** to select a surface, like the outline of a hub, and get the surface area (m²) and geographic location of the geometry. The optimiser defines the optimal **Slope** and **Azimuth**.
 
 ![Optimize slope and azimuth dialog](img/on-site-resources-step-10.png)
 
@@ -87,7 +87,7 @@ Possible settings:
 
 ## Solar Resource > Weighted sum aggregation
 
-Calculate an aggregated solar profile, normalized in kW/m², for all selected surfaces. The calculation accounts for the slope and azimuth of each roof element. The generated profiles are aggregated using a weighted average for each surface, with surface areas serving as weights.
+Calculate an aggregated solar profile, normalised in kW/m², for all selected surfaces. The calculation accounts for the slope and azimuth of each roof element. The generated profiles are aggregated using a weighted average for each surface, with surface areas serving as weights.
 
 ## Wind Resource
 

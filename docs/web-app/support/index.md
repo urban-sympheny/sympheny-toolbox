@@ -10,7 +10,7 @@ Have a question, hit a bug, or want to suggest a feature? Start with the FAQs, t
 
 ## Check the FAQs first
 
-The [FAQs](faqs.md) cover the questions we get most often: what optimization means and how Sympheny applies it, how the demand profiles are generated, how to share a project, and why a result sometimes differs from what you expected.
+The [FAQs](faqs.md) cover the questions we get most often: what optimisation means and how Sympheny applies it, how the demand profiles are generated, how to share a project, and why a result sometimes differs from what you expected.
 
 ## Contact us
 

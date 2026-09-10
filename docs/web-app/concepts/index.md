@@ -6,9 +6,9 @@ tags:
 
 # Concepts
 
-Sympheny models an energy system as a network of hubs connected by energy flows. The optimizer decides which technologies to install, how to operate them, and how energy moves between hubs and over time, to meet demand at the lowest cost (or another objective you choose) across one or more stages.
+Sympheny models an energy system as a network of hubs connected by energy flows. The optimiser decides which technologies to install, how to operate them, and how energy moves between hubs and over time, to meet demand at the lowest cost (or another objective you choose) across one or more stages.
 
-This section explains the concepts you'll configure when building a scenario, and the methodology behind the optimizer. The first table below lists the concepts that are specific to Sympheny: the building blocks you create and configure in the scenario editor. The second table lists general concepts and methodological terms used within Sympheny: the established methods the optimizer applies to your model rather than things you build yourself.
+This section explains the concepts you'll configure when building a scenario, and the methodology behind the optimiser. The first table below lists the concepts that are specific to Sympheny: the building blocks you create and configure in the scenario editor. The second table lists general concepts and methodological terms used within Sympheny: the established methods the optimiser applies to your model rather than things you build yourself.
 
 ## Sympheny concepts
 
@@ -24,7 +24,7 @@ This section explains the concepts you'll configure when building a scenario, an
 | Conversion technology | A system that transforms one or more energy carriers into different ones, for example a gas boiler converting natural gas to heat. | [Conversion technologies](conversion-technologies.md) |
 | Storage technology | A technology that stores energy for later use, such as a battery. | [Storage technologies](storage-technologies.md) |
 | Network technology | A technology that transports energy between two hubs. | [Network technologies](network-technologies.md) |
-| Technology package | A bundle of technologies considered together in the optimization. | [Technology packages](technology-packages.md) |
+| Technology package | A bundle of technologies considered together in the optimisation. | [Technology packages](technology-packages.md) |
 | Intra-hub network | A network technology that transports energy within a hub. | [Intra-hub networks](intra-hub-networks.md) |
 
 ## General concepts and methodology

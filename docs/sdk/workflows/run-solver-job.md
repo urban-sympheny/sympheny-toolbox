@@ -6,7 +6,7 @@ tags:
 
 # Run solver job
 
-Submit a scenario to the Sympheny solver and wait for the optimization to finish. This
+Submit a scenario to the Sympheny solver and wait for the optimisation to finish. This
 mirrors clicking **Execute** in the [web app](../../web-app/step-by-step-guide/execution.md),
 but scripted end to end.
 
@@ -14,7 +14,7 @@ but scripted end to end.
 
 - A **scenario GUID** that is ready for execution, from
   [`client.scenarios.create()`](../reference/scenarios.md#method-scenarios-create) or from a
-  scenario you modeled in the web app.
+  scenario you modelled in the web app.
 - Solver quota on your subscription. Check it with
   [`client.solver_jobs.usage()`](../reference/solver_jobs.md#method-solver_jobs-usage).
 
@@ -39,7 +39,7 @@ request = PostSolverJobExt(
 )
 ```
 
-- **`objective1` / `objective2`**: the optimization objectives (see
+- **`objective1` / `objective2`**: the optimisation objectives (see
   [`ObjectiveFunction`](../reference/models/solver.md#model-ObjectiveFunction)). With two
   objectives the solver returns a Pareto front of `points` solutions.
 - **`temporal_resolution`**: how aggressively the 8760-hour year is
@@ -54,7 +54,7 @@ request = PostSolverJobExt(
 ## Submit and poll
 
 Submit the request, then poll the job until it reaches a terminal status. `DONE` means the
-optimization succeeded; `STOPPED`, `FAILED`, and `INVALID` are terminal failures.
+optimisation succeeded; `STOPPED`, `FAILED`, and `INVALID` are terminal failures.
 
 === "Async"
 

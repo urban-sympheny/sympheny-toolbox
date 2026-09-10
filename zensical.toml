@@ -173,16 +173,12 @@ nav = [
 [project.theme]
 logo = "assets/sympheny-logo-light.svg"
 favicon = "assets/favicon.ico"
-# custom_dir is sanctioned ONLY for overrides/main.html's announce block (the
-# dismissible beta banner) — see the header comment and SKILL.md ground rule 1.
-custom_dir = "overrides"
 features = [
   "navigation.tabs",
   "navigation.indexes",
   "content.tabs.link",
   "content.code.copy",
   "search.highlight",
-  "announce.dismiss",
 ]
 
 # Brand color schemes: two-way light/dark toggle. The media queries make the

@@ -6,9 +6,9 @@ tags:
 
 # RAMP tool suite
 
-The RAMP tool suite specializes in synthetic demand modeling for cases where measured datasets are unavailable or incomplete. It generates stochastic load profiles (domestic, hot water, EV, and more).
+The RAMP tool suite specialises in synthetic demand modelling for cases where measured datasets are unavailable or incomplete. It generates stochastic load profiles (domestic, hot water, EV, and more).
 
-**RAMP Mobility** is a dedicated sister repository focused on electric mobility demand modeling. It provides demand profiles for EV fleets and integrates them into energy system optimization. The complete RAMP Mobility documentation is available on [GitHub](https://github.com/RAMP-project/RAMP-mobility/blob/master/docs/getting_started.md).
+**RAMP Mobility** is a dedicated sister repository focused on electric mobility demand modelling. It provides demand profiles for EV fleets and integrates them into energy system optimisation. The complete RAMP Mobility documentation is available on [GitHub](https://github.com/RAMP-project/RAMP-mobility/blob/master/docs/getting_started.md).
 
 ## In EnyTool
 
@@ -17,7 +17,7 @@ The RAMP tool suite specializes in synthetic demand modeling for cases where mea
 
 Key benefits:
 
-- Enables richer modeling for sites without measured loads.
+- Enables richer modelling for sites without measured loads.
 - Supports future-proofing by including EV loads and mobility transitions.
 - Plugs into district/building energy models in EnyTool to assess flexibility, grid impact, and network sizing.
 

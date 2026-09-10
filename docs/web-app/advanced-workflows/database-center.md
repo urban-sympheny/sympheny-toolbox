@@ -15,16 +15,16 @@ In the Sympheny Database Center (the database icon at the bottom left of your sc
 ![Database Center overview](img/database-1.png)
 
 - **My User Database**: your own private database, available to you across all your scenarios. You can maintain this database directly.
-- **Organization Database**: the database specific to your organization, named after your organization. Only accounts from your organization can access this data. See the roles and permissions table below.
+- **Organization Database**: the database specific to your organisation, named after your organisation. Only accounts from your organisation can access this data. See the roles and permissions table below.
 
 ## Roles & permissions
 
-The account type and license determine which rights are available to which users.
+The account type and licence determine which rights are available to which users.
 
 | Access | Organization Database | My User Database |
 | --- | --- | --- |
-| Download | Organization users | Individual user |
-| Upload / Delete | Organization admin users | Individual user |
+| Download | Organisation users | Individual user |
+| Upload / Delete | Organisation admin users | Individual user |
 
 ## Download databases
 
@@ -66,7 +66,7 @@ To use the data, click **Select Saved** when adding a new demand in step 4.
 
 ## Upload from Database Center
 
-To upload data to your databases, first prepare your data in the correct format. The parameters available depend on the type of data you want to upload. The databases you're allowed to modify depend on your [roles and permissions](#roles-permissions) within your organization.
+To upload data to your databases, first prepare your data in the correct format. The parameters available depend on the type of data you want to upload. The databases you're allowed to modify depend on your [roles and permissions](#roles-permissions) within your organisation.
 
 ### Conversion and storage technologies
 
@@ -131,7 +131,7 @@ To upload energy demand profiles, fill in an Excel file with two sheets. There a
 This method is preferred for batch upload.
 
 1. In the [Excel template](https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/templates/energy-demands-org-db-template.xlsx), enter information about each profile in Sheet 1: Building Use, Demand Type, Building Age or Standard, and Specific Energy Demand. Follow the [naming convention](#naming-convention) below. The Specific Energy Demand (kWh/m²/a) for each combination of Building Use, Demand Type, and Building Age or Standard lets you scale the profiles to each scenario's requirements via the scenario editor.
-2. In Sheet 2, add the corresponding profiles under the columns with the same column names as in Sheet 1, normalized to 1 kWh. Make sure the naming in row 1 of Sheet 2 matches the naming in column A of Sheet 1.
+2. In Sheet 2, add the corresponding profiles under the columns with the same column names as in Sheet 1, normalised to 1 kWh. Make sure the naming in row 1 of Sheet 2 matches the naming in column A of Sheet 1.
 
 ##### Naming convention
 
@@ -249,11 +249,11 @@ Building age or standard must use the following nomenclature:
 | AGE_OVER_2015 |
 | MINERGIE_A |
 
-#### Use demand profiles from organization database
+#### Use demand profiles from organisation database
 
-To use your profile, click **Generate Profile** when adding a new demand in step 4, then click your organization database (in this example, "Sympheny database"):
+To use your profile, click **Generate Profile** when adding a new demand in step 4, then click your organisation database (in this example, "Sympheny database"):
 
-![Selecting the organization database when generating a profile](img/upload-databases-4.png)
+![Selecting the organisation database when generating a profile](img/upload-databases-4.png)
 
 ### Currency
 

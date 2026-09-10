@@ -70,5 +70,8 @@ CI (`.github/workflows/ci.yml`, also called by the publish workflow) runs the sa
 
 ## Docs & tests
 
-- Update documentation whenever behavior or interfaces change — this includes `README.md` and `CHANGELOG.md`.
-- Update tests whenever behavior or interfaces change. Tests live under `tests/` and run against a mock API (`httpx.MockTransport`); they must never hit the real Sympheny API.
+- Update documentation whenever behaviour or interfaces change — this includes `README.md` and `CHANGELOG.md`.
+- Documentation prose is **British English** (`-ise`, not `-ize`). UI strings, code identifiers, enum
+  values, generated pages, and filenames keep their source spelling — the exemptions are recorded in
+  the `docs` skill under Conventions.
+- Update tests whenever behaviour or interfaces change. Tests live under `tests/` and run against a mock API (`httpx.MockTransport`); they must never hit the real Sympheny API.

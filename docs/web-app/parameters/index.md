@@ -6,7 +6,7 @@ tags:
 
 # Parameters
 
-Sympheny lets you consolidate all your input data into a single Excel file available in the [execution history](../step-by-step-guide/execution.md#execution-history). This file is organized into separate worksheets, with each worksheet representing a specific component of your scenario model:
+Sympheny lets you consolidate all your input data into a single Excel file available in the [execution history](../step-by-step-guide/execution.md#execution-history). This file is organised into separate worksheets, with each worksheet representing a specific component of your scenario model:
 
 - [General parameters](general.md)
 - [Stage parameters](stages.md)

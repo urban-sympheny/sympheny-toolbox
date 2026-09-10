@@ -8,7 +8,7 @@ tags:
 
 ## Database Center
 
-Update or replace all the different database types for your organization or user account at once with an Excel file. You can also download all the databases as an Excel file. [Learn more](../advanced-workflows/database-center.md)
+Update or replace all the different database types for your organisation or user account at once with an Excel file. You can also download all the databases as an Excel file. [Learn more](../advanced-workflows/database-center.md)
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/database-center.mp4"></video>
 
@@ -24,8 +24,8 @@ Documentation on how to use the Sympheny API in your own application is now avai
 
 ![API documentation link in the Sympheny web app navigation bar](img/2023-march-1.png)
 
-## Visualize geoadmin data
+## Visualise geoadmin data
 
-Visualize geoadmin data in Switzerland provided by the BAFU, such as CO2 emissions for each of the selected buildings in your site's hubs.
+Visualise geoadmin data in Switzerland provided by the BAFU, such as CO2 emissions for each of the selected buildings in your site's hubs.
 
 ![Geoadmin CO2 emissions data overlay](img/2023-march-2.png)

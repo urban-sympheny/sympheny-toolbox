@@ -11,7 +11,7 @@ building use. They are stored in three levels, each contributing to the overall 
 of the demand profile:
 
 - **Demand type** refers to the energy carrier. Space heating and cooling depend on a
-  normalized weather profile, while the other profiles are stochastic: they depend on
+  normalised weather profile, while the other profiles are stochastic: they depend on
   the time of use of different appliances.
 - **Building use** affects the shape of the profile. For example, an office building is
   generally closed on weekends and less occupied in summer, while a hospital operates
@@ -21,7 +21,7 @@ of the demand profile:
   include values of peak load in kW. When you select SIA standards, profiles are
   slightly reshaped to match the annual demand in kWh and the peak load in kW.
 
-In the database, all profiles are normalized for annual energy demand, meaning the sum
+In the database, all profiles are normalised for annual energy demand, meaning the sum
 of annual energy demand is 1 kWh. The profile is then "scaled": multiplied by the
 actual energy demand.
 

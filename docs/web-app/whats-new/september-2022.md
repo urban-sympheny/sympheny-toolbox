@@ -8,13 +8,13 @@ tags:
 
 ## New navigation page for projects
 
-Geolocate and organize all your projects at once on the same map. Order projects easily by name, favorite, or date created. A new sidebar gives access to the main sections of your project: *Design*, *Execution*, and *Results* of your scenario optimizations.
+Geolocate and organise all your projects at once on the same map. Order projects easily by name, favourite, or date created. A new sidebar gives access to the main sections of your project: *Design*, *Execution*, and *Results* of your scenario optimisations.
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/navigation-page.mp4"></video>
 
 ## CO2 Capture Technology candidates
 
-Evaluate Technology candidates in your scenario optimization that are able to capture and/or emit CO2 in their operation. CO2 streams can also be modeled to consider more complex CCS (Carbon Capture and Storage) systems.
+Evaluate Technology candidates in your scenario optimisation that are able to capture and/or emit CO2 in their operation. CO2 streams can also be modelled to consider more complex CCS (Carbon Capture and Storage) systems.
 
 <video controls preload="metadata" src="https://prod-eu-north-1-sympheny-public.s3.eu-north-1.amazonaws.com/docs/videos/co2-capture-technologies.mp4"></video>
 
@@ -32,6 +32,6 @@ Directly upload your own building data based on the EGID identifier from Excel t
 
 ## New API service
 
-Integrate the Sympheny optimization engine and other services in your own software application.
+Integrate the Sympheny optimisation engine and other services in your own software application.
 
 ![Sympheny API service overview](img/2022-september-1.png)

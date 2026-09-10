@@ -6,7 +6,7 @@ tags:
 
 # Analyses
 
-This guide shows you how to create and manage analyses, which can be used to organize scenarios by design iteration or project stage.
+This guide shows you how to create and manage analyses, which can be used to organise scenarios by design iteration or project stage.
 
 ![Listing the analysis within a project](img/analyses-1.png)
 

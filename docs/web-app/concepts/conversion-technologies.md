@@ -20,7 +20,7 @@ For parameters, see
 
 A mode represents a specific operational regime with its own set of inputs, outputs, and efficiencies. A single technology can have multiple modes to reflect different operating regimes.
 
-**Example**: a reversible heat pump has a heating mode and a cooling mode, each with a distinct coefficient of performance (COP). Only one investment is made and two behaviors are possible.
+**Example**: a reversible heat pump has a heating mode and a cooling mode, each with a distinct coefficient of performance (COP). Only one investment is made and two behaviours are possible.
 
 !!! tip
     **Technical parameters** such as efficiency and capacity only affect the mode they are assigned to. **Financial and environmental parameters** affect all of the modes of the technology.
@@ -68,8 +68,8 @@ The installed capacity of the technology is used to calculate the investment, ma
 The efficiency of a mode indicates energy dissipation within systems. The sum of output efficiencies represents the mode's total efficiency:
 
 - A total efficiency of 100% means useful energy is conserved.
-- A total efficiency below 100% indicates useful energy is lost in the system, for example heat losses in the technology, which are not modeled as a "waste heat" flow.
-- A total efficiency above 100% indicates useful energy is created within the system, for example useful heat extracted from the environment, which is not modeled as an "ambient air" flow.
+- A total efficiency below 100% indicates useful energy is lost in the system, for example heat losses in the technology, which are not modelled as a "waste heat" flow.
+- A total efficiency above 100% indicates useful energy is created within the system, for example useful heat extracted from the environment, which is not modelled as an "ambient air" flow.
 
 ### Example: heat pump
 
@@ -93,7 +93,7 @@ of HT heat. This corresponds to a COP of 3 (yearly average). See illustration be
 
 ### Example: chiller
 
-For chillers, there are two ways to model cooling energy. The first method treats cooling energy as a service, meaning the energy is generated and supplied. For example, when modeling a chiller with an energy efficiency ratio (EER) of 2, the process is as follows:
+For chillers, there are two ways to model cooling energy. The first method treats cooling energy as a service, meaning the energy is generated and supplied. For example, when modelling a chiller with an energy efficiency ratio (EER) of 2, the process is as follows:
 
 | Input EC    | Input share | Output EC | Output efficiency [%] |
 | ----------- | ----------- | --------- | ---------------------- |
@@ -108,7 +108,7 @@ This means that an input of 100 units of electricity produces 200 units of cooli
 
 ### Alternative method: chiller
 
-There's also an alternative method where cooling energy is treated as an extraction of energy demand. To use this method, set the cooling demand to "reversed." In this case, the chiller can be modeled as a heat pump with an EER of 2 (or a COP of 3).
+There's also an alternative method where cooling energy is treated as an extraction of energy demand. To use this method, set the cooling demand to "reversed." In this case, the chiller can be modelled as a heat pump with an EER of 2 (or a COP of 3).
 
 | Input EC    | Input share | Output EC | Output efficiency [%] |
 | ----------- | ----------- | --------- | ---------------------- |
@@ -126,13 +126,13 @@ See illustration below on how to set these parameters in the web-app.
 
 ## Simultaneity of operation
 
-Different modes can operate simultaneously. To prevent this, leave the **simultaneous** checkbox unchecked, indicating the mode cannot run with others. This may increase optimization time.
+Different modes can operate simultaneously. To prevent this, leave the **simultaneous** checkbox unchecked, indicating the mode cannot run with others. This may increase optimisation time.
 
 ![Simultaneous operation checkbox](img/conversion-technologies-7.png)
 
 Alternatively, a less computationally intensive option is to define a different [seasonal or hourly operation](#seasonal-and-hourly-parameters) for each mode.
 
-Some advanced parameters are not available to all plan tiers, but can be added through add-on options. Contact customer support for a demo and to discuss customizing these
+Some advanced parameters are not available to all plan tiers, but can be added through add-on options. Contact customer support for a demo and to discuss customising these
 options to your needs.
 
 ## Seasonal and hourly parameters

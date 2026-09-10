@@ -30,9 +30,9 @@ Gain more insight into the cost breakdown of your optimal solutions.
 
 This release includes extended, more easily navigable databases of energy conversion and storage technologies.
 
-## Organization-specific workflows
+## Organisation-specific workflows
 
-Need to customize your Sympheny workflow with a tailored module? Now we can do that.
+Need to customise your Sympheny workflow with a tailored module? Now we can do that.
 
 ## Time-varying efficiencies
 

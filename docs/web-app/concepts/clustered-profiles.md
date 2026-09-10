@@ -8,7 +8,7 @@ tags:
 
 ## What are clustered profiles?
 
-In the optimization process, machine-learning-generated clustered profiles are used to
+In the optimisation process, machine-learning-generated clustered profiles are used to
 improve performance. These profiles are created by grouping similar daily patterns
 from all hourly input data in Sympheny, including energy demand, on-site resources, and
 hourly tariffs. A reduced number of representative days (typical days) is selected, but
@@ -78,7 +78,7 @@ peaks of two or more profiles occurring at the same time step are conserved.
 
 The clustered profiles exhibit a similar load duration curve to the original profiles,
 while ensuring both the sum and peaks of the profiles are preserved. In the results
-folder, the `Output.xlsx` file, which you can download once the optimization is
+folder, the `Output.xlsx` file, which you can download once the optimisation is
 complete, contains a sheet titled `Clustered Profiles-[Scenario Name].xlsx` with the
 following metrics:
 

@@ -31,7 +31,7 @@ You can choose different sizing methods. The size of the storage technology is e
 
 ## Maximum discharge rate
 
-The discharge rate is modeled as a %/h of the capacity. For a 10 kWh battery, a discharge rate of 100%/h means the battery can deliver 100% of its capacity in one hour, equivalent to a power of 10 kW.
+The discharge rate is modelled as a %/h of the capacity. For a 10 kWh battery, a discharge rate of 100%/h means the battery can deliver 100% of its capacity in one hour, equivalent to a power of 10 kW.
 
 ## Efficiency
 

@@ -15,7 +15,7 @@ properly evaluated.
 **Interest rate:**
 
 - **Interest rate as financing cost**: when you take out a loan (especially an
-  amortized one, with regular payments), the interest rate directly reflects the cost
+  amortised one, with regular payments), the interest rate directly reflects the cost
   of borrowing that money: it's what the lender charges you.
 - **Discounting future cash flows**: the interest rate can also be used to calculate
   the present value of money expected in the future (a process called discounting). In

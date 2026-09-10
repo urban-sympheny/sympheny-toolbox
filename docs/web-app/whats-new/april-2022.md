@@ -20,7 +20,7 @@ tags:
 
 ## MFA (multi-factor authentication) at login
 
-To protect your organization against lost or stolen credentials, you can request the use of MFA to log in to your Sympheny account.
+To protect your organisation against lost or stolen credentials, you can request the use of MFA to log in to your Sympheny account.
 
 ## Dynamic CO2 intensity for import & export candidates
 

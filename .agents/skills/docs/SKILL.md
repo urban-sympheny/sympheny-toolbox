@@ -33,21 +33,30 @@ is hand-written prose that follows the conventions below.
    neither licenses arbitrary raw HTML or decorative emoji elsewhere. MDX,
    React components, and other raw HTML are banned, with two exceptions: the
    GENERATED header comment and
-   `<video controls preload="metadata" src="…"></video>` for S3-hosted
-   screencasts. If content genuinely needs something with no equivalent in
+   `<video controls preload="metadata" src="…">` for S3-hosted screencasts.
+   That `<video>` may carry exactly one child: a
+   `<track kind="captions" srclang="…" label="…" default>` whose `src` is a
+   `.vtt` file committed under `docs/` beside the page and referenced with a
+   relative path. Caption tracks MUST be same-origin — a browser rejects a
+   cross-origin text track that carries no CORS headers, and it does so
+   silently (the video plays, with no subtitles and no console error) — so
+   never move a `.vtt` onto S3 next to the video it belongs to. Nothing else
+   on the element is sanctioned: no `poster`, no `width`, no `<source>`, no
+   other children. If content genuinely needs something with no equivalent in
    the whitelist, **do not silently drop it or hack raw HTML** — flag it with
    `TODO(review)`, tell the maintainer in your report, and propose either a
    new whitelisted extension or a new sanctioned HTML element (that's how
    `<video>` was approved). Extending the whitelist is a deliberate
    maintainer decision, made in `zensical.toml`, never ad-hoc per page.
-   Two further **infrastructure** sanctions (Phase 5c) sit outside page
-   content and do not license raw HTML in Markdown: (a) a `custom_dir`
-   theme override (`overrides/main.html`) is permitted **only** for the
-   announcement bar's `announce` block (the dismissible beta banner) — no
-   other block overrides; (b) HTML inside `zensical.toml` **config values** —
-   the `copyright` footer string and the `extra.consent` description — is
-   permitted for their links (Support / Privacy policy / Change cookie
-   settings, and the privacy-policy link). One `docs/api/explorer.html` is a
+   One further **infrastructure** sanction (Phase 5c) sits outside page
+   content and does not license raw HTML in Markdown: HTML inside
+   `zensical.toml` **config values** — the `copyright` footer string and the
+   `extra.consent` description — is permitted for their links (Support /
+   Privacy policy / Change cookie settings, and the privacy-policy link).
+   There is NO `custom_dir` theme override: the only one that ever existed
+   (`overrides/main.html`, holding the dismissible beta banner) was deleted
+   along with the banner in 2026-09, so a theme override is not sanctioned at
+   all. One `docs/api/explorer.html` is a
    standalone non-Markdown page (the Scalar API explorer, listed in the nav
    under REST API) copied verbatim, not Markdown content. There is NO
    `extra_javascript` — a snippet was tried 2026-07-10 and reverted after it
@@ -199,6 +208,37 @@ fails.
 **Style.** Second person ("you"), present tense, imperative steps. Short
 paragraphs. One H1 per page (the title). Sentence-case headings. Spell out the
 product's domain terms exactly as the UI does. No marketing tone.
+
+**British English**, with the `-ise`/`-isation` convention rather than Oxford's
+`-ize`: `optimise`, `organisation`, `analyse`, `visualisation`, plus `colour`,
+`centre`, `modelling`, `behaviour`, `favourable`, and `licence` for the noun
+(the verb stays `license`). This binds hand-written prose under `docs/` and
+`README.md`. Four things are exempt, because they are names rather than prose:
+
+1. **Product UI strings** keep the spelling the UI shows, which the Style rule
+   above already requires: **Database Center**, **Organization Database**, the
+   **Optimize** sizing option, **Optimization Options**, **Reinitialize
+   project**, the `Energy Carrier Color` parameter, the Help Center. Quote what
+   the reader will click, not what a style guide would prefer. Prose *about* a
+   UI element still follows the rule ("the HEX colour code of the energy
+   carrier", under a column headed `Energy Carrier Color`).
+2. **Code identifiers, API fields, and enum values** are never respelled:
+   `organizationId`, `colorHexCode`, `optimize`, `SPORTS_CENTER`,
+   `HYDROGEN_PRESSURIZED`, the `Authorization` header. This extends to the
+   display name a table pairs with an enum value (`Hydrogen Pressurized` beside
+   `HYDROGEN_PRESSURIZED`, `Sports center` beside `SPORTS_CENTER`).
+3. **Generated pages follow their source.** `docs/api/reference/` and
+   `docs/sdk/reference/` inherit the US spellings of the spec and the
+   docstrings (the spec's own summary says "optimization"), and hand-editing
+   them is banned by ground rule 2. The two surfaces differ on purpose: the
+   prose is ours, the reference mirrors the API.
+4. **Filenames, URLs, and anchors** stay as they are — `database-center.md`,
+   `#upload-from-database-center` — because they mirror a UI name and every
+   link into them is load-bearing.
+
+`dialog` stays `dialog` for the UI window; `dialogue` is a conversation.
+`CHANGELOG.md` entries already released are a dated record, so leave their
+spelling alone and apply the rule to new entries only.
 
 **No em-dashes.** Never use `—` (or `–`) in page content. They read as
 machine-written. Restructure the sentence instead: use a period and two short
@@ -378,6 +418,10 @@ validate them.
 5. Style and naming pass on every page you touched:
    - No em-dashes: `grep -rn "—\|–" docs/ --include="*.md"` returns nothing
      outside the `GENERATED` headers.
+   - British spellings: sweep the pages you touched for `-ize`/`-ization`,
+     `color`, `center`, `behavior`, `favor`, `modeling`, `analyze`. Every
+     remaining hit must be one of the four documented exemptions (UI string,
+     code identifier or enum, generated page, filename/anchor).
    - Filenames are the kebab-case of their nav titles, and each H1 matches its
      nav title.
    - Front matter carries one surface tag plus one topic tag, and the topic tag

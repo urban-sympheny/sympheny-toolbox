@@ -6,7 +6,7 @@ tags:
 
 # Technology packages
 
-Technology packages are bundles of technologies that the optimizer considers
+Technology packages are bundles of technologies that the optimiser considers
 together. They build on the individual
 [conversion](conversion-technologies.md) and
 [storage](storage-technologies.md) technology candidates defined in your

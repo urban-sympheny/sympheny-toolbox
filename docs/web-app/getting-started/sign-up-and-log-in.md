@@ -28,4 +28,4 @@ If you'd like to enable MFA or have any questions, feel free to contact us for a
 
 ## What's next?
 
-Now that you're signed in, read [Structure](structure.md) to see how the web app is organized: how projects, analyses, scenarios, executions, and solutions relate to each other. From there you can walk through the [Quick start](quick-start.md) and then build your own model with the [Step-by-step guide](../step-by-step-guide/index.md).
+Now that you're signed in, read [Structure](structure.md) to see how the web app is organised: how projects, analyses, scenarios, executions, and solutions relate to each other. From there you can walk through the [Quick start](quick-start.md) and then build your own model with the [Step-by-step guide](../step-by-step-guide/index.md).

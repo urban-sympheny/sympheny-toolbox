@@ -7,7 +7,7 @@ tags:
 
 The Sympheny REST API gives you programmatic access to everything you can do in
 the Sympheny web app: create projects and analyses, model energy hubs,
-demands, supply technologies and networks, run optimizations, and integrate
+demands, supply technologies and networks, run optimisations, and integrate
 Sympheny into your own tools and workflows.
 
 If you work in Python, the [Python SDK](../sdk/index.md) wraps this API with

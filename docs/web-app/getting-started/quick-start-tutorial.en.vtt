@@ -1,0 +1,678 @@
+WEBVTT
+
+1
+00:00:03.000 --> 00:00:07.000
+Today we'll be going over the basics of how to use Sympheny.
+
+2
+00:00:07.000 --> 00:00:10.000
+So we'll do a very simple project just to illustrate how to use the app.
+
+3
+00:00:10.000 --> 00:00:14.000
+Sympheny is a really flexible software, but there is a lot of data available.
+
+4
+00:00:14.000 --> 00:00:17.000
+Here i'm selecting solar panels in the database.
+
+5
+00:00:17.000 --> 00:00:21.000
+We can see that there's quite a lot of technologies and quite a lot of options just for solar panels.
+
+6
+00:00:21.000 --> 00:00:24.000
+There we have our annual solar irradiance profile.
+
+7
+00:00:24.000 --> 00:00:29.000
+So the energy diagram will be updated every time you add something to it.
+
+8
+00:00:29.000 --> 00:00:32.000
+All of the items on our dashboard are interactive.
+
+9
+00:00:32.000 --> 00:00:42.000
+You can view values, move things around, filter out components, and download the data table with all of the data.
+
+10
+00:00:42.000 --> 00:00:45.000
+This is what you will see once you've created a new account.
+
+11
+00:00:45.000 --> 00:00:47.000
+You have access to an example project.
+
+12
+00:00:47.000 --> 00:00:50.000
+Let's start with creating our first project.
+
+13
+00:00:50.000 --> 00:00:52.000
+We give it a name.
+
+14
+00:00:52.000 --> 00:00:55.000
+This will be a demo on the topic of a data center.
+
+15
+00:00:55.000 --> 00:00:57.000
+We can Give it a location.
+
+16
+00:00:57.000 --> 00:01:02.000
+This will help you find your projects when you have many.
+
+17
+00:01:02.000 --> 00:01:05.000
+Now that we have our project, let's open it up.
+
+18
+00:01:05.000 --> 00:01:06.000
+For now it's empty.
+
+19
+00:01:06.000 --> 00:01:07.000
+We have a few options here.
+
+20
+00:01:07.000 --> 00:01:10.000
+We can edit it, of course.
+
+21
+00:01:10.000 --> 00:01:14.000
+We can also share it with our colleagues.
+
+22
+00:01:14.000 --> 00:01:20.000
+We'll start by adding an image to illustrate the project.
+
+23
+00:01:20.000 --> 00:01:22.000
+Here we go.
+
+24
+00:01:22.000 --> 00:01:27.000
+Let's add an analysis.
+
+25
+00:01:27.000 --> 00:01:31.000
+Scenarios can be used to compare different situations.
+
+26
+00:01:31.000 --> 00:01:39.000
+In this case, we want a first scenario to be about solar power only.
+
+27
+00:01:39.000 --> 00:01:44.000
+So we'll do a very simple project today just to illustrate how to use the app.
+
+28
+00:01:44.000 --> 00:01:45.000
+We click into the scenario.
+
+29
+00:01:45.000 --> 00:01:48.000
+Now we are inside the scenario editor.
+
+30
+00:01:48.000 --> 00:01:51.000
+We can see a number of steps up here.
+
+31
+00:01:51.000 --> 00:01:54.000
+First let's change the currency.
+
+32
+00:01:54.000 --> 00:01:58.000
+Maybe for this project we're using euros.
+
+33
+00:01:58.000 --> 00:02:00.000
+We need to have a stage.
+
+34
+00:02:00.000 --> 00:02:04.000
+Stages are meant to represent faces in our project.
+
+35
+00:02:04.000 --> 00:02:15.000
+These are used mostly for very large-scale projects when we are planning the entire heating system of a district, including network, over decades.
+
+36
+00:02:15.000 --> 00:02:17.000
+Let's say 20 year.
+
+37
+00:02:17.000 --> 00:02:21.000
+Starting out, we can set the interest rate and the inflation as zero.
+
+38
+00:02:21.000 --> 00:02:24.000
+This will help us interpret results.
+
+39
+00:02:24.000 --> 00:02:26.000
+The next step we need to add a hub.
+
+40
+00:02:26.000 --> 00:02:29.000
+So a hub is a geographical location.
+
+41
+00:02:29.000 --> 00:02:39.000
+We can use the search function.
+
+42
+00:02:39.000 --> 00:02:52.000
+We can change the overlay.
+
+43
+00:02:52.000 --> 00:02:54.000
+I'll simply draw the outline.
+
+44
+00:02:54.000 --> 00:03:02.000
+This is just to kind of anchor the project geographically and show the stakeholders what we're talking about.
+
+45
+00:03:02.000 --> 00:03:06.000
+We can also with add-ons extract information directly from the map.
+
+46
+00:03:06.000 --> 00:03:17.000
+If we want to have surface and heating system for example of a building or a group of buildings that's possible to get directly from the map.
+
+47
+00:03:17.000 --> 00:03:19.000
+A hub is a geographical location.
+
+48
+00:03:19.000 --> 00:03:22.000
+If we draw more of them, we can connect them with networks.
+
+49
+00:03:22.000 --> 00:03:31.000
+This is necessary when we're modeling, for example, district heating or electrical systems, or you have different buildings that are electrically connected.
+
+50
+00:03:31.000 --> 00:03:34.000
+A hub can be a single building or, in this case, a group of buildings.
+
+51
+00:03:34.000 --> 00:03:36.000
+Next step is energy carriers.
+
+52
+00:03:36.000 --> 00:03:42.000
+We'll add these energy carriers automatically by going directly to supply technology.
+
+53
+00:03:42.000 --> 00:03:44.000
+and adding some from the database.
+
+54
+00:03:44.000 --> 00:03:48.000
+Sympheny is a really flexible software, but there is a lot of data available.
+
+55
+00:03:48.000 --> 00:03:50.000
+Here i'm selecting solar panels in the database.
+
+56
+00:03:50.000 --> 00:03:55.000
+We can see that there is quite a lot of technologies and quite a lot of options just for solar panels.
+
+57
+00:03:55.000 --> 00:03:56.000
+I'll take the larger array.
+
+58
+00:03:56.000 --> 00:03:59.000
+These will be cheaper per kilowatt.
+
+59
+00:03:59.000 --> 00:04:02.000
+And here we have missing energy carriers.
+
+60
+00:04:02.000 --> 00:04:03.000
+Do you want to add them?
+
+61
+00:04:03.000 --> 00:04:05.000
+Yes.
+
+62
+00:04:03.000 --> 00:04:07.000
+So we're adding solar irradiance and electricity.
+
+63
+00:04:07.000 --> 00:04:12.000
+So we can see that this already has all of the information we need.
+
+64
+00:04:12.000 --> 00:04:14.000
+This is the efficiency of this technology.
+
+65
+00:04:14.000 --> 00:04:24.000
+So this is the sun hitting the panel and the electricity produced overall is 18%, including inverter efficiency, inclination, shading, everything.
+
+66
+00:04:24.000 --> 00:04:26.000
+We have some technical parameters.
+
+67
+00:04:26.000 --> 00:04:30.000
+We can set the capacity or the production or other limits for the technology.
+
+68
+00:04:30.000 --> 00:04:35.000
+In this case, we'll just let Sympheny size and optimize this solar field.
+
+69
+00:04:35.000 --> 00:04:38.000
+We also have all of the cost parameters already entered.
+
+70
+00:04:38.000 --> 00:04:39.000
+This comes from our database.
+
+71
+00:04:39.000 --> 00:04:44.000
+We can edit anything we want to or we can leave it as it is.
+
+72
+00:04:44.000 --> 00:04:49.000
+We also have the possibility to enter values for embedded emissions.
+
+73
+00:04:49.000 --> 00:04:51.000
+Okay, so now we have our solar panels.
+
+74
+00:04:51.000 --> 00:04:57.000
+If we go back to energy carriers, we can see that electricity and solar roof has been automatically entered.
+
+75
+00:04:57.000 --> 00:05:01.000
+If you want, you can change the color or the name.
+
+76
+00:05:01.000 --> 00:05:04.000
+For this example, we only have one energy demand.
+
+77
+00:05:04.000 --> 00:05:07.000
+It will be electricity, so electricity that the facility uses.
+
+78
+00:05:07.000 --> 00:05:09.000
+This is a bit of an odd one.
+
+79
+00:05:09.000 --> 00:05:13.000
+It's not a standard building, it's a data center.
+
+80
+00:05:13.000 --> 00:05:18.000
+And we can see that in our database we have a lot of options, but we do not have data centers.
+
+81
+00:05:18.000 --> 00:05:26.000
+We can still try out something that maybe sounds close, industry warehouse, and see where this will take us.
+
+82
+00:05:26.000 --> 00:05:30.000
+Here we have a value per square meter coming out for the norms for this kind of building.
+
+83
+00:05:30.000 --> 00:05:34.000
+In this case, this is not really correct because it's not the one we want to model.
+
+84
+00:05:34.000 --> 00:05:39.000
+So from the project, we have a value of 1.2 GWh of electricity per year.
+
+85
+00:05:39.000 --> 00:05:41.000
+We'll enter that here.
+
+86
+00:05:41.000 --> 00:05:44.000
+Some information on where this data comes from.
+
+87
+00:05:44.000 --> 00:05:46.000
+Save and close.
+
+88
+00:05:46.000 --> 00:05:51.000
+And we see that there is quite a lot of variation based on weekends.
+
+89
+00:05:51.000 --> 00:05:54.000
+Maybe we're not very happy with this one and we want to change it.
+
+90
+00:05:54.000 --> 00:05:58.000
+we can actually upload our own.
+
+91
+00:05:58.000 --> 00:06:05.000
+So upload profile, go to downloads, take this one.
+
+92
+00:06:05.000 --> 00:06:08.000
+It's been updated to something a bit more realistic.
+
+93
+00:06:08.000 --> 00:06:10.000
+There is quite a number of options here.
+
+94
+00:06:10.000 --> 00:06:16.000
+We can smooth out the profile if we enter a number between 1 and 20 here.
+
+95
+00:06:16.000 --> 00:06:19.000
+So there is a lot you can do with Symfony.
+
+96
+00:06:19.000 --> 00:06:25.000
+This is a simple Excel file with 8,760 values.
+
+97
+00:06:25.000 --> 00:06:28.000
+You can grab it.
+
+98
+00:06:28.000 --> 00:06:32.000
+We can open it on the screen to look at the format.
+
+99
+00:06:32.000 --> 00:06:34.000
+There we see the format.
+
+100
+00:06:34.000 --> 00:06:42.000
+So it's a simple Excel file with two columns.
+
+101
+00:06:42.000 --> 00:06:46.000
+We're also going to add an on-site resource for solar power.
+
+102
+00:06:46.000 --> 00:06:48.000
+You can see that we have two options.
+
+103
+00:06:48.000 --> 00:06:53.000
+We can add it from the map, so to simulate virtually any location.
+
+104
+00:06:53.000 --> 00:07:00.000
+But for this case, since we're in Geneva, we're simply going to select here the ones that are available in our database.
+
+105
+00:07:00.000 --> 00:07:05.000
+So let's say that it's 10,000 square meter of roof surface available.
+
+106
+00:07:05.000 --> 00:07:09.000
+And we're only going to simulate one orientation.
+
+107
+00:07:09.000 --> 00:07:14.000
+Here it's going to be 15 degrees east.
+
+108
+00:07:14.000 --> 00:07:21.000
+And if we click the View button, there we have our annual solar irradiance profile.
+
+109
+00:07:21.000 --> 00:07:29.000
+Okay, if you've been paying attention, in every step we have some things that are happening below here and on top on top we have the editor for that step.
+
+110
+00:07:29.000 --> 00:07:34.000
+And below we have a map that i can hide and also an energy diagram.
+
+111
+00:07:34.000 --> 00:07:38.000
+So the energy diagram will be updated every time you add something to it.
+
+112
+00:07:38.000 --> 00:07:48.000
+And here we can see on the left the onsite resource, in the middle the technology, and on the right the electricity demand.
+
+113
+00:07:48.000 --> 00:07:52.000
+Let's add the grid to finish modeling this problem.
+
+114
+00:07:52.000 --> 00:07:56.000
+So we'll add grid electricity.
+
+115
+00:07:56.000 --> 00:08:03.000
+This is electricity that can be purchased at let's say 15 cents per kWh.
+
+116
+00:08:03.000 --> 00:08:09.000
+We can also give a capacity cost in euro per kilowatt per year.
+
+117
+00:08:09.000 --> 00:08:12.000
+We have a number of technical parameters.
+
+118
+00:08:12.000 --> 00:08:14.000
+We can limit this on a per hour basis.
+
+119
+00:08:14.000 --> 00:08:18.000
+The tariff can also be an hourly profile.
+
+120
+00:08:18.000 --> 00:08:21.000
+We also have parameters for the environment for emissions.
+
+121
+00:08:21.000 --> 00:08:26.000
+Let's add here 0.1 kilogram of CO2 per kWh.
+
+122
+00:08:26.000 --> 00:08:30.000
+Let's do the same for the export.
+
+123
+00:08:30.000 --> 00:08:32.000
+So this will be surplus PV.
+
+124
+00:08:32.000 --> 00:08:35.000
+It's also electricity that we can sell.
+
+125
+00:08:35.000 --> 00:08:43.000
+This is positive value and it means we're going to earn money when we're exporting this electricity.
+
+126
+00:08:43.000 --> 00:08:48.000
+Before we execute and solve this problem, important to take a look at the energy diagram.
+
+127
+00:08:48.000 --> 00:08:54.000
+We can see that there is no loose ends and our very, very simple problem looks complete.
+
+128
+00:08:54.000 --> 00:08:59.000
+So we go to execute, give it a name, select the scenario.
+
+129
+00:08:59.000 --> 00:09:05.000
+Here are different parameters that can be changed to make the solution more accurate or faster.
+
+130
+00:09:05.000 --> 00:09:11.000
+You can see that we have choices between different objectives that we can use.
+
+131
+00:09:11.000 --> 00:09:14.000
+Once we have the results, of an execution that will show up here.
+
+132
+00:09:14.000 --> 00:09:18.000
+Here's where all the history of the execution will be displayed.
+
+133
+00:09:18.000 --> 00:09:20.000
+You can also access them from here.
+
+134
+00:09:20.000 --> 00:09:26.000
+We could download the Excel file of all of the parameters used to simulate the scenario.
+
+135
+00:09:26.000 --> 00:09:30.000
+We can also download all of the results in the Excel format.
+
+136
+00:09:30.000 --> 00:09:35.000
+We can view the parameters or we can go on our interactive dashboard.
+
+137
+00:09:35.000 --> 00:09:41.000
+We can head to all stages and display the Pareto front for this very simple problem.
+
+138
+00:09:41.000 --> 00:09:46.000
+Both solutions are virtually the same.
+
+139
+00:09:46.000 --> 00:09:53.000
+Once you select a solution, a station, a hub, you get to the detailed view for this result.
+
+140
+00:09:53.000 --> 00:09:56.000
+All of the items on our dashboard are interactive.
+
+141
+00:09:56.000 --> 00:10:04.000
+You can view values, move things around, filter out components and download the data table with all of the data.
+
+142
+00:10:04.000 --> 00:10:11.000
+This Sankey diagram of energy flows is available for every month of the year.
+
+143
+00:10:11.000 --> 00:10:18.000
+The energy diagram now contains only the technologies that are part of the optimal solution.
+
+144
+00:10:18.000 --> 00:10:23.000
+We have the solar field, which is about 1700 kilowatt.
+
+145
+00:10:23.000 --> 00:10:29.000
+That is about what we expect to have for a field that covers 10,000 square meter.
+
+146
+00:10:29.000 --> 00:10:32.000
+We have an efficiency of 18%.
+
+147
+00:10:32.000 --> 00:10:38.000
+We know that on average in Europe we get about 1 kilowatt per square meter of ton power.
+
+148
+00:10:38.000 --> 00:10:57.000
+We multiply that 18% by 10,000, we get about 1,800.
+
+149
+00:10:57.000 --> 00:11:03.000
+Let's head back into the project and we are going to create a scenario with a battery.
+
+150
+00:11:03.000 --> 00:11:07.000
+So copy this scenario, rename it.
+
+151
+00:11:07.000 --> 00:11:14.000
+This will be PV plus 100 kWh battery.
+
+152
+00:11:14.000 --> 00:11:16.000
+Now head into the scenario.
+
+153
+00:11:16.000 --> 00:11:20.000
+All of the parameters we set before have been carried over.
+
+154
+00:11:20.000 --> 00:11:33.000
+So all we need to do is just to add the battery or add it from the database.
+
+155
+00:11:33.000 --> 00:11:43.000
+I'll rename it battery 100 kWh, because for this one we will not optimize the capacity, we will specify the capacity 100 kWh.
+
+156
+00:11:43.000 --> 00:11:50.000
+And if we specify the capacity and that can be installed, then it can still not be installed, but must be installed.
+
+157
+00:11:50.000 --> 00:11:56.000
+So for this scenario we're not giving any wiggle room, the cost parameters leave it the same.
+
+158
+00:11:56.000 --> 00:12:05.000
+Now that's done, we can go directly to execution, we see that the battery has been added here on the diagram.
+
+159
+00:12:05.000 --> 00:12:14.000
+We can execute again.
+
+160
+00:12:14.000 --> 00:12:17.000
+Okay, execution is done.
+
+161
+00:12:17.000 --> 00:12:22.000
+View results.
+
+162
+00:12:22.000 --> 00:12:28.000
+Again, we can check out the Pareto font.
+
+163
+00:12:28.000 --> 00:12:32.000
+This time we can see that the lifecycle cost has been slightly reduced.
+
+164
+00:12:32.000 --> 00:12:40.000
+The battery saved us about 30K Euro.
+
+165
+00:12:40.000 --> 00:12:41.000
+The results look rather similar.
+
+166
+00:12:41.000 --> 00:12:52.000
+The energy stored in the battery is not huge compared to the GWh that's been consumed by the system.
+
+167
+00:12:52.000 --> 00:13:02.000
+What we can see is the state of charge of the battery that wasn't there before.
+
+168
+00:13:02.000 --> 00:13:07.000
+Here we see how the battery is used on a daily basis.
+
+169
+00:13:07.000 --> 00:13:11.875
+The self-sufficiency has been somewhat increased.
+
