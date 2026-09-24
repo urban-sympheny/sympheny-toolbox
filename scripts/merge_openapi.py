@@ -282,6 +282,8 @@ def is_superset_schema(a: dict[str, Any], b: dict[str, Any]) -> bool:
 
 
 def merge_schemas(target: dict[str, Any], source_spec: dict[str, Any], label: str) -> None:
+    """Add `source_spec`'s schemas to `target`. A same-name schema of a different shape is never
+    resolved silently: it is reported, then the richer variant is kept or the source's is prefixed."""
     target_schemas = target["components"]["schemas"]
     for name in list(source_spec["components"]["schemas"]):
         schema = source_spec["components"]["schemas"][name]
@@ -291,11 +293,13 @@ def merge_schemas(target: dict[str, Any], source_spec: dict[str, Any], label: st
         elif existing == schema:
             continue
         elif is_superset_schema(schema, existing):
-            target_schemas[name] = schema  # keep richer variant
+            print(f"warning: schema clash {name!r}: {label}'s variant has extra optional properties, it replaces the earlier one", file=sys.stderr)
+            target_schemas[name] = schema
         elif is_superset_schema(existing, schema):
-            continue
+            print(f"warning: schema clash {name!r}: the earlier variant has extra optional properties, {label}'s is dropped", file=sys.stderr)
         else:
             new_name = f"{label}{name}"
+            print(f"warning: schema clash {name!r}: incompatible variants, {label}'s is renamed {new_name!r}", file=sys.stderr)
             rename_schema(source_spec, name, new_name)
             target_schemas[new_name] = source_spec["components"]["schemas"][new_name]
 
