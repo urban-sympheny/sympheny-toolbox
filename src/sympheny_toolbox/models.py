@@ -1678,6 +1678,73 @@ class ResponseDtoListHubResponseDto(BaseModel):
     status: Status | None = None
 
 
+class Address(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    street: str | None = Field(..., title="Street")
+    house_number: str | None = Field(..., title="House Number")
+    postcode: str | None = Field(..., title="Postcode")
+    locality: str | None = Field(..., title="Locality")
+    country: str | None = Field(..., title="Country")
+    formatted: str = Field(..., title="Formatted")
+    source: str = Field(..., title="Source")
+
+
+class BuildingTypeEnum(StrEnum):
+    residence_mfh = "RESIDENCE_MFH"
+    residence_sfh = "RESIDENCE_SFH"
+    administration = "ADMINISTRATION"
+    schools = "SCHOOLS"
+    retail = "RETAIL"
+    assembly = "ASSEMBLY"
+    hospitals = "HOSPITALS"
+    industry = "INDUSTRY"
+    warehouse = "WAREHOUSE"
+    sports_center = "SPORTS_CENTER"
+    hotel = "HOTEL"
+
+
+class FeatureCollectionEnum(StrEnum):
+    feature_collection = "FeatureCollection"
+
+
+class FeatureEnum(StrEnum):
+    feature = "Feature"
+
+
+class FeatureGeoTypeEnum(StrEnum):
+    point = "Point"
+    line_string = "LineString"
+    polygon = "Polygon"
+    multi_point = "MultiPoint"
+    multi_line_string = "MultiLineString"
+    multi_polygon = "MultiPolygon"
+
+
+class Geometry(BaseModel):
+    """
+    A class representing a geojson geometry
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: FeatureGeoTypeEnum
+    coordinates: list[Any] = Field(..., title="Coordinates")
+
+
+class ValidationError(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    loc: list[str | int] = Field(..., title="Location")
+    msg: str = Field(..., title="Message")
+    type: str = Field(..., title="Error Type")
+    input: Any | None = Field(None, title="Input")
+    ctx: dict[str, Any] | None = Field(None, title="Context")
+
+
 class AppException(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -1843,17 +1910,6 @@ class User(BaseModel):
     account_guid: str = Field(..., alias="accountGuid", title="Accountguid")
     created: AwareDatetime = Field(..., title="Created")
     updated: AwareDatetime = Field(..., title="Updated")
-
-
-class ValidationError(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-    )
-    loc: list[str | int] = Field(..., title="Location")
-    msg: str = Field(..., title="Message")
-    type: str = Field(..., title="Error Type")
-    input: Any | None = Field(None, title="Input")
-    ctx: dict[str, Any] | None = Field(None, title="Context")
 
 
 class CustomHTTPException(BaseModel):
@@ -3405,6 +3461,33 @@ class NetworkTechnologyResponseDto(BaseModel):
     cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
 
 
+class BuildingProperties(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    source: str = Field(..., title="Source")
+    area_m2: int = Field(..., title="Area M2")
+    floors: int | None = Field(..., title="Floors")
+    height_m: float | None = Field(..., title="Height M")
+    building_type: BuildingTypeEnum | None
+    construction_year: int | None = Field(..., title="Construction Year")
+    addresses: list[Address] = Field(..., title="Addresses")
+
+
+class BuildingsRequest(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    aoi: Geometry
+
+
+class HTTPValidationError(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    detail: list[ValidationError] | None = Field(None, title="Detail")
+
+
 class GetUserProfileExt(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -3416,13 +3499,6 @@ class GetUserProfileExt(BaseModel):
     subscription: GetSubscriptionExt
     profile_picture: str | None = Field(None, alias="profilePicture", title="Profilepicture")
     organization_picture: str | None = Field(None, alias="organizationPicture", title="Organizationpicture")
-
-
-class HTTPValidationError(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-    )
-    detail: list[ValidationError] | None = Field(None, title="Detail")
 
 
 class GetSolverJobExt(BaseModel):
@@ -3978,6 +4054,24 @@ class NetworkTechnologyListResponseDto(BaseModel):
         populate_by_name=True,
     )
     network_technologies: list[NetworkTechnologyResponseDto] | None = Field(None, alias="networkTechnologies")
+
+
+class BuildingFeature(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: FeatureEnum | None = FeatureEnum.feature
+    geometry: Geometry
+    properties: BuildingProperties
+
+
+class BuildingFeatureCollection(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: FeatureCollectionEnum | None = FeatureCollectionEnum.feature_collection
+    features: list[BuildingFeature] = Field(..., title="Features")
+    properties: dict[str, Any] | None = Field({}, title="Properties")
 
 
 class ProjectDetailResponseDto(BaseModel):

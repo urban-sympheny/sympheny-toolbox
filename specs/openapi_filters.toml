@@ -14,7 +14,7 @@ exclude = []
 
 # Allowlist: api-services must declare `include`, so nothing is published unless listed here.
 [api-services]
-include = []
+include = ["POST /api-services/gis/buildings"]
 
 [backoffice]
 include = ["POST /backoffice/auth/ext/token", "GET /backoffice/ext/users/profile"]

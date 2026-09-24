@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- The published OpenAPI spec now includes a first api-services endpoint,
+  `POST /api-services/gis/buildings`, which returns the buildings within an area as GeoJSON. It
+  adds generated models (`BuildingsRequest`, `BuildingFeatureCollection`, `BuildingFeature`,
+  `BuildingProperties`, `Address`, `Geometry`, and the `BuildingTypeEnum`, `FeatureEnum`,
+  `FeatureCollectionEnum` and `FeatureGeoTypeEnum` enums) and a
+  [Buildings](https://docs.sympheny.com/api/reference/buildings/) REST API reference page.
+
 ### Changed
 - Maintainer tooling (no change to the published spec or the SDK): `scripts/fetch_webapp_openapi.py`
   is now `scripts/fetch_openapi.py`. It fetches the webapp and the api-services
@@ -15,7 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `scripts/merge_openapi.py` now takes the endpoints to publish from the committed
   `specs/openapi_filters.toml`: include/exclude patterns per source (`METHOD /path` globs, `tag:`,
   `op:`), with a warning for patterns that match nothing. This replaces the hardcoded backoffice and
-  sense selections. api-services is merged as a new source under `/api-services`, as an allowlist:
+  sense selections. api-services is merged as a new source, as an allowlist
+  (its paths already start with `/api-services`; its caller tags such as `Web App FE` are dropped):
   nothing is published until its `include` names it. The non-required-means-nullable contract
   still applies to the webapp export only.
 - `scripts/merge_openapi.py` now sorts the merged spec's paths, and the methods within each, so a

@@ -36,7 +36,7 @@ GENERATED_HEADER = (
 )
 
 # Tag → (output file stem, page title). Order defines nav/reading order:
-# platform resources first, then account, then solver. A spec tag missing from
+# platform resources first, then services, account, solver. A spec tag missing from
 # this mapping is an error so new tags force a deliberate docs decision.
 TAG_PAGES: dict[str, tuple[str, str]] = {
     "project-controller": ("projects", "Projects"),
@@ -55,6 +55,7 @@ TAG_PAGES: dict[str, tuple[str, str]] = {
     "network-link-controller": ("network-links", "Network links"),
     "intra-hub-network-link-controller": ("intra-hub-network-links", "Intra-hub network links"),
     "impex-controller": ("impex", "Imports and exports (impex)"),
+    "GIS Buildings": ("buildings", "Buildings"),
     "Auth External": ("auth", "Auth"),
     "External Users": ("users", "Users"),
     "External Solver Jobs": ("solver-jobs", "Solver jobs"),

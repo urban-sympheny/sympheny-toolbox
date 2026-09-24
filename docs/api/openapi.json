@@ -3,7 +3,7 @@
   "info": {
     "title": "Sympheny API",
     "summary": "Programmatic access to the Sympheny energy system optimization platform.",
-    "description": "The Sympheny API gives you programmatic access to the Sympheny platform for designing and optimizing multi-energy systems.\n\nUse it to automate everything you can do in the Sympheny web application: create projects and analyses, model energy hubs, demands, supply technologies and networks, run optimizations, and integrate the platform into your own tools and workflows.\n\n## API areas\n\n- **Platform** (`/sympheny-app`) - manage projects, analyses, scenarios, hubs, energy carriers, demands, technologies and networks.\n- **Account** (`/backoffice`) - obtain access tokens and inspect your user profile.\n- **Solver** (`/sense-api`) - submit solver jobs, track their progress, and manage your job quota.\n\n## Authentication\n\nRequest a JWT access token with your Sympheny credentials via `POST /backoffice/auth/ext/token`, then send it with every request in the `Authorization: Bearer <token>` header.\n\n## Client library\n\nA Python client is available as [sympheny-toolbox](https://github.com/urban-sympheny/sympheny-toolbox).",
+    "description": "The Sympheny API gives you programmatic access to the Sympheny platform for designing and optimizing multi-energy systems.\n\nUse it to automate everything you can do in the Sympheny web application: create projects and analyses, model energy hubs, demands, supply technologies and networks, run optimizations, and integrate the platform into your own tools and workflows.\n\n## API areas\n\n- **Platform** (`/sympheny-app`) - manage projects, analyses, scenarios, hubs, energy carriers, demands, technologies and networks.\n- **Services** (`/api-services`) - GIS utilities, such as finding the buildings within an area.\n- **Account** (`/backoffice`) - obtain access tokens and inspect your user profile.\n- **Solver** (`/sense-api`) - submit solver jobs, track their progress, and manage your job quota.\n\n## Authentication\n\nRequest a JWT access token with your Sympheny credentials via `POST /backoffice/auth/ext/token`, then send it with every request in the `Authorization: Bearer <token>` header.\n\n## Client library\n\nA Python client is available as [sympheny-toolbox](https://github.com/urban-sympheny/sympheny-toolbox).",
     "version": "1.0.0",
     "contact": {
       "name": "Sympheny",
@@ -16,6 +16,103 @@
     }
   ],
   "paths": {
+    "/api-services/gis/buildings": {
+      "post": {
+        "tags": [
+          "GIS Buildings"
+        ],
+        "summary": "Post Buildings",
+        "operationId": "post_buildings_api_services_gis_buildings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildingsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildingFeatureCollection"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error: Not authenticated",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Missing": {
+                    "summary": "Missing authentication",
+                    "value": {
+                      "detail": "Not authenticated"
+                    }
+                  },
+                  "Invalid JWT": {
+                    "summary": "Invalid JWT",
+                    "value": {
+                      "detail": {
+                        "code": "ESP_401",
+                        "message": "Unable to parse JWT"
+                      }
+                    }
+                  },
+                  "Invalid API Key": {
+                    "summary": "Invalid API Key",
+                    "value": {
+                      "detail": {
+                        "code": "ESP_401",
+                        "message": "Unable to parse key"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error: Not found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "User not found": {
+                    "summary": "User not found",
+                    "value": {
+                      "detail": {
+                        "code": "ESP_404",
+                        "message": "User not found"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/backoffice/auth/ext/token": {
       "post": {
         "tags": [
@@ -14568,6 +14665,337 @@
           }
         }
       },
+      "Address": {
+        "properties": {
+          "street": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Street"
+          },
+          "house_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "House Number"
+          },
+          "postcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postcode"
+          },
+          "locality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locality"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "formatted": {
+            "type": "string",
+            "title": "Formatted"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "street",
+          "house_number",
+          "postcode",
+          "locality",
+          "country",
+          "formatted",
+          "source"
+        ],
+        "title": "Address"
+      },
+      "BuildingFeature": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/FeatureEnum",
+            "default": "Feature"
+          },
+          "geometry": {
+            "$ref": "#/components/schemas/Geometry"
+          },
+          "properties": {
+            "$ref": "#/components/schemas/BuildingProperties"
+          }
+        },
+        "type": "object",
+        "required": [
+          "geometry",
+          "properties"
+        ],
+        "title": "BuildingFeature"
+      },
+      "BuildingFeatureCollection": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/FeatureCollectionEnum",
+            "default": "FeatureCollection"
+          },
+          "features": {
+            "items": {
+              "$ref": "#/components/schemas/BuildingFeature"
+            },
+            "type": "array",
+            "title": "Features"
+          },
+          "properties": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Properties",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "features"
+        ],
+        "title": "BuildingFeatureCollection"
+      },
+      "BuildingProperties": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "area_m2": {
+            "type": "integer",
+            "title": "Area M2"
+          },
+          "floors": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Floors"
+          },
+          "height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height M"
+          },
+          "building_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildingTypeEnum"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "construction_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Construction Year"
+          },
+          "addresses": {
+            "items": {
+              "$ref": "#/components/schemas/Address"
+            },
+            "type": "array",
+            "title": "Addresses"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "area_m2",
+          "floors",
+          "height_m",
+          "building_type",
+          "construction_year",
+          "addresses"
+        ],
+        "title": "BuildingProperties"
+      },
+      "BuildingTypeEnum": {
+        "type": "string",
+        "enum": [
+          "RESIDENCE_MFH",
+          "RESIDENCE_SFH",
+          "ADMINISTRATION",
+          "SCHOOLS",
+          "RETAIL",
+          "ASSEMBLY",
+          "HOSPITALS",
+          "INDUSTRY",
+          "WAREHOUSE",
+          "SPORTS_CENTER",
+          "HOTEL"
+        ],
+        "title": "BuildingTypeEnum"
+      },
+      "BuildingsRequest": {
+        "properties": {
+          "aoi": {
+            "$ref": "#/components/schemas/Geometry"
+          }
+        },
+        "type": "object",
+        "required": [
+          "aoi"
+        ],
+        "title": "BuildingsRequest"
+      },
+      "FeatureCollectionEnum": {
+        "type": "string",
+        "enum": [
+          "FeatureCollection"
+        ],
+        "title": "FeatureCollectionEnum"
+      },
+      "FeatureEnum": {
+        "type": "string",
+        "enum": [
+          "Feature"
+        ],
+        "title": "FeatureEnum"
+      },
+      "FeatureGeoTypeEnum": {
+        "type": "string",
+        "enum": [
+          "Point",
+          "LineString",
+          "Polygon",
+          "MultiPoint",
+          "MultiLineString",
+          "MultiPolygon"
+        ],
+        "title": "FeatureGeoTypeEnum"
+      },
+      "Geometry": {
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/FeatureGeoTypeEnum"
+          },
+          "coordinates": {
+            "items": {},
+            "type": "array",
+            "title": "Coordinates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "coordinates"
+        ],
+        "title": "Geometry",
+        "description": "A class representing a geojson geometry"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
       "AppException": {
         "properties": {
           "detail": {
@@ -15327,19 +15755,6 @@
         ],
         "title": "GetUserProfileExt"
       },
-      "HTTPValidationError": {
-        "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
       "Language": {
         "type": "string",
         "enum": [
@@ -15532,46 +15947,6 @@
           "updated"
         ],
         "title": "User"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          },
-          "input": {
-            "title": "Input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "Context"
-          }
-        },
-        "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
-        "title": "ValidationError"
       },
       "CustomHTTPException": {
         "properties": {
@@ -16256,6 +16631,9 @@
       "name": "technology-package-controller"
     },
     {
+      "name": "GIS Buildings"
+    },
+    {
       "name": "Auth External",
       "description": "External API - auth resource"
     },
@@ -16287,6 +16665,12 @@
         "stage-controller",
         "storage-technology-controller",
         "technology-package-controller"
+      ]
+    },
+    {
+      "name": "Services",
+      "tags": [
+        "GIS Buildings"
       ]
     },
     {

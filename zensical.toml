@@ -123,6 +123,7 @@ nav = [
       "api/reference/network-links.md",
       "api/reference/intra-hub-network-links.md",
       "api/reference/impex.md",
+      "api/reference/buildings.md",
       "api/reference/auth.md",
       "api/reference/users.md",
       "api/reference/solver-jobs.md",

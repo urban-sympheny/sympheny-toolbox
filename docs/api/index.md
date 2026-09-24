@@ -27,6 +27,7 @@ The path prefix selects the API area:
 | Prefix | Area | What it covers |
 | --- | --- | --- |
 | `/sympheny-app` | Web app | Projects, analyses, scenarios, hubs, energy carriers, demands, technologies, networks. |
+| `/api-services` | Services | GIS utilities, such as finding the buildings within an area. |
 | `/backoffice` | Account | Access tokens and your user profile. |
 | `/sense-api` | Solver | Submitting solver jobs, tracking their progress, and your job quota. |
 
@@ -54,8 +55,8 @@ Web app (`/sympheny-app`) endpoints wrap every response in an envelope:
 ```
 
 The payload is in `data`; `status` carries a machine-readable code and a
-human-readable message. Account (`/backoffice`) and solver (`/sense-api`)
-endpoints return the payload directly and report errors as a JSON object with
+human-readable message. Services (`/api-services`), account (`/backoffice`)
+and solver (`/sense-api`) endpoints return the payload directly and report errors as a JSON object with
 a `detail` field.
 
 Errors use conventional HTTP status codes: `400` for invalid input, `401` for

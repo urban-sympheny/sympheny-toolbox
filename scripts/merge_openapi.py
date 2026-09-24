@@ -28,8 +28,8 @@ include/exclude patterns per source. api-services is an allowlist — its sectio
 Private source inputs (in specs/, git-ignored):
 - webapp_openapi.json       (OpenAPI 3.0.1) : upgraded to 3.1, non-required fields marked nullable,
                                               paths prefixed with /sympheny-app
-- api_services_openapi.json                 : upgraded to 3.1 if needed, paths prefixed with
-                                              /api-services; optional while its allowlist is empty
+- api_services_openapi.json (OpenAPI 3.1.0) : paths already carry /api-services; audience tags
+                                              dropped; optional while its allowlist is empty
 - backoffice_openapi.json   (OpenAPI 3.1.0)
 - sense_openapi.json        (OpenAPI 3.1.0)
 
@@ -61,7 +61,8 @@ PRIVATE_SOURCES = ("webapp_openapi.json", "api_services_openapi.json", "backoffi
 
 SERVER_URL = "https://eu-north-1-api.sympheny.com"
 WEBAPP_PREFIX = "/sympheny-app"
-API_SERVICES_PREFIX = "/api-services"
+# api-services tags each operation with its caller as well as its feature; only the feature tag is published
+API_SERVICES_AUDIENCE_TAGS = {"Web App FE", "Web App BE", "Fargate BE"}
 
 HTTP_METHODS = {"get", "put", "post", "delete", "options", "head", "patch", "trace"}
 
@@ -327,7 +328,8 @@ def sort_output(spec: dict[str, Any]) -> None:
 
 
 def prepare_api_services(rules: dict[str, list[str]]) -> dict[str, Any]:
-    """Load, upgrade (if 3.0), filter and prefix the api-services export — no nullability contract."""
+    """Load, upgrade (if 3.0) and filter the api-services export — no nullability contract, no path prefix
+    (its paths already start with /api-services)."""
     # nothing is published from api-services until its allowlist names something, so the export
     # is only required then
     if not rules["include"] and not (SPECS / "api_services_openapi.json").exists():
@@ -337,10 +339,13 @@ def prepare_api_services(rules: dict[str, list[str]]) -> dict[str, Any]:
         upgrade_schema_3_0_to_3_1(spec.get("components", {}))
         upgrade_schema_3_0_to_3_1(spec["paths"])
     set_default_security(spec, [{"HTTPBearer": []}])
-    apply_filters(spec, rules, API_SERVICES_PREFIX, "api-services")
+    apply_filters(spec, rules, "", "api-services")
+    for path_item in spec["paths"].values():
+        for method, op in path_item.items():
+            if method in HTTP_METHODS:
+                op["tags"] = [tag for tag in op.get("tags", []) if tag not in API_SERVICES_AUDIENCE_TAGS]
     spec.setdefault("components", {}).setdefault("schemas", {})
     prune_components(spec)
-    spec["paths"] = {API_SERVICES_PREFIX + path: item for path, item in spec["paths"].items()}
     return spec
 
 
@@ -390,6 +395,8 @@ def main() -> int:
                 "\n"
                 "- **Platform** (`/sympheny-app`) - manage projects, analyses, scenarios, "
                 "hubs, energy carriers, demands, technologies and networks.\n"
+                "- **Services** (`/api-services`) - GIS utilities, such as finding the "
+                "buildings within an area.\n"
                 "- **Account** (`/backoffice`) - obtain access tokens and inspect your "
                 "user profile.\n"
                 "- **Solver** (`/sense-api`) - submit solver jobs, track their progress, "
