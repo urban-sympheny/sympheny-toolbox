@@ -7,7 +7,19 @@ from typing import TYPE_CHECKING
 import pytest
 
 from sympheny_toolbox.errors import UnexpectedResponseError
-from sympheny_toolbox.models import GetScenarioGuidsPage, JobStatus, ProjectRequestDto, ScenarioRequestDto, Status, Version
+from sympheny_toolbox.models import (
+    BuildingType1,
+    DemandType,
+    EnergyDemandDBRequest,
+    FeatureGeoTypeEnum,
+    Geometry,
+    GetScenarioGuidsPage,
+    JobStatus,
+    ProjectRequestDto,
+    ScenarioRequestDto,
+    Status,
+    Version,
+)
 
 
 if TYPE_CHECKING:
@@ -106,6 +118,81 @@ def test_scenarios_delete_tolerates_missing_data_payload(client: Sympheny, api: 
     api.add("DELETE", "/sympheny-app/scenario/scn-1", {"data": None})
 
     assert client.scenarios.delete("scn-1") == Status()
+
+
+def test_scenarios_excel_upload_url_unwraps_url(client: Sympheny, api: MockAPI) -> None:
+    api.add("GET", "/sympheny-app/db-update/s3-presigned-url", {"data": {"s3PresignedUrl": "https://s3/upload"}})
+
+    url = client.scenarios.excel_upload_url(delete_previous=True)
+
+    assert url == "https://s3/upload"
+    assert dict(api.last_request.url.params) == {"deletePrevious": "true"}
+
+
+def test_scenarios_create_from_excel_sends_url_and_name(client: Sympheny, api: MockAPI) -> None:
+    api.add("POST", "/sympheny-app/v2/analysis/ana-1/scenario/excel", {"data": {"scenarioGuid": "scn-1"}}, status_code=201)
+
+    scenario = client.scenarios.create_from_excel("ana-1", "https://s3/upload", "From Excel")
+
+    assert scenario.scenario_guid == "scn-1"
+    assert api.last_json == {"s3PresignedUrl": "https://s3/upload", "scenarioName": "From Excel"}
+
+
+def test_scenarios_replace_from_excel_sends_url(client: Sympheny, api: MockAPI) -> None:
+    api.add("PUT", "/sympheny-app/v2/scenarios/scn-1/excel", {"data": {"scenarioGuid": "scn-1"}})
+
+    client.scenarios.replace_from_excel("scn-1", "https://s3/upload")
+
+    assert api.last_json == {"s3PresignedUrl": "https://s3/upload"}
+
+
+def test_scenarios_prepare_specs_input_files_sends_guids(client: Sympheny, api: MockAPI) -> None:
+    api.add("PUT", "/sympheny-app/v2/specs", {"data": {"code": "200"}})
+
+    client.scenarios.prepare_specs_input_files(["scn-1", "scn-2"])
+
+    assert api.last_json == {"scenarioGuids": ["scn-1", "scn-2"]}
+
+
+def test_scenarios_specs_input_file_url_is_none_until_ready(client: Sympheny, api: MockAPI) -> None:
+    api.add("GET", "/sympheny-app/scenario/scn-1/specs-input-file-url", {"data": {"presignedUrl": None}})
+    api.add("GET", "/sympheny-app/scenario/scn-1/specs-input-file-url", {"data": {"presignedUrl": "https://s3/specs.xlsx"}})
+
+    assert client.scenarios.specs_input_file_url("scn-1") is None
+    assert client.scenarios.specs_input_file_url("scn-1") == "https://s3/specs.xlsx"
+
+
+def test_energy_demand_database_calculate_sends_list_body(client: Sympheny, api: MockAPI) -> None:
+    api.add("POST", "/sympheny-app/database-energy-demand-profile/SPACE_HEATING/calculate", {"data": [1.5, 2.0]})
+    request = EnergyDemandDBRequest(building_type=BuildingType1.offices, year=2000, area_m2=120.0)
+
+    profile = client.energy_demand_database.calculate(DemandType.space_heating, [request])
+
+    assert profile == [1.5, 2.0]
+    assert api.last_json == [{"buildingType": "OFFICES", "year": 2000, "areaM2": 120.0}]
+
+
+def test_buildings_in_area_parses_unwrapped_feature_collection(client: Sympheny, api: MockAPI) -> None:
+    feature = {
+        "type": "Feature",
+        "geometry": {"type": "Polygon", "coordinates": [[[8.5, 47.3], [8.6, 47.3], [8.6, 47.4], [8.5, 47.3]]]},
+        "properties": {
+            "source": "osm",
+            "area_m2": 250,
+            "floors": 3,
+            "height_m": None,
+            "building_type": "RESIDENCE_MFH",
+            "construction_year": None,
+            "addresses": [],
+        },
+    }
+    api.add("POST", "/api-services/gis/buildings", {"type": "FeatureCollection", "features": [feature]})
+    aoi = Geometry(type=FeatureGeoTypeEnum.polygon, coordinates=[[[8.5, 47.3], [8.6, 47.3], [8.6, 47.4], [8.5, 47.3]]])
+
+    buildings = client.buildings.in_area(aoi)
+
+    assert api.last_json == {"aoi": {"type": "Polygon", "coordinates": [[[8.5, 47.3], [8.6, 47.3], [8.6, 47.4], [8.5, 47.3]]]}}
+    assert buildings.features[0].properties.area_m2 == 250
 
 
 def test_solver_jobs_list_for_scenarios_sends_aliased_body(client: Sympheny, api: MockAPI) -> None:

@@ -38,6 +38,71 @@
 | `AvailableResourceType.generic` | `'Generic'` |
 | `AvailableResourceType.power` | `'Power'` |
 
+## BuildingType { #model-BuildingType }
+
+| Member | Value |
+| --- | --- |
+| `BuildingType.residence_mfh` | `'RESIDENCE_MFH'` |
+| `BuildingType.residence_sfh` | `'RESIDENCE_SFH'` |
+| `BuildingType.administration` | `'ADMINISTRATION'` |
+| `BuildingType.offices` | `'OFFICES'` |
+| `BuildingType.schools` | `'SCHOOLS'` |
+| `BuildingType.retail` | `'RETAIL'` |
+| `BuildingType.restaurant` | `'RESTAURANT'` |
+| `BuildingType.assembly` | `'ASSEMBLY'` |
+| `BuildingType.hospitals` | `'HOSPITALS'` |
+| `BuildingType.industry` | `'INDUSTRY'` |
+| `BuildingType.warehouse` | `'WAREHOUSE'` |
+| `BuildingType.sports_center` | `'SPORTS_CENTER'` |
+| `BuildingType.indoor_pool` | `'INDOOR_POOL'` |
+| `BuildingType.hotel` | `'HOTEL'` |
+| `BuildingType.industry_1_shift_fabricated_metals` | `'INDUSTRY_1_SHIFT_FABRICATED_METALS'` |
+| `BuildingType.industry_2_shift_fabricated_metals` | `'INDUSTRY_2_SHIFT_FABRICATED_METALS'` |
+| `BuildingType.industry_food_processing` | `'INDUSTRY_FOOD_PROCESSING'` |
+| `BuildingType.industry_general_manufacturer` | `'INDUSTRY_GENERAL_MANUFACTURER'` |
+| `BuildingType.industry_pharmaceutical` | `'INDUSTRY_PHARMACEUTICAL'` |
+| `BuildingType.industry_plastic_manufacturer` | `'INDUSTRY_PLASTIC_MANUFACTURER'` |
+| `BuildingType.industry_services` | `'INDUSTRY_SERVICES'` |
+| `BuildingType.industry_warehouse` | `'INDUSTRY_WAREHOUSE'` |
+| `BuildingType.none_type_none` | `None` |
+
+## BuildingType1 { #model-BuildingType1 }
+
+| Member | Value |
+| --- | --- |
+| `BuildingType1.residence_mfh` | `'RESIDENCE_MFH'` |
+| `BuildingType1.residence_sfh` | `'RESIDENCE_SFH'` |
+| `BuildingType1.administration` | `'ADMINISTRATION'` |
+| `BuildingType1.offices` | `'OFFICES'` |
+| `BuildingType1.schools` | `'SCHOOLS'` |
+| `BuildingType1.retail` | `'RETAIL'` |
+| `BuildingType1.restaurant` | `'RESTAURANT'` |
+| `BuildingType1.assembly` | `'ASSEMBLY'` |
+| `BuildingType1.hospitals` | `'HOSPITALS'` |
+| `BuildingType1.industry` | `'INDUSTRY'` |
+| `BuildingType1.warehouse` | `'WAREHOUSE'` |
+| `BuildingType1.sports_center` | `'SPORTS_CENTER'` |
+| `BuildingType1.indoor_pool` | `'INDOOR_POOL'` |
+| `BuildingType1.hotel` | `'HOTEL'` |
+| `BuildingType1.industry_1_shift_fabricated_metals` | `'INDUSTRY_1_SHIFT_FABRICATED_METALS'` |
+| `BuildingType1.industry_2_shift_fabricated_metals` | `'INDUSTRY_2_SHIFT_FABRICATED_METALS'` |
+| `BuildingType1.industry_food_processing` | `'INDUSTRY_FOOD_PROCESSING'` |
+| `BuildingType1.industry_general_manufacturer` | `'INDUSTRY_GENERAL_MANUFACTURER'` |
+| `BuildingType1.industry_pharmaceutical` | `'INDUSTRY_PHARMACEUTICAL'` |
+| `BuildingType1.industry_plastic_manufacturer` | `'INDUSTRY_PLASTIC_MANUFACTURER'` |
+| `BuildingType1.industry_services` | `'INDUSTRY_SERVICES'` |
+| `BuildingType1.industry_warehouse` | `'INDUSTRY_WAREHOUSE'` |
+
+## DemandType { #model-DemandType }
+
+| Member | Value |
+| --- | --- |
+| `DemandType.electricity` | `'ELECTRICITY'` |
+| `DemandType.space_heating` | `'SPACE_HEATING'` |
+| `DemandType.hot_water` | `'HOT_WATER'` |
+| `DemandType.cooling` | `'COOLING'` |
+| `DemandType.none_type_none` | `None` |
+
 ## EnergyCarrierRequestDtoV2 { #model-EnergyCarrierRequestDtoV2 }
 
 | Field | Type | Required | Description |
@@ -52,6 +117,25 @@
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `energy_carriers` | list of [`EnergyCarrierResponseDto`](common.md#model-EnergyCarrierResponseDto), optional | no |  |
+
+## EnergyDemandDBRequest { #model-EnergyDemandDBRequest }
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `building_type` | [`BuildingType1`](#model-BuildingType1) | yes |  |
+| `year` | `int` | yes |  |
+| `area_m2` | `float`, optional | no |  |
+| `annual_kwh` | `float`, optional | no |  |
+
+## EnergyDemandDBResponse { #model-EnergyDemandDBResponse }
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `demand_type` | [`DemandType`](#model-DemandType), optional | no |  |
+| `building_type` | [`BuildingType`](#model-BuildingType), optional | no |  |
+| `year_from` | `int`, optional | no |  |
+| `year_to` | `int`, optional | no |  |
+| `kwh_per_m2a` | `float`, optional | no |  |
 
 ## EnergyDemandDetailResponseDtoV2 { #model-EnergyDemandDetailResponseDtoV2 }
 

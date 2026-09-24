@@ -323,7 +323,7 @@ curl -X GET "https://eu-north-1-api.sympheny.com/sympheny-app/scenario/{scenario
 GET /sympheny-app/scenario/{scenarioGuid}/specs-input-file-url
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.scenarios.specs_input_file_url()`](../../sdk/reference/scenarios.md#method-scenarios-specs_input_file_url).
 
 First call PUT /v2/specs. This triggers the specs file generation asynchronously. Then poll GET /scenario/{scenarioGuid}/specs-input-file-url until returned presignedUrl is not null
 
@@ -523,7 +523,7 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/{scenari
 POST /sympheny-app/v2/analysis/{guid}/scenario/excel
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.scenarios.create_from_excel()`](../../sdk/reference/scenarios.md#method-scenarios-create_from_excel).
 
 Before calling this endpoint, first obtain s3PresignedUrl from GET /db-update/s3-presigned-url, second upload the excel file to the presigned url (using a standard PUT call)
 
@@ -609,7 +609,7 @@ curl -X POST "https://eu-north-1-api.sympheny.com/sympheny-app/v2/analysis/{guid
 PUT /sympheny-app/v2/scenarios/{scenarioGuid}/excel
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.scenarios.replace_from_excel()`](../../sdk/reference/scenarios.md#method-scenarios-replace_from_excel).
 
 Before calling this endpoint, first obtain s3PresignedUrl from GET /db-update/s3-presigned-url, second upload the excel file to the presigned url (using a standard PUT call)
 

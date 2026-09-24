@@ -9,7 +9,7 @@
 POST /sympheny-app/database-energy-demand-profile/{demandType}/calculate
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.energy_demand_database.calculate()`](../../sdk/reference/energy_demand_database.md#method-energy_demand_database-calculate).
 
 areaM2 or annualKwh must be not null
 
@@ -71,7 +71,7 @@ curl -X POST "https://eu-north-1-api.sympheny.com/sympheny-app/database-energy-d
 GET /sympheny-app/database-energy-demand-table
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.energy_demand_database.list()`](../../sdk/reference/energy_demand_database.md#method-energy_demand_database-list).
 
 **Example request**
 

@@ -147,6 +147,7 @@ nav = [
       "sdk/reference/hubs.md",
       "sdk/reference/energy_carriers.md",
       "sdk/reference/energy_demands.md",
+      "sdk/reference/energy_demand_database.md",
       "sdk/reference/profiles.md",
       "sdk/reference/solar_resources.md",
       "sdk/reference/conversion_technologies.md",
@@ -156,6 +157,7 @@ nav = [
       "sdk/reference/network_links.md",
       "sdk/reference/intra_hub_network_links.md",
       "sdk/reference/impex.md",
+      "sdk/reference/buildings.md",
       "sdk/reference/solver_jobs.md",
       "sdk/reference/users.md",
       { "Models" = [
@@ -164,6 +166,7 @@ nav = [
         "sdk/reference/models/scenarios.md",
         "sdk/reference/models/energy.md",
         "sdk/reference/models/technologies.md",
+        "sdk/reference/models/gis.md",
         "sdk/reference/models/solver.md",
       ] },
     ] },

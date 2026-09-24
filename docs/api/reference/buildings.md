@@ -9,7 +9,7 @@
 POST /api-services/gis/buildings
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.buildings.in_area()`](../../sdk/reference/buildings.md#method-buildings-in_area).
 
 **Request body** (`BuildingsRequest`)
 

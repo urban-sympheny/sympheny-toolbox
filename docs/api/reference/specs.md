@@ -9,7 +9,7 @@
 PUT /sympheny-app/v2/specs
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.scenarios.prepare_specs_input_files()`](../../sdk/reference/scenarios.md#method-scenarios-prepare_specs_input_files).
 
 This triggers the specs file generation asynchronously. Then poll GET /scenario/{scenarioGuid}/specs-input-file-url until returned presignedUrl is not null
 

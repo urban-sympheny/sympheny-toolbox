@@ -7,8 +7,10 @@ from typing import TYPE_CHECKING
 
 from sympheny_toolbox._sync._transport import DEFAULT_BASE_URL, DEV_BASE_URL, Transport
 from sympheny_toolbox._sync.analyses import Analyses
+from sympheny_toolbox._sync.buildings import Buildings
 from sympheny_toolbox._sync.conversion_technologies import ConversionTechnologies
 from sympheny_toolbox._sync.energy_carriers import EnergyCarriers
+from sympheny_toolbox._sync.energy_demand_database import EnergyDemandDatabase
 from sympheny_toolbox._sync.energy_demands import EnergyDemands
 from sympheny_toolbox._sync.hubs import Hubs
 from sympheny_toolbox._sync.impex import Impex
@@ -68,6 +70,7 @@ class Sympheny:
         self.impex = Impex(self._transport)
         self.profiles = Profiles(self._transport)
         self.energy_demands = EnergyDemands(self._transport)
+        self.energy_demand_database = EnergyDemandDatabase(self._transport)
         self.solar_resources = SolarResources(self._transport)
         self.conversion_technologies = ConversionTechnologies(self._transport)
         self.storage_technologies = StorageTechnologies(self._transport)
@@ -75,6 +78,7 @@ class Sympheny:
         self.network_technologies = NetworkTechnologies(self._transport)
         self.network_links = NetworkLinks(self._transport)
         self.intra_hub_network_links = IntraHubNetworkLinks(self._transport)
+        self.buildings = Buildings(self._transport)
         self.solver_jobs = SolverJobs(self._transport)
         self.users = Users(self._transport)
 

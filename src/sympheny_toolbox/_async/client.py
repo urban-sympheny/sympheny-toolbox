@@ -6,8 +6,10 @@ from typing import TYPE_CHECKING
 
 from sympheny_toolbox._async._transport import DEFAULT_BASE_URL, DEV_BASE_URL, AsyncTransport
 from sympheny_toolbox._async.analyses import AsyncAnalyses
+from sympheny_toolbox._async.buildings import AsyncBuildings
 from sympheny_toolbox._async.conversion_technologies import AsyncConversionTechnologies
 from sympheny_toolbox._async.energy_carriers import AsyncEnergyCarriers
+from sympheny_toolbox._async.energy_demand_database import AsyncEnergyDemandDatabase
 from sympheny_toolbox._async.energy_demands import AsyncEnergyDemands
 from sympheny_toolbox._async.hubs import AsyncHubs
 from sympheny_toolbox._async.impex import AsyncImpex
@@ -67,6 +69,7 @@ class AsyncSympheny:
         self.impex = AsyncImpex(self._transport)
         self.profiles = AsyncProfiles(self._transport)
         self.energy_demands = AsyncEnergyDemands(self._transport)
+        self.energy_demand_database = AsyncEnergyDemandDatabase(self._transport)
         self.solar_resources = AsyncSolarResources(self._transport)
         self.conversion_technologies = AsyncConversionTechnologies(self._transport)
         self.storage_technologies = AsyncStorageTechnologies(self._transport)
@@ -74,6 +77,7 @@ class AsyncSympheny:
         self.network_technologies = AsyncNetworkTechnologies(self._transport)
         self.network_links = AsyncNetworkLinks(self._transport)
         self.intra_hub_network_links = AsyncIntraHubNetworkLinks(self._transport)
+        self.buildings = AsyncBuildings(self._transport)
         self.solver_jobs = AsyncSolverJobs(self._transport)
         self.users = AsyncUsers(self._transport)
 

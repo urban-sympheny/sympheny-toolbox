@@ -9,7 +9,7 @@
 GET /sympheny-app/db-update/s3-presigned-url
 ```
 
-Requires a [Bearer token](../authentication.md).
+Requires a [Bearer token](../authentication.md). SDK method: [`client.scenarios.excel_upload_url()`](../../sdk/reference/scenarios.md#method-scenarios-excel_upload_url).
 
 **Parameters**
 
