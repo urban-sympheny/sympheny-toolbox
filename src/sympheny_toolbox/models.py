@@ -1678,6 +1678,197 @@ class ResponseDtoListHubResponseDto(BaseModel):
     status: Status | None = None
 
 
+class DemandType(Enum):
+    electricity = "ELECTRICITY"
+    space_heating = "SPACE_HEATING"
+    hot_water = "HOT_WATER"
+    cooling = "COOLING"
+    none_type_none = None
+
+
+class BuildingType(Enum):
+    residence_mfh = "RESIDENCE_MFH"
+    residence_sfh = "RESIDENCE_SFH"
+    administration = "ADMINISTRATION"
+    offices = "OFFICES"
+    schools = "SCHOOLS"
+    retail = "RETAIL"
+    restaurant = "RESTAURANT"
+    assembly = "ASSEMBLY"
+    hospitals = "HOSPITALS"
+    industry = "INDUSTRY"
+    warehouse = "WAREHOUSE"
+    sports_center = "SPORTS_CENTER"
+    indoor_pool = "INDOOR_POOL"
+    hotel = "HOTEL"
+    industry_1_shift_fabricated_metals = "INDUSTRY_1_SHIFT_FABRICATED_METALS"
+    industry_2_shift_fabricated_metals = "INDUSTRY_2_SHIFT_FABRICATED_METALS"
+    industry_food_processing = "INDUSTRY_FOOD_PROCESSING"
+    industry_general_manufacturer = "INDUSTRY_GENERAL_MANUFACTURER"
+    industry_pharmaceutical = "INDUSTRY_PHARMACEUTICAL"
+    industry_plastic_manufacturer = "INDUSTRY_PLASTIC_MANUFACTURER"
+    industry_services = "INDUSTRY_SERVICES"
+    industry_warehouse = "INDUSTRY_WAREHOUSE"
+    none_type_none = None
+
+
+class EnergyDemandDBResponse(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    demand_type: DemandType | None = Field(None, alias="demandType")
+    building_type: BuildingType | None = Field(None, alias="buildingType")
+    year_from: int | None = Field(None, alias="yearFrom")
+    year_to: int | None = Field(None, alias="yearTo")
+    kwh_per_m2a: float | None = Field(None, alias="kwhPerM2a")
+
+
+class BuildingType1(StrEnum):
+    residence_mfh = "RESIDENCE_MFH"
+    residence_sfh = "RESIDENCE_SFH"
+    administration = "ADMINISTRATION"
+    offices = "OFFICES"
+    schools = "SCHOOLS"
+    retail = "RETAIL"
+    restaurant = "RESTAURANT"
+    assembly = "ASSEMBLY"
+    hospitals = "HOSPITALS"
+    industry = "INDUSTRY"
+    warehouse = "WAREHOUSE"
+    sports_center = "SPORTS_CENTER"
+    indoor_pool = "INDOOR_POOL"
+    hotel = "HOTEL"
+    industry_1_shift_fabricated_metals = "INDUSTRY_1_SHIFT_FABRICATED_METALS"
+    industry_2_shift_fabricated_metals = "INDUSTRY_2_SHIFT_FABRICATED_METALS"
+    industry_food_processing = "INDUSTRY_FOOD_PROCESSING"
+    industry_general_manufacturer = "INDUSTRY_GENERAL_MANUFACTURER"
+    industry_pharmaceutical = "INDUSTRY_PHARMACEUTICAL"
+    industry_plastic_manufacturer = "INDUSTRY_PLASTIC_MANUFACTURER"
+    industry_services = "INDUSTRY_SERVICES"
+    industry_warehouse = "INDUSTRY_WAREHOUSE"
+
+
+class EnergyDemandDBRequest(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    building_type: BuildingType1 = Field(..., alias="buildingType")
+    year: int
+    area_m2: float | None = Field(None, alias="areaM2")
+    annual_kwh: float | None = Field(None, alias="annualKwh")
+
+
+class ResponseDtoListBigDecimal(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: list[float] | None = None
+    status: Status | None = None
+
+
+class S3PresignedUrlDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    s3_presigned_url: str | None = Field(None, alias="s3PresignedUrl")
+
+
+class ScenarioExcelRequestDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    s3_presigned_url: str = Field(..., alias="s3PresignedUrl")
+    scenario_name: str = Field(..., alias="scenarioName")
+
+
+class ScenarioExcelRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    s3_presigned_url: str = Field(..., alias="s3PresignedUrl")
+
+
+class ScenarioGuidListDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    scenario_guids: list[str] = Field(..., alias="scenarioGuids")
+
+
+class SpecsInputFilePresignedUrlResponseDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    presigned_url: str | None = Field(None, alias="presignedUrl")
+
+
+class Address(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    street: str | None = Field(..., title="Street")
+    house_number: str | None = Field(..., title="House Number")
+    postcode: str | None = Field(..., title="Postcode")
+    locality: str | None = Field(..., title="Locality")
+    country: str | None = Field(..., title="Country")
+    formatted: str = Field(..., title="Formatted")
+    source: str = Field(..., title="Source")
+
+
+class BuildingTypeEnum(StrEnum):
+    residence_mfh = "RESIDENCE_MFH"
+    residence_sfh = "RESIDENCE_SFH"
+    administration = "ADMINISTRATION"
+    schools = "SCHOOLS"
+    retail = "RETAIL"
+    assembly = "ASSEMBLY"
+    hospitals = "HOSPITALS"
+    industry = "INDUSTRY"
+    warehouse = "WAREHOUSE"
+    sports_center = "SPORTS_CENTER"
+    hotel = "HOTEL"
+
+
+class FeatureCollectionEnum(StrEnum):
+    feature_collection = "FeatureCollection"
+
+
+class FeatureEnum(StrEnum):
+    feature = "Feature"
+
+
+class FeatureGeoTypeEnum(StrEnum):
+    point = "Point"
+    line_string = "LineString"
+    polygon = "Polygon"
+    multi_point = "MultiPoint"
+    multi_line_string = "MultiLineString"
+    multi_polygon = "MultiPolygon"
+
+
+class Geometry(BaseModel):
+    """
+    A class representing a geojson geometry
+    """
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: FeatureGeoTypeEnum
+    coordinates: list[Any] = Field(..., title="Coordinates")
+
+
+class ValidationError(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    loc: list[str | int] = Field(..., title="Location")
+    msg: str = Field(..., title="Message")
+    type: str = Field(..., title="Error Type")
+    input: Any | None = Field(None, title="Input")
+    ctx: dict[str, Any] | None = Field(None, title="Context")
+
+
 class AppException(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -1843,17 +2034,6 @@ class User(BaseModel):
     account_guid: str = Field(..., alias="accountGuid", title="Accountguid")
     created: AwareDatetime = Field(..., title="Created")
     updated: AwareDatetime = Field(..., title="Updated")
-
-
-class ValidationError(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-    )
-    loc: list[str | int] = Field(..., title="Location")
-    msg: str = Field(..., title="Message")
-    type: str = Field(..., title="Error Type")
-    input: Any | None = Field(None, title="Input")
-    ctx: dict[str, Any] | None = Field(None, title="Context")
 
 
 class CustomHTTPException(BaseModel):
@@ -3405,6 +3585,57 @@ class NetworkTechnologyResponseDto(BaseModel):
     cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
 
 
+class ResponseDtoListEnergyDemandDBResponse(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: list[EnergyDemandDBResponse] | None = None
+    status: Status | None = None
+
+
+class ResponseDtoS3PresignedUrlDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: S3PresignedUrlDto | None = None
+    status: Status | None = None
+
+
+class ResponseDtoSpecsInputFilePresignedUrlResponseDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: SpecsInputFilePresignedUrlResponseDto | None = None
+    status: Status | None = None
+
+
+class BuildingProperties(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    source: str = Field(..., title="Source")
+    area_m2: int = Field(..., title="Area M2")
+    floors: int | None = Field(..., title="Floors")
+    height_m: float | None = Field(..., title="Height M")
+    building_type: BuildingTypeEnum | None
+    construction_year: int | None = Field(..., title="Construction Year")
+    addresses: list[Address] = Field(..., title="Addresses")
+
+
+class BuildingsRequest(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    aoi: Geometry
+
+
+class HTTPValidationError(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    detail: list[ValidationError] | None = Field(None, title="Detail")
+
+
 class GetUserProfileExt(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -3416,13 +3647,6 @@ class GetUserProfileExt(BaseModel):
     subscription: GetSubscriptionExt
     profile_picture: str | None = Field(None, alias="profilePicture", title="Profilepicture")
     organization_picture: str | None = Field(None, alias="organizationPicture", title="Organizationpicture")
-
-
-class HTTPValidationError(BaseModel):
-    model_config = ConfigDict(
-        populate_by_name=True,
-    )
-    detail: list[ValidationError] | None = Field(None, title="Detail")
 
 
 class GetSolverJobExt(BaseModel):
@@ -3978,6 +4202,24 @@ class NetworkTechnologyListResponseDto(BaseModel):
         populate_by_name=True,
     )
     network_technologies: list[NetworkTechnologyResponseDto] | None = Field(None, alias="networkTechnologies")
+
+
+class BuildingFeature(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: FeatureEnum | None = FeatureEnum.feature
+    geometry: Geometry
+    properties: BuildingProperties
+
+
+class BuildingFeatureCollection(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    type: FeatureCollectionEnum | None = FeatureCollectionEnum.feature_collection
+    features: list[BuildingFeature] = Field(..., title="Features")
+    properties: dict[str, Any] | None = Field({}, title="Properties")
 
 
 class ProjectDetailResponseDto(BaseModel):

@@ -9,6 +9,8 @@ createNewHub: hubs.create
 createNewImpexV2_1: impex.create
 createNewProject: projects.create
 createNewScenario: scenarios.create
+createNewScenarioExcelV2: scenarios.replace_from_excel
+createNewScenarioExcelV2_1: scenarios.create_from_excel
 delete: stages.delete
 deleteAnalysis: analyses.delete
 deleteConversionTechnologyV2: conversion_technologies.delete
@@ -34,6 +36,7 @@ editSolarOnSiteResourceV2_2: solar_resources.update
 findAllByScenarioV2: impex.list
 findAllEnergyCarriersByScenario: energy_carriers.list
 findAllHubsByScenario: hubs.list
+finishSpecsAndSubmitForExecV2List: scenarios.prepare_specs_input_files
 get: profiles.get
 getAllConversionTechnologiesByScenarioV2: conversion_technologies.list
 getAllEnergyDemandsByScenarioV2: energy_demands.list
@@ -44,6 +47,8 @@ getAllSolarOnSiteResourcesByScenarioV2: solar_resources.list
 getAllStorageTechnologiesByScenarioV2: storage_technologies.list
 getAllTechnologyPackagesByScenarioV2: technology_packages.list
 getConversionTechDetailsV2: conversion_technologies.get
+getDatabaseEnergyDemandTable: energy_demand_database.list
+getDatabaseEnergyProfile: energy_demand_database.calculate
 getEnergyCarrierByGuid: energy_carriers.get
 getEnergyDemandDetailsByGuidV2: energy_demands.get
 getHub: hubs.get
@@ -53,6 +58,7 @@ getNetworkLinkDetailsV2: network_links.get
 getNetworkTechDetailsV2: network_technologies.get
 getScenario: scenarios.get
 getSolarOnSiteResourcesV2: solar_resources.get
+getSpecsInputFileUrl: scenarios.specs_input_file_url
 getStorageTechDetailsV2: storage_technologies.get
 getTechnologyPackageByGuidV2: technology_packages.get
 get_1: stages.get
@@ -63,9 +69,11 @@ list: stages.list
 listScenarios: scenarios.list
 list_1: profiles.list
 list_2: analyses.list
+post_buildings_api_services_gis_buildings_post: buildings.in_area
 post_get_scenario_jobs_sense_api_ext_solver_jobs_get_scenarios_post: solver_jobs.list_for_scenarios
 post_solver_jobs_sense_api_ext_solver_jobs_post: solver_jobs.submit
 renameScenario: scenarios.rename
+s3PresignedUrl_1: scenarios.excel_upload_url
 specifyConversionTechnologyV2_2: conversion_technologies.create
 specifyIntraHubNetworkLinkV2: intra_hub_network_links.create
 specifyNetworkLinkV2_1: network_links.create

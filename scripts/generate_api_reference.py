@@ -36,16 +36,18 @@ GENERATED_HEADER = (
 )
 
 # Tag → (output file stem, page title). Order defines nav/reading order:
-# platform resources first, then account, then solver. A spec tag missing from
+# platform resources first, then services, account, solver. A spec tag missing from
 # this mapping is an error so new tags force a deliberate docs decision.
 TAG_PAGES: dict[str, tuple[str, str]] = {
     "project-controller": ("projects", "Projects"),
     "analysis-controller": ("analyses", "Analyses"),
     "scenario-controller": ("scenarios", "Scenarios"),
+    "review-analysis-specification-controller": ("specs", "Specs"),
     "stage-controller": ("stages", "Stages"),
     "hub-controller": ("hubs", "Hubs"),
     "energy-carrier-controller": ("energy-carriers", "Energy carriers"),
     "energy-demand-controller": ("energy-demands", "Energy demands"),
+    "database-energy-demand-controller": ("energy-demand-database", "Energy demand database"),
     "profile-controller": ("profiles", "Profiles"),
     "solar-on-site-resource-controller": ("solar-resources", "Solar resources"),
     "conversion-technology-controller": ("conversion-technologies", "Conversion technologies"),
@@ -55,6 +57,8 @@ TAG_PAGES: dict[str, tuple[str, str]] = {
     "network-link-controller": ("network-links", "Network links"),
     "intra-hub-network-link-controller": ("intra-hub-network-links", "Intra-hub network links"),
     "impex-controller": ("impex", "Imports and exports (impex)"),
+    "db-update-controller": ("uploads", "Uploads"),
+    "GIS Buildings": ("buildings", "Buildings"),
     "Auth External": ("auth", "Auth"),
     "External Users": ("users", "Users"),
     "External Solver Jobs": ("solver-jobs", "Solver jobs"),

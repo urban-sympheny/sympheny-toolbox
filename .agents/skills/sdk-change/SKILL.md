@@ -64,13 +64,19 @@ and regenerate.
 The upstream exports are internal, git-ignored artifacts — a fresh clone cannot
 run this. In order:
 
-1. `uv run python scripts/fetch_webapp_openapi.py --creds creds.properties` —
-   writes `specs/webapp_openapi_latest.json` and prints the operation/schema
-   diff. It overwrites nothing: review the diff, then copy it over
-   `specs/webapp_openapi.json` by hand.
-2. `uv run python scripts/merge_openapi.py` — merges the webapp, backoffice, and
-   sense exports into `specs/sympheny_openapi.json` and applies the nullability
-   contract (a property absent from its schema's `required` may be null).
+1. `uv run python scripts/fetch_openapi.py --creds creds.properties` (add
+   `--source webapp` or `--source api-services` to fetch one) — writes
+   `specs/<source>_openapi_latest.json` per source and prints the
+   operation/schema diff. It overwrites nothing: review the diff, then copy it
+   over `specs/<source>_openapi.json` by hand. The backoffice and sense exports
+   have no docs endpoint yet and stay local files.
+2. `uv run python scripts/merge_openapi.py` — merges the webapp, api-services,
+   backoffice, and sense exports into `specs/sympheny_openapi.json`. Which
+   endpoints are published is set per source in `specs/openapi_filters.toml`
+   (include/exclude patterns; api-services is an allowlist). It applies the
+   nullability contract to the webapp export only (a property absent from its
+   schema's `required` may be null), and sorts paths so export order causes no
+   churn. Schemas are not sorted: re-sorting them renames generated enum models.
 3. `uv run python scripts/generate_models.py` — regenerates `models.py`.
 4. Reconcile `_async/` with the new models (changed request/response DTOs,
    new or removed operations), then regenerate `_sync/`.

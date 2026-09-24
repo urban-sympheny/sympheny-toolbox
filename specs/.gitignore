@@ -3,3 +3,5 @@ webapp_openapi.json
 webapp_openapi_latest.json
 backoffice_openapi.json
 webapp_legacy_openapi.json
+api_services_openapi.json
+api_services_openapi_latest.json

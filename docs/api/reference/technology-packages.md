@@ -190,7 +190,7 @@ POST /sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages
 
 Requires a [Bearer token](../authentication.md). SDK method: [`client.technology_packages.create()`](../../sdk/reference/technology_packages.md#method-technology_packages-create).
 
-conversionTechnologies or storageTechnologies must not be empty
+conversionTechnologies or storageTechnologies must be specified and not empty
 
 **Parameters**
 
@@ -277,7 +277,7 @@ PUT /sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages/{guid}
 
 Requires a [Bearer token](../authentication.md). SDK method: [`client.technology_packages.update()`](../../sdk/reference/technology_packages.md#method-technology_packages-update).
 
-conversionTechnologies or storageTechnologies must not be empty
+conversionTechnologies or storageTechnologies must be specified and not empty
 
 **Parameters**
 
