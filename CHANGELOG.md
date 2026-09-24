@@ -14,6 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `BuildingProperties`, `Address`, `Geometry`, and the `BuildingTypeEnum`, `FeatureEnum`,
   `FeatureCollectionEnum` and `FeatureGeoTypeEnum` enums) and a
   [Buildings](https://docs.sympheny.com/api/reference/buildings/) REST API reference page.
+- The published spec picks up seven new webapp endpoints from the latest export, with their
+  generated models and REST API reference entries:
+  - energy demand database: `GET /sympheny-app/database-energy-demand-table` and
+    `POST /sympheny-app/database-energy-demand-profile/{demandType}/calculate` (new
+    [Energy demand database](https://docs.sympheny.com/api/reference/energy-demand-database/) page);
+  - specs input file: `PUT /sympheny-app/v2/specs` starts generating the specs file (new
+    [Specs](https://docs.sympheny.com/api/reference/specs/) page), and
+    `GET /sympheny-app/scenario/{scenarioGuid}/specs-input-file-url` is polled for its URL;
+  - scenario from Excel: `GET /sympheny-app/db-update/s3-presigned-url` returns an upload URL
+    (new [Uploads](https://docs.sympheny.com/api/reference/uploads/) page); after the file is
+    uploaded there, `POST /sympheny-app/v2/analysis/{guid}/scenario/excel` creates a scenario from
+    it, or `PUT /sympheny-app/v2/scenarios/{scenarioGuid}/excel` replaces one.
 
 ### Changed
 - Maintainer tooling (no change to the published spec or the SDK): `scripts/fetch_webapp_openapi.py`

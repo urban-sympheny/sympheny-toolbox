@@ -1071,6 +1071,126 @@
         ]
       }
     },
+    "/sympheny-app/database-energy-demand-profile/{demandType}/calculate": {
+      "post": {
+        "tags": [
+          "database-energy-demand-controller"
+        ],
+        "description": "areaM2 or annualKwh must be not null",
+        "operationId": "getDatabaseEnergyProfile",
+        "parameters": [
+          {
+            "name": "demandType",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ELECTRICITY",
+                "SPACE_HEATING",
+                "HOT_WATER",
+                "COOLING"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EnergyDemandDBRequest"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListBigDecimal"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/database-energy-demand-table": {
+      "get": {
+        "tags": [
+          "database-energy-demand-controller"
+        ],
+        "operationId": "getDatabaseEnergyDemandTable",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListEnergyDemandDBResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/db-update/s3-presigned-url": {
+      "get": {
+        "tags": [
+          "db-update-controller"
+        ],
+        "operationId": "s3PresignedUrl_1",
+        "parameters": [
+          {
+            "name": "deletePrevious",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoS3PresignedUrlDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/sympheny-app/impex/{type}/{guid}": {
       "delete": {
         "tags": [
@@ -1491,6 +1611,44 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDtoScenarioFrontendUrlResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenario/{scenarioGuid}/specs-input-file-url": {
+      "get": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "description": "First call PUT /v2/specs. This triggers the specs file generation asynchronously. Then poll GET /scenario/{scenarioGuid}/specs-input-file-url until returned presignedUrl is not null",
+        "operationId": "getSpecsInputFileUrl",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoSpecsInputFilePresignedUrlResponseDto"
                 }
               }
             }
@@ -2585,6 +2743,54 @@
         ]
       }
     },
+    "/sympheny-app/v2/analysis/{guid}/scenario/excel": {
+      "post": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "description": "Before calling this endpoint, first obtain s3PresignedUrl from GET /db-update/s3-presigned-url, second upload the excel file to the presigned url (using a standard PUT call)",
+        "operationId": "createNewScenarioExcelV2_1",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioExcelRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/sympheny-app/v2/carriers/{carrierGuid}": {
       "put": {
         "tags": [
@@ -3168,6 +3374,54 @@
         ]
       }
     },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/excel": {
+      "put": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "description": "Before calling this endpoint, first obtain s3PresignedUrl from GET /db-update/s3-presigned-url, second upload the excel file to the presigned url (using a standard PUT call)",
+        "operationId": "createNewScenarioExcelV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioExcelRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/sympheny-app/v2/scenarios/{scenarioGuid}/impexes": {
       "get": {
         "tags": [
@@ -3530,6 +3784,42 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDtoTechnologyPackageResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/specs": {
+      "put": {
+        "tags": [
+          "review-analysis-specification-controller"
+        ],
+        "description": "This triggers the specs file generation asynchronously. Then poll GET /scenario/{scenarioGuid}/specs-input-file-url until returned presignedUrl is not null",
+        "operationId": "finishSpecsAndSubmitForExecV2List",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioGuidListDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStatus"
                 }
               }
             }
@@ -3972,7 +4262,7 @@
         "tags": [
           "technology-package-controller"
         ],
-        "description": "conversionTechnologies or storageTechnologies must not be empty",
+        "description": "conversionTechnologies or storageTechnologies must be specified and not empty",
         "operationId": "specifyTechnologyPackageV2_1",
         "parameters": [
           {
@@ -4020,7 +4310,7 @@
         "tags": [
           "technology-package-controller"
         ],
-        "description": "conversionTechnologies or storageTechnologies must not be empty",
+        "description": "conversionTechnologies or storageTechnologies must be specified and not empty",
         "operationId": "updateTechnologyPackageV2_1",
         "parameters": [
           {
@@ -14665,6 +14955,289 @@
           }
         }
       },
+      "ResponseDtoListEnergyDemandDBResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/EnergyDemandDBResponse"
+            }
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Status"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "EnergyDemandDBResponse": {
+        "type": "object",
+        "properties": {
+          "demandType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "ELECTRICITY",
+              "SPACE_HEATING",
+              "HOT_WATER",
+              "COOLING",
+              null
+            ]
+          },
+          "buildingType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "RESIDENCE_MFH",
+              "RESIDENCE_SFH",
+              "ADMINISTRATION",
+              "OFFICES",
+              "SCHOOLS",
+              "RETAIL",
+              "RESTAURANT",
+              "ASSEMBLY",
+              "HOSPITALS",
+              "INDUSTRY",
+              "WAREHOUSE",
+              "SPORTS_CENTER",
+              "INDOOR_POOL",
+              "HOTEL",
+              "INDUSTRY_1_SHIFT_FABRICATED_METALS",
+              "INDUSTRY_2_SHIFT_FABRICATED_METALS",
+              "INDUSTRY_FOOD_PROCESSING",
+              "INDUSTRY_GENERAL_MANUFACTURER",
+              "INDUSTRY_PHARMACEUTICAL",
+              "INDUSTRY_PLASTIC_MANUFACTURER",
+              "INDUSTRY_SERVICES",
+              "INDUSTRY_WAREHOUSE",
+              null
+            ]
+          },
+          "yearFrom": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "yearTo": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "kwhPerM2a": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      },
+      "EnergyDemandDBRequest": {
+        "required": [
+          "buildingType",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "buildingType": {
+            "type": "string",
+            "enum": [
+              "RESIDENCE_MFH",
+              "RESIDENCE_SFH",
+              "ADMINISTRATION",
+              "OFFICES",
+              "SCHOOLS",
+              "RETAIL",
+              "RESTAURANT",
+              "ASSEMBLY",
+              "HOSPITALS",
+              "INDUSTRY",
+              "WAREHOUSE",
+              "SPORTS_CENTER",
+              "INDOOR_POOL",
+              "HOTEL",
+              "INDUSTRY_1_SHIFT_FABRICATED_METALS",
+              "INDUSTRY_2_SHIFT_FABRICATED_METALS",
+              "INDUSTRY_FOOD_PROCESSING",
+              "INDUSTRY_GENERAL_MANUFACTURER",
+              "INDUSTRY_PHARMACEUTICAL",
+              "INDUSTRY_PLASTIC_MANUFACTURER",
+              "INDUSTRY_SERVICES",
+              "INDUSTRY_WAREHOUSE"
+            ]
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "areaM2": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double"
+          },
+          "annualKwh": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "format": "double"
+          }
+        }
+      },
+      "ResponseDtoListBigDecimal": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "number"
+            }
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Status"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "ResponseDtoS3PresignedUrlDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/S3PresignedUrlDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Status"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "S3PresignedUrlDto": {
+        "type": "object",
+        "properties": {
+          "s3PresignedUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "ScenarioExcelRequestDto": {
+        "required": [
+          "s3PresignedUrl",
+          "scenarioName"
+        ],
+        "type": "object",
+        "properties": {
+          "s3PresignedUrl": {
+            "type": "string"
+          },
+          "scenarioName": {
+            "type": "string"
+          }
+        }
+      },
+      "ScenarioExcelRequestDtoPUT": {
+        "required": [
+          "s3PresignedUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "s3PresignedUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "ScenarioGuidListDto": {
+        "required": [
+          "scenarioGuids"
+        ],
+        "type": "object",
+        "properties": {
+          "scenarioGuids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ResponseDtoSpecsInputFilePresignedUrlResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SpecsInputFilePresignedUrlResponseDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Status"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SpecsInputFilePresignedUrlResponseDto": {
+        "type": "object",
+        "properties": {
+          "presignedUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
       "Address": {
         "properties": {
           "street": {
@@ -16589,6 +17162,12 @@
       "name": "conversion-technology-controller"
     },
     {
+      "name": "database-energy-demand-controller"
+    },
+    {
+      "name": "db-update-controller"
+    },
+    {
       "name": "energy-carrier-controller"
     },
     {
@@ -16614,6 +17193,9 @@
     },
     {
       "name": "project-controller"
+    },
+    {
+      "name": "review-analysis-specification-controller"
     },
     {
       "name": "scenario-controller"
@@ -16651,6 +17233,8 @@
       "tags": [
         "analysis-controller",
         "conversion-technology-controller",
+        "database-energy-demand-controller",
+        "db-update-controller",
         "energy-carrier-controller",
         "energy-demand-controller",
         "hub-controller",
@@ -16660,6 +17244,7 @@
         "network-technology-controller",
         "profile-controller",
         "project-controller",
+        "review-analysis-specification-controller",
         "scenario-controller",
         "solar-on-site-resource-controller",
         "stage-controller",

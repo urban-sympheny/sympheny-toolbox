@@ -1678,6 +1678,130 @@ class ResponseDtoListHubResponseDto(BaseModel):
     status: Status | None = None
 
 
+class DemandType(Enum):
+    electricity = "ELECTRICITY"
+    space_heating = "SPACE_HEATING"
+    hot_water = "HOT_WATER"
+    cooling = "COOLING"
+    none_type_none = None
+
+
+class BuildingType(Enum):
+    residence_mfh = "RESIDENCE_MFH"
+    residence_sfh = "RESIDENCE_SFH"
+    administration = "ADMINISTRATION"
+    offices = "OFFICES"
+    schools = "SCHOOLS"
+    retail = "RETAIL"
+    restaurant = "RESTAURANT"
+    assembly = "ASSEMBLY"
+    hospitals = "HOSPITALS"
+    industry = "INDUSTRY"
+    warehouse = "WAREHOUSE"
+    sports_center = "SPORTS_CENTER"
+    indoor_pool = "INDOOR_POOL"
+    hotel = "HOTEL"
+    industry_1_shift_fabricated_metals = "INDUSTRY_1_SHIFT_FABRICATED_METALS"
+    industry_2_shift_fabricated_metals = "INDUSTRY_2_SHIFT_FABRICATED_METALS"
+    industry_food_processing = "INDUSTRY_FOOD_PROCESSING"
+    industry_general_manufacturer = "INDUSTRY_GENERAL_MANUFACTURER"
+    industry_pharmaceutical = "INDUSTRY_PHARMACEUTICAL"
+    industry_plastic_manufacturer = "INDUSTRY_PLASTIC_MANUFACTURER"
+    industry_services = "INDUSTRY_SERVICES"
+    industry_warehouse = "INDUSTRY_WAREHOUSE"
+    none_type_none = None
+
+
+class EnergyDemandDBResponse(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    demand_type: DemandType | None = Field(None, alias="demandType")
+    building_type: BuildingType | None = Field(None, alias="buildingType")
+    year_from: int | None = Field(None, alias="yearFrom")
+    year_to: int | None = Field(None, alias="yearTo")
+    kwh_per_m2a: float | None = Field(None, alias="kwhPerM2a")
+
+
+class BuildingType1(StrEnum):
+    residence_mfh = "RESIDENCE_MFH"
+    residence_sfh = "RESIDENCE_SFH"
+    administration = "ADMINISTRATION"
+    offices = "OFFICES"
+    schools = "SCHOOLS"
+    retail = "RETAIL"
+    restaurant = "RESTAURANT"
+    assembly = "ASSEMBLY"
+    hospitals = "HOSPITALS"
+    industry = "INDUSTRY"
+    warehouse = "WAREHOUSE"
+    sports_center = "SPORTS_CENTER"
+    indoor_pool = "INDOOR_POOL"
+    hotel = "HOTEL"
+    industry_1_shift_fabricated_metals = "INDUSTRY_1_SHIFT_FABRICATED_METALS"
+    industry_2_shift_fabricated_metals = "INDUSTRY_2_SHIFT_FABRICATED_METALS"
+    industry_food_processing = "INDUSTRY_FOOD_PROCESSING"
+    industry_general_manufacturer = "INDUSTRY_GENERAL_MANUFACTURER"
+    industry_pharmaceutical = "INDUSTRY_PHARMACEUTICAL"
+    industry_plastic_manufacturer = "INDUSTRY_PLASTIC_MANUFACTURER"
+    industry_services = "INDUSTRY_SERVICES"
+    industry_warehouse = "INDUSTRY_WAREHOUSE"
+
+
+class EnergyDemandDBRequest(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    building_type: BuildingType1 = Field(..., alias="buildingType")
+    year: int
+    area_m2: float | None = Field(None, alias="areaM2")
+    annual_kwh: float | None = Field(None, alias="annualKwh")
+
+
+class ResponseDtoListBigDecimal(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: list[float] | None = None
+    status: Status | None = None
+
+
+class S3PresignedUrlDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    s3_presigned_url: str | None = Field(None, alias="s3PresignedUrl")
+
+
+class ScenarioExcelRequestDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    s3_presigned_url: str = Field(..., alias="s3PresignedUrl")
+    scenario_name: str = Field(..., alias="scenarioName")
+
+
+class ScenarioExcelRequestDtoPUT(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    s3_presigned_url: str = Field(..., alias="s3PresignedUrl")
+
+
+class ScenarioGuidListDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    scenario_guids: list[str] = Field(..., alias="scenarioGuids")
+
+
+class SpecsInputFilePresignedUrlResponseDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    presigned_url: str | None = Field(None, alias="presignedUrl")
+
+
 class Address(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
@@ -3459,6 +3583,30 @@ class NetworkTechnologyResponseDto(BaseModel):
     network_size: str | None = Field(None, alias="networkSize")
     comes_from_db: str | None = Field(None, alias="comesFromDb")
     cost_components: list[AdvancedCostComponentResponseDto] | None = Field(None, alias="costComponents")
+
+
+class ResponseDtoListEnergyDemandDBResponse(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: list[EnergyDemandDBResponse] | None = None
+    status: Status | None = None
+
+
+class ResponseDtoS3PresignedUrlDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: S3PresignedUrlDto | None = None
+    status: Status | None = None
+
+
+class ResponseDtoSpecsInputFilePresignedUrlResponseDto(BaseModel):
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
+    data: SpecsInputFilePresignedUrlResponseDto | None = None
+    status: Status | None = None
 
 
 class BuildingProperties(BaseModel):

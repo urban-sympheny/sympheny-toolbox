@@ -317,6 +317,50 @@ curl -X GET "https://eu-north-1-api.sympheny.com/sympheny-app/scenario/{scenario
 }
 ```
 
+## Get specs input file url { #operation-getSpecsInputFileUrl }
+
+```
+GET /sympheny-app/scenario/{scenarioGuid}/specs-input-file-url
+```
+
+Requires a [Bearer token](../authentication.md).
+
+First call PUT /v2/specs. This triggers the specs file generation asynchronously. Then poll GET /scenario/{scenarioGuid}/specs-input-file-url until returned presignedUrl is not null
+
+**Parameters**
+
+| Name | In | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| `scenarioGuid` | path | string | yes |  |
+
+**Example request**
+
+```bash
+curl -X GET "https://eu-north-1-api.sympheny.com/sympheny-app/scenario/{scenarioGuid}/specs-input-file-url" \
+  -H "Authorization: Bearer $SYMPHENY_TOKEN"
+```
+
+**Responses**
+
+| Status | Description | Schema |
+| --- | --- | --- |
+| 200 | OK | `ResponseDtoSpecsInputFilePresignedUrlResponseDto` |
+
+**Example response** (200)
+
+```json
+{
+  "data": {
+    "presignedUrl": "string"
+  },
+  "status": {
+    "code": "string",
+    "desc": "string",
+    "message": "string"
+  }
+}
+```
+
 ## Copy scenario { #operation-copyScenario }
 
 ```
@@ -419,6 +463,176 @@ curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/scenarios/{scenari
   -H "Content-Type: application/json" \
   -d '{
   "scenarioName": "string"
+}'
+```
+
+**Responses**
+
+| Status | Description | Schema |
+| --- | --- | --- |
+| 200 | OK | `ResponseDtoScenarioResponseDto` |
+
+**Example response** (200)
+
+```json
+{
+  "data": {
+    "scenarioGuid": "string",
+    "scenarioName": "string",
+    "updated": "2026-01-01T00:00:00Z",
+    "readyForExecution": true,
+    "preparingExecutionV2": true,
+    "masterScenarioGuid": "string",
+    "projectGuid": "string",
+    "projectName": "string",
+    "analysisGuid": "string",
+    "analysisName": "string",
+    "enymap": {
+      "length": 0,
+      "interestRate": 0.0,
+      "exchangeCurrency": "string",
+      "exchangeRate": 0.0,
+      "scope": "BUILDING_DEVELOPMENTS",
+      "technologies": [
+        "PV"
+      ],
+      "demands": [
+        "HOT_WATER"
+      ],
+      "imports": [
+        "ELECTRICITY"
+      ],
+      "exports": [
+        "HEAT_AMBIENT"
+      ],
+      "multiHubs": true
+    },
+    "variant": true
+  },
+  "status": {
+    "code": "string",
+    "desc": "string",
+    "message": "string"
+  }
+}
+```
+
+## Create new scenario excel v2 1 { #operation-createNewScenarioExcelV2_1 }
+
+```
+POST /sympheny-app/v2/analysis/{guid}/scenario/excel
+```
+
+Requires a [Bearer token](../authentication.md).
+
+Before calling this endpoint, first obtain s3PresignedUrl from GET /db-update/s3-presigned-url, second upload the excel file to the presigned url (using a standard PUT call)
+
+**Parameters**
+
+| Name | In | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| `guid` | path | string | yes |  |
+
+**Request body** (`ScenarioExcelRequestDto`)
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `s3PresignedUrl` | string | yes |  |
+| `scenarioName` | string | yes |  |
+
+**Example request**
+
+```bash
+curl -X POST "https://eu-north-1-api.sympheny.com/sympheny-app/v2/analysis/{guid}/scenario/excel" \
+  -H "Authorization: Bearer $SYMPHENY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "s3PresignedUrl": "string",
+  "scenarioName": "string"
+}'
+```
+
+**Responses**
+
+| Status | Description | Schema |
+| --- | --- | --- |
+| 201 | Created | `ResponseDtoScenarioResponseDto` |
+
+**Example response** (201)
+
+```json
+{
+  "data": {
+    "scenarioGuid": "string",
+    "scenarioName": "string",
+    "updated": "2026-01-01T00:00:00Z",
+    "readyForExecution": true,
+    "preparingExecutionV2": true,
+    "masterScenarioGuid": "string",
+    "projectGuid": "string",
+    "projectName": "string",
+    "analysisGuid": "string",
+    "analysisName": "string",
+    "enymap": {
+      "length": 0,
+      "interestRate": 0.0,
+      "exchangeCurrency": "string",
+      "exchangeRate": 0.0,
+      "scope": "BUILDING_DEVELOPMENTS",
+      "technologies": [
+        "PV"
+      ],
+      "demands": [
+        "HOT_WATER"
+      ],
+      "imports": [
+        "ELECTRICITY"
+      ],
+      "exports": [
+        "HEAT_AMBIENT"
+      ],
+      "multiHubs": true
+    },
+    "variant": true
+  },
+  "status": {
+    "code": "string",
+    "desc": "string",
+    "message": "string"
+  }
+}
+```
+
+## Create new scenario excel v2 { #operation-createNewScenarioExcelV2 }
+
+```
+PUT /sympheny-app/v2/scenarios/{scenarioGuid}/excel
+```
+
+Requires a [Bearer token](../authentication.md).
+
+Before calling this endpoint, first obtain s3PresignedUrl from GET /db-update/s3-presigned-url, second upload the excel file to the presigned url (using a standard PUT call)
+
+**Parameters**
+
+| Name | In | Type | Required | Description |
+| --- | --- | --- | --- | --- |
+| `scenarioGuid` | path | string | yes |  |
+
+**Request body** (`ScenarioExcelRequestDtoPUT`)
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `s3PresignedUrl` | string | yes |  |
+
+**Example request**
+
+```bash
+curl -X PUT "https://eu-north-1-api.sympheny.com/sympheny-app/v2/scenarios/{scenarioGuid}/excel" \
+  -H "Authorization: Bearer $SYMPHENY_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "s3PresignedUrl": "string"
 }'
 ```
 
