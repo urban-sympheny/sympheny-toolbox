@@ -7,62 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-09-24
+
 ### Added
-- The published OpenAPI spec now includes a first api-services endpoint,
-  `POST /api-services/gis/buildings`, which returns the buildings within an area as GeoJSON. It
-  adds generated models (`BuildingsRequest`, `BuildingFeatureCollection`, `BuildingFeature`,
-  `BuildingProperties`, `Address`, `Geometry`, and the `BuildingTypeEnum`, `FeatureEnum`,
-  `FeatureCollectionEnum` and `FeatureGeoTypeEnum` enums) and a
-  [Buildings](https://docs.sympheny.com/api/reference/buildings/) REST API reference page.
-- The published spec picks up seven new webapp endpoints from the latest export, with their
-  generated models and REST API reference entries:
-  - energy demand database: `GET /sympheny-app/database-energy-demand-table` and
-    `POST /sympheny-app/database-energy-demand-profile/{demandType}/calculate` (new
-    [Energy demand database](https://docs.sympheny.com/api/reference/energy-demand-database/) page);
-  - specs input file: `PUT /sympheny-app/v2/specs` starts generating the specs file (new
-    [Specs](https://docs.sympheny.com/api/reference/specs/) page), and
-    `GET /sympheny-app/scenario/{scenarioGuid}/specs-input-file-url` is polled for its URL;
-  - scenario from Excel: `GET /sympheny-app/db-update/s3-presigned-url` returns an upload URL
-    (new [Uploads](https://docs.sympheny.com/api/reference/uploads/) page); after the file is
-    uploaded there, `POST /sympheny-app/v2/analysis/{guid}/scenario/excel` creates a scenario from
-    it, or `PUT /sympheny-app/v2/scenarios/{scenarioGuid}/excel` replaces one.
+- `client.scenarios`: import a scenario from Excel with `excel_upload_url`, then
+  `create_from_excel` or `replace_from_excel`; export its specs input file with
+  `prepare_specs_input_files`, then poll `specs_input_file_url`.
+- `client.energy_demand_database`: `list` the database's specific demands and `calculate` a demand
+  profile from it.
+- `client.buildings.in_area`: the buildings within an area, as GeoJSON. This is the first endpoint
+  from the api-services backend (`/api-services`).
+- The REST API reference covers the new endpoints, with new
+  [Specs](https://docs.sympheny.com/api/reference/specs/),
+  [Energy demand database](https://docs.sympheny.com/api/reference/energy-demand-database/),
+  [Uploads](https://docs.sympheny.com/api/reference/uploads/) and
+  [Buildings](https://docs.sympheny.com/api/reference/buildings/) pages.
 
 ### Changed
-- Maintainer tooling (no change to the published spec or the SDK): `scripts/fetch_webapp_openapi.py`
-  is now `scripts/fetch_openapi.py`. It fetches the webapp and the api-services
-  (`/api-services/api-docs`) exports (`--source` picks one) and diffs each against the copy on disk.
-  The backoffice and sense exports stay local files until they get a docs endpoint.
-- `scripts/merge_openapi.py` now takes the endpoints to publish from the committed
-  `specs/openapi_filters.toml`: include/exclude patterns per source (`METHOD /path` globs, `tag:`,
-  `op:`), with a warning for patterns that match nothing. This replaces the hardcoded backoffice and
-  sense selections. api-services is merged as a new source, as an allowlist
-  (its paths already start with `/api-services`; its caller tags such as `Web App FE` are dropped):
-  nothing is published until its `include` names it. The non-required-means-nullable contract
-  still applies to the webapp export only.
-- `scripts/merge_openapi.py` now sorts the merged spec's paths, and the methods within each, so a
-  reordered upstream export no longer churns `specs/sympheny_openapi.json`. This change reorders
-  the committed spec (and its `docs/api/openapi.json` copy) once, with identical content. Component
-  schemas keep their order on purpose: sorting them would renumber the generated enum models
-  (`Version`, `Version1`, …) and rename public SDK classes.
+- Maintainer tooling: `scripts/fetch_webapp_openapi.py` is now `scripts/fetch_openapi.py`, which
+  fetches the webapp and api-services exports. `scripts/merge_openapi.py` reads the endpoints to
+  publish from `specs/openapi_filters.toml` (api-services is an allowlist), warns when two backends
+  define a schema with the same name but a different shape, and sorts paths so that a reordered
+  export no longer churns the committed spec.
 
 ### Docs
-- Removed the beta announcement banner and the `overrides/main.html` theme override it lived in
-  (with `custom_dir` and the `announce.dismiss` theme feature): the legacy documentation at
-  support.app.sympheny.com is being retired and redirected to
-  [docs.sympheny.com](https://docs.sympheny.com), so the banner's pointer to it no longer holds.
-- Added the quick-start tutorial video to
-  [Quick start](https://docs.sympheny.com/web-app/getting-started/quick-start/), with an English
-  caption track served from the site (`docs/web-app/getting-started/quick-start-tutorial.en.vtt`);
-  browsers reject a cross-origin caption track, so it ships with the docs rather than with the
-  video on S3.
-- Quick start now lazy-loads its screenshots (`{ loading=lazy }` on all but the first two of 52
-  images, 11.3 MB in total), so the page no longer fetches every screenshot up front.
-- Documentation prose is now British English with the `-ise` convention (`optimise`, `organisation`,
-  `colour`, `centre`, `modelling`, `analyse`, `licence`), applied across 47 hand-written pages. UI
-  strings (**Database Center**, **Organization Database**, the **Optimize** sizing option),
-  code identifiers and enum values (`organizationId`, `colorHexCode`, `SPORTS_CENTER`), the
-  generated reference pages, and filenames keep their source spelling. The rule and its four
-  exemptions are recorded in `AGENTS.md` and the `docs` skill.
+- Removed the beta banner, since the legacy documentation it pointed to now redirects to
+  [docs.sympheny.com](https://docs.sympheny.com).
+- Added the tutorial video, with English captions, to
+  [Quick start](https://docs.sympheny.com/web-app/getting-started/quick-start/), and made the page
+  load its screenshots lazily.
+- Hand-written documentation now uses British English (`-ise` spellings). UI strings, code
+  identifiers and generated reference pages keep their original spelling.
 
 ## [3.0.1] - 2026-08-07
 
@@ -178,6 +153,7 @@ from the current webapp spec, and the documentation moves to a full site at
 
 - Rewritten as a typed API client generated from the OpenAPI spec, with parallel async/sync clients.
 
+[3.1.0]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v3.1.0
 [3.0.1]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v3.0.1
 [3.0.0]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v3.0.0
 [2.1.0]: https://github.com/urban-sympheny/sympheny-toolbox/releases/tag/v2.1.0
