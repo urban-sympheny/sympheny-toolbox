@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Maintainer tooling (no change to the published spec or the SDK): `scripts/fetch_webapp_openapi.py`
+  is now `scripts/fetch_openapi.py`. It fetches the webapp and the api-services
+  (`/api-services/api-docs`) exports (`--source` picks one) and diffs each against the copy on disk.
+  The backoffice and sense exports stay local files until they get a docs endpoint.
+- `scripts/merge_openapi.py` now takes the endpoints to publish from the committed
+  `specs/openapi_filters.toml`: include/exclude patterns per source (`METHOD /path` globs, `tag:`,
+  `op:`), with a warning for patterns that match nothing. This replaces the hardcoded backoffice and
+  sense selections. api-services is merged as a new source under `/api-services`, as an allowlist:
+  nothing is published until its `include` names it. The non-required-means-nullable contract
+  still applies to the webapp export only.
+- `scripts/merge_openapi.py` now sorts the merged spec's paths, and the methods within each, so a
+  reordered upstream export no longer churns `specs/sympheny_openapi.json`. This change reorders
+  the committed spec (and its `docs/api/openapi.json` copy) once, with identical content. Component
+  schemas keep their order on purpose: sorting them would renumber the generated enum models
+  (`Version`, `Version1`, …) and rename public SDK classes.
+
 ### Docs
 - Removed the beta announcement banner and the `overrides/main.html` theme override it lived in
   (with `custom_dir` and the `announce.dismiss` theme feature): the legacy documentation at

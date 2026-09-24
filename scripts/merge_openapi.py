@@ -5,27 +5,33 @@ Only the merged output, ``specs/sympheny_openapi.json``, is committed and public
 below are **internal Sympheny artifacts, git-ignored** (see ``specs/.gitignore``); a fresh clone will
 not have them, so this script is a **maintainer-only** step for regenerating the public spec.
 
-The nullability contract (agreed with the webapp backend team)
+The nullability contract (agreed with the webapp backend team — webapp only)
 --------------------------------------------------------------
 In the upstream webapp export, a property listed in a schema's ``required`` must be **present and
 non-null**; every other property **may be null**. The export marks nothing ``nullable``, so
 ``mark_non_required_nullable`` below applies the second half of the rule when producing the public
 spec: every property absent from its schema's ``required`` gains ``"null"`` in its type. Required
-properties keep their declared type, and a ``null`` returned for one of them is an API bug.
+properties keep their declared type, and a ``null`` returned for one of them is an API bug. The other
+exports (api-services, backoffice, sense) are not under this contract and keep their declared types.
 
-Refresh the export with ``scripts/fetch_webapp_openapi.py`` (``GET
-{base_url}sympheny-app/v3/api-docs?select=essential``); it saves ``specs/webapp_openapi_latest.json``
-and prints the diff — review it, then copy it over ``specs/webapp_openapi.json`` and rerun this
-script. Since the 2026-08-06 export, every operation the SDK uses (including ``renameScenario`` and
+Refresh the webapp and api-services exports with ``scripts/fetch_openapi.py``; it saves
+``specs/<source>_openapi_latest.json`` and prints the diff — review it, then copy it over
+``specs/<source>_openapi.json`` and rerun this script. The backoffice and sense exports have no docs
+endpoint yet and are maintained as local files. Since the 2026-08-06 export, every operation the SDK uses (including ``renameScenario`` and
 ``copyScenario``, which used to be patched in manually) is present upstream, so no manual additions
 remain.
 
+Which operations of each export are published is set in ``specs/openapi_filters.toml`` (committed):
+include/exclude patterns per source. api-services is an allowlist — its section must declare
+``include`` — so a new upstream endpoint is never published by accident.
+
 Private source inputs (in specs/, git-ignored):
-- webapp_openapi.json     (OpenAPI 3.0.1) : all endpoints, upgraded to 3.1,
-                                            non-required fields marked nullable
-- backoffice_openapi.json (OpenAPI 3.1.0) : only POST /backoffice/auth/ext/token
-                                            and GET /backoffice/ext/users/profile
-- sense_openapi.json      (OpenAPI 3.1.0) : only "External Solver Jobs" endpoints
+- webapp_openapi.json       (OpenAPI 3.0.1) : upgraded to 3.1, non-required fields marked nullable,
+                                              paths prefixed with /sympheny-app
+- api_services_openapi.json                 : upgraded to 3.1 if needed, paths prefixed with
+                                              /api-services; optional while its allowlist is empty
+- backoffice_openapi.json   (OpenAPI 3.1.0)
+- sense_openapi.json        (OpenAPI 3.1.0)
 
 Output (committed, public): specs/sympheny_openapi.json
 
@@ -34,8 +40,10 @@ Usage: python scripts/merge_openapi.py
 
 from __future__ import annotations
 
+import fnmatch
 import json
 import sys
+import tomllib
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -46,23 +54,19 @@ if TYPE_CHECKING:
 
 SPECS = Path(__file__).resolve().parent.parent / "specs"
 OUTPUT = SPECS / "sympheny_openapi.json"
+FILTERS = SPECS / "openapi_filters.toml"
 
 # Internal Sympheny exports, git-ignored (see specs/.gitignore); only OUTPUT is committed/public.
-PRIVATE_SOURCES = ("webapp_openapi.json", "backoffice_openapi.json", "sense_openapi.json")
+PRIVATE_SOURCES = ("webapp_openapi.json", "api_services_openapi.json", "backoffice_openapi.json", "sense_openapi.json")
 
 SERVER_URL = "https://eu-north-1-api.sympheny.com"
 WEBAPP_PREFIX = "/sympheny-app"
+API_SERVICES_PREFIX = "/api-services"
 
 HTTP_METHODS = {"get", "put", "post", "delete", "options", "head", "patch", "trace"}
 
-# (path, method) pairs to keep from the backoffice spec
-BACKOFFICE_KEEP = {
-    ("/backoffice/auth/ext/token", "post"),
-    ("/backoffice/ext/users/profile", "get"),
-}
-
-# operations with any of these tags are kept from the sense spec
-SENSE_KEEP_TAGS = {"External Solver Jobs"}
+# sections of FILTERS; api-services is an allowlist and must declare `include`
+FILTER_SOURCES = ("webapp", "api-services", "backoffice", "sense")
 
 
 def load(name: str) -> dict[str, Any]:
@@ -171,6 +175,43 @@ def filter_paths(
     spec["paths"] = new_paths
 
 
+def load_filters() -> dict[str, dict[str, list[str]]]:
+    filters: dict[str, dict[str, list[str]]] = tomllib.loads(FILTERS.read_text())
+    missing = [name for name in FILTER_SOURCES if name not in filters]
+    if missing:
+        raise SystemExit(f"{FILTERS.name}: missing section(s) {missing}")
+    if "include" not in filters["api-services"]:
+        raise SystemExit(f"{FILTERS.name}: [api-services] must declare `include` (allowlist)")
+    return filters
+
+
+def matches(pattern: str, path: str, method: str, op: dict[str, Any]) -> bool:
+    """Whether a filter pattern (``tag:<name>``, ``op:<operationId>`` or ``METHOD /path`` glob) selects an operation."""
+    if pattern.startswith("tag:"):
+        return pattern.removeprefix("tag:") in op.get("tags", [])
+    if pattern.startswith("op:"):
+        return pattern.removeprefix("op:") == op.get("operationId")
+    return fnmatch.fnmatchcase(f"{method.upper()} {path}", pattern)
+
+
+def apply_filters(spec: dict[str, Any], rules: dict[str, list[str]], prefix: str, label: str) -> None:
+    """Keep the operations selected by `rules`, matched against their public path (`prefix` + path)."""
+    include, exclude = rules.get("include"), rules.get("exclude", [])
+    used: set[str] = set()
+
+    def keep(path: str, method: str, op: dict[str, Any]) -> bool:
+        public = prefix + path
+        included = [p for p in include if matches(p, public, method, op)] if include is not None else []
+        excluded = [p for p in exclude if matches(p, public, method, op)]
+        used.update(included, excluded)
+        return (include is None or bool(included)) and not excluded
+
+    filter_paths(spec, keep)
+    for pattern in [*(include or []), *exclude]:
+        if pattern not in used:
+            print(f"warning: [{label}] filter pattern matched nothing: {pattern!r}", file=sys.stderr)
+
+
 def collect_refs(node: Any, refs: set[str]) -> None:
     if isinstance(node, list):
         for item in node:
@@ -275,10 +316,40 @@ def set_default_security(spec: dict[str, Any], security: list[dict[str, list[str
                 op["security"] = security
 
 
+def sort_output(spec: dict[str, Any]) -> None:
+    """Sort paths, and the methods within each (path-level fields first), so upstream export order
+    never shows up as churn in the committed spec.
+
+    Component schemas deliberately keep their merge order: datamodel-codegen numbers inline enums
+    (``Version``, ``Version1``, ...) by encounter order, so sorting them renames public SDK models.
+    """
+    spec["paths"] = {path: dict(sorted(item.items(), key=lambda kv: (kv[0] in HTTP_METHODS, kv[0]))) for path, item in sorted(spec["paths"].items())}
+
+
+def prepare_api_services(rules: dict[str, list[str]]) -> dict[str, Any]:
+    """Load, upgrade (if 3.0), filter and prefix the api-services export — no nullability contract."""
+    # nothing is published from api-services until its allowlist names something, so the export
+    # is only required then
+    if not rules["include"] and not (SPECS / "api_services_openapi.json").exists():
+        return {"openapi": "3.1.0", "paths": {}, "components": {"schemas": {}}}
+    spec = load("api_services_openapi.json")
+    if str(spec.get("openapi", "")).startswith("3.0"):
+        upgrade_schema_3_0_to_3_1(spec.get("components", {}))
+        upgrade_schema_3_0_to_3_1(spec["paths"])
+    set_default_security(spec, [{"HTTPBearer": []}])
+    apply_filters(spec, rules, API_SERVICES_PREFIX, "api-services")
+    spec.setdefault("components", {}).setdefault("schemas", {})
+    prune_components(spec)
+    spec["paths"] = {API_SERVICES_PREFIX + path: item for path, item in spec["paths"].items()}
+    return spec
+
+
 def main() -> int:
+    filters = load_filters()
     webapp = load("webapp_openapi.json")
     backoffice = load("backoffice_openapi.json")
     sense = load("sense_openapi.json")
+    api_services = prepare_api_services(filters["api-services"])
 
     # --- webapp: upgrade to 3.1, nullability, path prefix -------------------
     upgrade_schema_3_0_to_3_1(webapp["components"])
@@ -286,17 +357,18 @@ def main() -> int:
     mark_non_required_nullable(webapp["components"])
     mark_non_required_nullable(webapp["paths"])
     set_default_security(webapp, [{"HTTPBearer": []}])
+    apply_filters(webapp, filters["webapp"], WEBAPP_PREFIX, "webapp")
     prune_components(webapp)
     webapp["paths"] = {WEBAPP_PREFIX + path: item for path, item in webapp["paths"].items()}
 
-    # --- backoffice: keep only the two external endpoints -------------------
-    filter_paths(backoffice, lambda p, m, _op: (p, m) in BACKOFFICE_KEEP)
+    # --- backoffice ----------------------------------------------------------
+    apply_filters(backoffice, filters["backoffice"], "", "backoffice")
     # token endpoint authenticates via credentials in the body
     backoffice["paths"]["/backoffice/auth/ext/token"]["post"]["security"] = []
     prune_components(backoffice)
 
-    # --- sense: keep only External Solver Jobs endpoints --------------------
-    filter_paths(sense, lambda _p, _m, op: bool(SENSE_KEEP_TAGS & set(op.get("tags", []))))
+    # --- sense ---------------------------------------------------------------
+    apply_filters(sense, filters["sense"], "", "sense")
     prune_components(sense)
 
     # --- merge ---------------------------------------------------------------
@@ -346,8 +418,8 @@ def main() -> int:
         "tags": [],
     }
 
-    labels = {id(webapp): "Webapp", id(backoffice): "Backoffice", id(sense): "Sense"}
-    for spec in (webapp, backoffice, sense):
+    labels = {id(webapp): "Webapp", id(api_services): "ApiServices", id(backoffice): "Backoffice", id(sense): "Sense"}
+    for spec in (webapp, api_services, backoffice, sense):
         for path in spec["paths"]:
             if path in merged["paths"]:
                 raise SystemExit(f"path collision: {path}")
@@ -359,14 +431,17 @@ def main() -> int:
     merged["components"]["securitySchemes"] = {"HTTPBearer": backoffice["components"]["securitySchemes"]["HTTPBearer"]}
 
     # --- tags ----------------------------------------------------------------
-    tag_descriptions = {tag["name"]: tag.get("description") for spec in (webapp, backoffice, sense) for tag in spec.get("tags", [])}
+    tag_descriptions = {tag["name"]: tag.get("description") for spec in (webapp, api_services, backoffice, sense) for tag in spec.get("tags", [])}
     merged["x-tagGroups"] = []
     for group_name, spec in (
         ("Platform", webapp),
+        ("Services", api_services),
         ("Account", backoffice),
         ("Solver", sense),
     ):
         names = sorted(used_tags(spec))
+        if not names:
+            continue
         merged["x-tagGroups"].append({"name": group_name, "tags": names})
         for name in names:
             tag: dict[str, Any] = {"name": name}
@@ -382,6 +457,7 @@ def main() -> int:
     if dangling:
         raise SystemExit(f"dangling $refs: {sorted(dangling)}")
 
+    sort_output(merged)
     OUTPUT.write_text(json.dumps(merged, indent=2) + "\n")
     ops = sum(1 for item in merged["paths"].values() for method in item if method in HTTP_METHODS)
     print(f"wrote {OUTPUT}: {len(merged['paths'])} paths, {ops} operations, {len(merged['components']['schemas'])} schemas")

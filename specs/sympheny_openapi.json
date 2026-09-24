@@ -16,3420 +16,6 @@
     }
   ],
   "paths": {
-    "/sympheny-app/projects": {
-      "get": {
-        "tags": [
-          "project-controller"
-        ],
-        "description": "Here you must use version=V2. Also name must be unique",
-        "operationId": "viewMyProjects",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoProjectSummaryResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "project-controller"
-        ],
-        "description": "Here you must use version=V2. Also name must be unique",
-        "operationId": "createNewProject",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProjectRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoProjectResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/projects/{guid}": {
-      "get": {
-        "tags": [
-          "project-controller"
-        ],
-        "operationId": "viewProjectDetails",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "includeAnalyses",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "boolean",
-              "default": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoProjectDetailResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "project-controller"
-        ],
-        "operationId": "deleteProject",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoProjectSummaryResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/projects/{guid}/analyses": {
-      "get": {
-        "tags": [
-          "analysis-controller"
-        ],
-        "operationId": "list_2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/PagedResponseAnalysisResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "analysis-controller"
-        ],
-        "operationId": "createNewAnalysis",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AnalysisRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoAnalysisResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/projects/{guid}/analysis/{analysisGuid}": {
-      "get": {
-        "tags": [
-          "analysis-controller"
-        ],
-        "operationId": "viewAnalysisDetails",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "analysisGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoAnalysisDetailsResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/analysis/{guid}/scenario": {
-      "get": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "listScenarios",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListFScenarioResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "createNewScenario",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScenarioRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}": {
-      "put": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "renameScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ScenarioRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenario/{scenarioGuid}/frontend-url": {
-      "get": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "getScenarioFrontendUrl",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoScenarioFrontendUrlResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/copy/{scenarioGuid}": {
-      "put": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "copyScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "analysisDestinationGuid",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenario/{scenarioGuid}": {
-      "get": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "getScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "scenario-controller"
-        ],
-        "operationId": "deleteScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStatus"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/stages": {
-      "get": {
-        "tags": [
-          "stage-controller"
-        ],
-        "operationId": "list",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListStageResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "stage-controller"
-        ],
-        "operationId": "create",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StageRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStageResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/stages/{guid}": {
-      "get": {
-        "tags": [
-          "stage-controller"
-        ],
-        "operationId": "get_1",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStageResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/stages/{stageGuid}": {
-      "put": {
-        "tags": [
-          "stage-controller"
-        ],
-        "operationId": "update",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "stageGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StageCore"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStageResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "stage-controller"
-        ],
-        "operationId": "delete",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "stageGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/hubs": {
-      "get": {
-        "tags": [
-          "hub-controller"
-        ],
-        "operationId": "findAllHubsByScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListFHubResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "hub-controller"
-        ],
-        "operationId": "createNewHub",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HubRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoHubResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/hubs/{guid}": {
-      "get": {
-        "tags": [
-          "hub-controller"
-        ],
-        "operationId": "getHub",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoHubResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "hub-controller"
-        ],
-        "operationId": "deleteHub",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListHubResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/hubs/{guid}": {
-      "put": {
-        "tags": [
-          "hub-controller"
-        ],
-        "operationId": "editHub",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HubRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoHubResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/carriers": {
-      "post": {
-        "tags": [
-          "energy-carrier-controller"
-        ],
-        "operationId": "createNewEnergyCarrierV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnergyCarrierRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyCarrierResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/carriers": {
-      "get": {
-        "tags": [
-          "energy-carrier-controller"
-        ],
-        "operationId": "findAllEnergyCarriersByScenario",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyCarriersListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/carriers/{carrierGuid}": {
-      "get": {
-        "tags": [
-          "energy-carrier-controller"
-        ],
-        "operationId": "getEnergyCarrierByGuid",
-        "parameters": [
-          {
-            "name": "carrierGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyCarrierResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/carriers/{carrierGuid}": {
-      "put": {
-        "tags": [
-          "energy-carrier-controller"
-        ],
-        "operationId": "editEnergyCarrierV2",
-        "parameters": [
-          {
-            "name": "carrierGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyCarrierResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_2/scenarios/{scenarioGuid}/conversion-technologies": {
-      "post": {
-        "tags": [
-          "conversion-technology-controller"
-        ],
-        "description": "Needs at least 1 mode. Each mode needs at least 1 carrier INPUT and 1 carrier OUTPUT. Cannot have same carrier in both INPUT and OUTPUT",
-        "operationId": "specifyConversionTechnologyV2_2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConversionTechnologyRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/conversion-technologies": {
-      "get": {
-        "tags": [
-          "conversion-technology-controller"
-        ],
-        "operationId": "getAllConversionTechnologiesByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyListResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/conversion-technologies/{guid}": {
-      "get": {
-        "tags": [
-          "conversion-technology-controller"
-        ],
-        "operationId": "getConversionTechDetailsV2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyDetailResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "conversion-technology-controller"
-        ],
-        "operationId": "deleteConversionTechnologyV2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/conversion-technologies/{guid}": {
-      "put": {
-        "tags": [
-          "conversion-technology-controller"
-        ],
-        "operationId": "updateConversionTechnology",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ConversionTechnologyRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/storage-technologies": {
-      "post": {
-        "tags": [
-          "storage-technology-controller"
-        ],
-        "operationId": "specifyStorageTechnologyV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StorageTechnologyRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/storage-technologies": {
-      "get": {
-        "tags": [
-          "storage-technology-controller"
-        ],
-        "operationId": "getAllStorageTechnologiesByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyListResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/storage-technologies/{guid}": {
-      "get": {
-        "tags": [
-          "storage-technology-controller"
-        ],
-        "operationId": "getStorageTechDetailsV2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyDetailResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_2/scenarios/storage-technologies/{guid}": {
-      "put": {
-        "tags": [
-          "storage-technology-controller"
-        ],
-        "operationId": "updateStorageTechnologyV2_2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StorageTechnologyRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyDetailResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages": {
-      "post": {
-        "tags": [
-          "technology-package-controller"
-        ],
-        "description": "conversionTechnologies or storageTechnologies must not be empty",
-        "operationId": "specifyTechnologyPackageV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TechnologyPackageRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/technology-packages": {
-      "get": {
-        "tags": [
-          "technology-package-controller"
-        ],
-        "operationId": "getAllTechnologyPackagesByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageListResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/technology-packages/{guid}": {
-      "get": {
-        "tags": [
-          "technology-package-controller"
-        ],
-        "operationId": "getTechnologyPackageByGuidV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages/{guid}": {
-      "put": {
-        "tags": [
-          "technology-package-controller"
-        ],
-        "description": "conversionTechnologies or storageTechnologies must not be empty",
-        "operationId": "updateTechnologyPackageV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TechnologyPackageRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/technology-packages/{guid}": {
-      "delete": {
-        "tags": [
-          "technology-package-controller"
-        ],
-        "operationId": "deleteTechnologyPackage",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "deleteTechs",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/network-technologies": {
-      "post": {
-        "tags": [
-          "network-technology-controller"
-        ],
-        "operationId": "specifyNetworkTechnologyV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NetworkTechnologyRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/network-technologies": {
-      "get": {
-        "tags": [
-          "network-technology-controller"
-        ],
-        "operationId": "getAllNetworkTechnologiesByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyListResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/network-technologies/{guid}": {
-      "get": {
-        "tags": [
-          "network-technology-controller"
-        ],
-        "operationId": "getNetworkTechDetailsV2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/network-technologies/{guid}": {
-      "put": {
-        "tags": [
-          "network-technology-controller"
-        ],
-        "operationId": "updateNetworkTechnologyV2_1",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NetworkTechnologyRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/network-links": {
-      "post": {
-        "tags": [
-          "network-link-controller"
-        ],
-        "operationId": "specifyNetworkLinkV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NetworkLinkRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/network-links": {
-      "get": {
-        "tags": [
-          "network-link-controller"
-        ],
-        "operationId": "getAllNetworkLinksByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListNetworkLinkResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/network-links/{network-link-guid}": {
-      "get": {
-        "tags": [
-          "network-link-controller"
-        ],
-        "operationId": "getNetworkLinkDetailsV2",
-        "parameters": [
-          {
-            "name": "network-link-guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_2/scenarios/{scenarioGuid}/network-links/{network-link-guid}": {
-      "put": {
-        "tags": [
-          "network-link-controller"
-        ],
-        "operationId": "updateNetworkLinkV2_2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "network-link-guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NetworkLinkRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/network-links/{network-link-guid}": {
-      "delete": {
-        "tags": [
-          "network-link-controller"
-        ],
-        "operationId": "deleteNetworkLink",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "network-link-guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/intra-hub-network-links": {
-      "post": {
-        "tags": [
-          "intra-hub-network-link-controller"
-        ],
-        "operationId": "specifyIntraHubNetworkLinkV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/IntraHubNetworkLinkRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/intra-hub-network-links": {
-      "get": {
-        "tags": [
-          "intra-hub-network-link-controller"
-        ],
-        "operationId": "getAllIntraHubNetworkLinks",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/intra-hub-network-links/{guid}": {
-      "get": {
-        "tags": [
-          "intra-hub-network-link-controller"
-        ],
-        "operationId": "getIntraHubNetworkLinkDetails",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "intra-hub-network-link-controller"
-        ],
-        "operationId": "deleteIntraHubNetworkLink",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/intra-hub-network-links/{guid}": {
-      "put": {
-        "tags": [
-          "intra-hub-network-link-controller"
-        ],
-        "operationId": "updateIntraHubNetworkLinkV2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/IntraHubNetworkLinkRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenario/{scenarioGuid}/impex": {
-      "post": {
-        "tags": [
-          "impex-controller"
-        ],
-        "operationId": "createNewImpexV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ImportExportRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoImportExportResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/impexes": {
-      "get": {
-        "tags": [
-          "impex-controller"
-        ],
-        "operationId": "findAllByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListImportExportResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/impex/{type}/{guid}": {
-      "get": {
-        "tags": [
-          "impex-controller"
-        ],
-        "operationId": "getImpexByGuidV2",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "IMPORT",
-                "EXPORT"
-              ]
-            }
-          },
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "scenarioVariantGuid",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoImportExportResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/impex/{guid}": {
-      "put": {
-        "tags": [
-          "impex-controller"
-        ],
-        "operationId": "editImpexV2_1",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ImportExportRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoImportExportResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/impex/{type}/{guid}": {
-      "delete": {
-        "tags": [
-          "impex-controller"
-        ],
-        "operationId": "deleteImpex",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "IMPORT",
-                "EXPORT"
-              ]
-            }
-          },
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStatus"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/profiles-json": {
-      "post": {
-        "tags": [
-          "profile-controller"
-        ],
-        "description": "values array size must be exactly 8760, with period from 1 to 8760, and positive demandValue",
-        "operationId": "createJson",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileJsonRequestDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoProfileResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/profiles": {
-      "get": {
-        "tags": [
-          "profile-controller"
-        ],
-        "operationId": "list_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListProfileResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/{scenarioGuid}/profiles/{profileId}": {
-      "get": {
-        "tags": [
-          "profile-controller"
-        ],
-        "operationId": "get",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "profileId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoProfileDetailsResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "profile-controller"
-        ],
-        "operationId": "delete_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "profileId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/profiles-json/{profileId}": {
-      "put": {
-        "tags": [
-          "profile-controller"
-        ],
-        "operationId": "editJsonV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "profileId",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoProfileDetailsResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/energy-demands": {
-      "post": {
-        "tags": [
-          "energy-demand-controller"
-        ],
-        "description": "demandProfileId and demandSalePrice must be exclusive",
-        "operationId": "uploadNewEnergyDemandProfileV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnergyDemandRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/energy-demands": {
-      "get": {
-        "tags": [
-          "energy-demand-controller"
-        ],
-        "operationId": "getAllEnergyDemandsByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListEnergyDemandResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/energy-demands/{guid}": {
-      "get": {
-        "tags": [
-          "energy-demand-controller"
-        ],
-        "operationId": "getEnergyDemandDetailsByGuidV2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "scenarioVariantGuid",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandDetailResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_2/scenarios/{scenarioGuid}/energy-demands/{demand-guid}": {
-      "put": {
-        "tags": [
-          "energy-demand-controller"
-        ],
-        "operationId": "updateEnergyDemandV2_2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "demand-guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EnergyDemandRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/energy-demands/{guid}": {
-      "delete": {
-        "tags": [
-          "energy-demand-controller"
-        ],
-        "operationId": "deleteEnergyDemandProfile",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/solar-on-site-resource": {
-      "post": {
-        "tags": [
-          "solar-on-site-resource-controller"
-        ],
-        "description": "energyCarrierGuid must be a carrier with subType in: SOLAR_ROOF,BIOMASS,GEOTHERMAL,HYDRO,PROCESS_WASTE_HEAT,SOLAR_FACADE,SOLAR_PARAPET,TIDAL,WIND",
-        "operationId": "uploadNewSolarOnSiteResourceV2_1",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SolarOnSiteResourceRequestDtoV2"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/{scenarioGuid}/solar-on-site-resource": {
-      "get": {
-        "tags": [
-          "solar-on-site-resource-controller"
-        ],
-        "operationId": "getAllSolarOnSiteResourcesByScenarioV2",
-        "parameters": [
-          {
-            "name": "scenarioGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoListSolarOnSiteResourceResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2/scenarios/solar-on-site-resource/{guid}": {
-      "get": {
-        "tags": [
-          "solar-on-site-resource-controller"
-        ],
-        "operationId": "getSolarOnSiteResourcesV2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/v2_2/scenarios/solar-on-site-resource/{guid}": {
-      "put": {
-        "tags": [
-          "solar-on-site-resource-controller"
-        ],
-        "operationId": "editSolarOnSiteResourceV2_2",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SolarOnSiteResourceRequestDtoPUT"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceResponseDtoV2"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/solar-on-site-resource/{guid}": {
-      "delete": {
-        "tags": [
-          "solar-on-site-resource-controller"
-        ],
-        "operationId": "deleteSolarOnSiteResource",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/storage-technologies/{guid}": {
-      "delete": {
-        "tags": [
-          "storage-technology-controller"
-        ],
-        "operationId": "deleteStorageTechnology",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/network-technologies/{guid}": {
-      "delete": {
-        "tags": [
-          "network-technology-controller"
-        ],
-        "operationId": "deleteNetworkTechnology",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/scenarios/carriers/{guid}": {
-      "delete": {
-        "tags": [
-          "energy-carrier-controller"
-        ],
-        "operationId": "deleteEnergyCarrier",
-        "parameters": [
-          {
-            "name": "guid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoEnergyCarriersListResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/sympheny-app/analysis/{analysisGuid}": {
-      "delete": {
-        "tags": [
-          "analysis-controller"
-        ],
-        "operationId": "deleteAnalysis",
-        "parameters": [
-          {
-            "name": "analysisGuid",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDtoStatus"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
     "/backoffice/auth/ext/token": {
       "post": {
         "tags": [
@@ -3909,12 +495,12 @@
       }
     },
     "/sense-api/ext/solver/jobs/{id}": {
-      "get": {
+      "delete": {
         "tags": [
           "External Solver Jobs"
         ],
-        "summary": "Get Solver Job",
-        "operationId": "get_solver_job_sense_api_ext_solver_jobs__id__get",
+        "summary": "Delete Solver Job",
+        "operationId": "delete_solver_job_sense_api_ext_solver_jobs__id__delete",
         "security": [
           {
             "HTTPBearer": []
@@ -3938,7 +524,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetSolverJobExt"
+                  "type": "string",
+                  "title": "Response Delete Solver Job Sense Api Ext Solver Jobs  Id  Delete"
                 }
               }
             }
@@ -4015,12 +602,12 @@
           }
         }
       },
-      "delete": {
+      "get": {
         "tags": [
           "External Solver Jobs"
         ],
-        "summary": "Delete Solver Job",
-        "operationId": "delete_solver_job_sense_api_ext_solver_jobs__id__delete",
+        "summary": "Get Solver Job",
+        "operationId": "get_solver_job_sense_api_ext_solver_jobs__id__get",
         "security": [
           {
             "HTTPBearer": []
@@ -4044,8 +631,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "title": "Response Delete Solver Job Sense Api Ext Solver Jobs  Id  Delete"
+                  "$ref": "#/components/schemas/GetSolverJobExt"
                 }
               }
             }
@@ -4230,6 +816,3420 @@
             }
           }
         }
+      }
+    },
+    "/sympheny-app/analysis/{analysisGuid}": {
+      "delete": {
+        "tags": [
+          "analysis-controller"
+        ],
+        "operationId": "deleteAnalysis",
+        "parameters": [
+          {
+            "name": "analysisGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStatus"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/analysis/{guid}/scenario": {
+      "get": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "listScenarios",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListFScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "createNewScenario",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/carriers/{carrierGuid}": {
+      "get": {
+        "tags": [
+          "energy-carrier-controller"
+        ],
+        "operationId": "getEnergyCarrierByGuid",
+        "parameters": [
+          {
+            "name": "carrierGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyCarrierResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/impex/{type}/{guid}": {
+      "delete": {
+        "tags": [
+          "impex-controller"
+        ],
+        "operationId": "deleteImpex",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "IMPORT",
+                "EXPORT"
+              ]
+            }
+          },
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStatus"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/projects": {
+      "get": {
+        "tags": [
+          "project-controller"
+        ],
+        "description": "Here you must use version=V2. Also name must be unique",
+        "operationId": "viewMyProjects",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoProjectSummaryResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "project-controller"
+        ],
+        "description": "Here you must use version=V2. Also name must be unique",
+        "operationId": "createNewProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoProjectResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/projects/{guid}": {
+      "delete": {
+        "tags": [
+          "project-controller"
+        ],
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoProjectSummaryResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "project-controller"
+        ],
+        "operationId": "viewProjectDetails",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeAnalyses",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoProjectDetailResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/projects/{guid}/analyses": {
+      "get": {
+        "tags": [
+          "analysis-controller"
+        ],
+        "operationId": "list_2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedResponseAnalysisResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "analysis-controller"
+        ],
+        "operationId": "createNewAnalysis",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoAnalysisResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/projects/{guid}/analysis/{analysisGuid}": {
+      "get": {
+        "tags": [
+          "analysis-controller"
+        ],
+        "operationId": "viewAnalysisDetails",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "analysisGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoAnalysisDetailsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenario/{scenarioGuid}": {
+      "delete": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "deleteScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStatus"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "getScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenario/{scenarioGuid}/frontend-url": {
+      "get": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "getScenarioFrontendUrl",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioFrontendUrlResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/carriers/{guid}": {
+      "delete": {
+        "tags": [
+          "energy-carrier-controller"
+        ],
+        "operationId": "deleteEnergyCarrier",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyCarriersListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/copy/{scenarioGuid}": {
+      "put": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "copyScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "analysisDestinationGuid",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/energy-demands/{guid}": {
+      "delete": {
+        "tags": [
+          "energy-demand-controller"
+        ],
+        "operationId": "deleteEnergyDemandProfile",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/hubs/{guid}": {
+      "delete": {
+        "tags": [
+          "hub-controller"
+        ],
+        "operationId": "deleteHub",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListHubResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "hub-controller"
+        ],
+        "operationId": "getHub",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoHubResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/intra-hub-network-links/{guid}": {
+      "delete": {
+        "tags": [
+          "intra-hub-network-link-controller"
+        ],
+        "operationId": "deleteIntraHubNetworkLink",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "intra-hub-network-link-controller"
+        ],
+        "operationId": "getIntraHubNetworkLinkDetails",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/network-technologies/{guid}": {
+      "delete": {
+        "tags": [
+          "network-technology-controller"
+        ],
+        "operationId": "deleteNetworkTechnology",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/solar-on-site-resource/{guid}": {
+      "delete": {
+        "tags": [
+          "solar-on-site-resource-controller"
+        ],
+        "operationId": "deleteSolarOnSiteResource",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/stages/{guid}": {
+      "get": {
+        "tags": [
+          "stage-controller"
+        ],
+        "operationId": "get_1",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStageResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/storage-technologies/{guid}": {
+      "delete": {
+        "tags": [
+          "storage-technology-controller"
+        ],
+        "operationId": "deleteStorageTechnology",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}": {
+      "put": {
+        "tags": [
+          "scenario-controller"
+        ],
+        "operationId": "renameScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoScenarioResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/carriers": {
+      "get": {
+        "tags": [
+          "energy-carrier-controller"
+        ],
+        "operationId": "findAllEnergyCarriersByScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyCarriersListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/hubs": {
+      "get": {
+        "tags": [
+          "hub-controller"
+        ],
+        "operationId": "findAllHubsByScenario",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListFHubResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "hub-controller"
+        ],
+        "operationId": "createNewHub",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HubRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoHubResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/intra-hub-network-links": {
+      "get": {
+        "tags": [
+          "intra-hub-network-link-controller"
+        ],
+        "operationId": "getAllIntraHubNetworkLinks",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/network-links/{network-link-guid}": {
+      "delete": {
+        "tags": [
+          "network-link-controller"
+        ],
+        "operationId": "deleteNetworkLink",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "network-link-guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/profiles": {
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "list_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListProfileResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/profiles-json": {
+      "post": {
+        "tags": [
+          "profile-controller"
+        ],
+        "description": "values array size must be exactly 8760, with period from 1 to 8760, and positive demandValue",
+        "operationId": "createJson",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileJsonRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoProfileResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/profiles/{profileId}": {
+      "delete": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "delete_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "get",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoProfileDetailsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/stages": {
+      "get": {
+        "tags": [
+          "stage-controller"
+        ],
+        "operationId": "list",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListStageResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "stage-controller"
+        ],
+        "operationId": "create",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StageRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStageResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/stages/{stageGuid}": {
+      "delete": {
+        "tags": [
+          "stage-controller"
+        ],
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stageGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "stage-controller"
+        ],
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "stageGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StageCore"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStageResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/scenarios/{scenarioGuid}/technology-packages/{guid}": {
+      "delete": {
+        "tags": [
+          "technology-package-controller"
+        ],
+        "operationId": "deleteTechnologyPackage",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deleteTechs",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageListResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/carriers/{carrierGuid}": {
+      "put": {
+        "tags": [
+          "energy-carrier-controller"
+        ],
+        "operationId": "editEnergyCarrierV2",
+        "parameters": [
+          {
+            "name": "carrierGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergyCarrierRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyCarrierResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/energy-demands/{guid}": {
+      "get": {
+        "tags": [
+          "energy-demand-controller"
+        ],
+        "operationId": "getEnergyDemandDetailsByGuidV2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scenarioVariantGuid",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandDetailResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/impex/{type}/{guid}": {
+      "get": {
+        "tags": [
+          "impex-controller"
+        ],
+        "operationId": "getImpexByGuidV2",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "IMPORT",
+                "EXPORT"
+              ]
+            }
+          },
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scenarioVariantGuid",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoImportExportResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/network-links/{network-link-guid}": {
+      "get": {
+        "tags": [
+          "network-link-controller"
+        ],
+        "operationId": "getNetworkLinkDetailsV2",
+        "parameters": [
+          {
+            "name": "network-link-guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/conversion-technologies/{guid}": {
+      "delete": {
+        "tags": [
+          "conversion-technology-controller"
+        ],
+        "operationId": "deleteConversionTechnologyV2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "conversion-technology-controller"
+        ],
+        "operationId": "getConversionTechDetailsV2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyDetailResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/hubs/{guid}": {
+      "put": {
+        "tags": [
+          "hub-controller"
+        ],
+        "operationId": "editHub",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HubRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoHubResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/intra-hub-network-links/{guid}": {
+      "put": {
+        "tags": [
+          "intra-hub-network-link-controller"
+        ],
+        "operationId": "updateIntraHubNetworkLinkV2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntraHubNetworkLinkRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/network-technologies/{guid}": {
+      "get": {
+        "tags": [
+          "network-technology-controller"
+        ],
+        "operationId": "getNetworkTechDetailsV2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/solar-on-site-resource/{guid}": {
+      "get": {
+        "tags": [
+          "solar-on-site-resource-controller"
+        ],
+        "operationId": "getSolarOnSiteResourcesV2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/storage-technologies/{guid}": {
+      "get": {
+        "tags": [
+          "storage-technology-controller"
+        ],
+        "operationId": "getStorageTechDetailsV2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyDetailResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/carriers": {
+      "post": {
+        "tags": [
+          "energy-carrier-controller"
+        ],
+        "operationId": "createNewEnergyCarrierV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergyCarrierRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyCarrierResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/conversion-technologies": {
+      "get": {
+        "tags": [
+          "conversion-technology-controller"
+        ],
+        "operationId": "getAllConversionTechnologiesByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyListResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/energy-demands": {
+      "get": {
+        "tags": [
+          "energy-demand-controller"
+        ],
+        "operationId": "getAllEnergyDemandsByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListEnergyDemandResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/impexes": {
+      "get": {
+        "tags": [
+          "impex-controller"
+        ],
+        "operationId": "findAllByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListImportExportResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/intra-hub-network-links": {
+      "post": {
+        "tags": [
+          "intra-hub-network-link-controller"
+        ],
+        "operationId": "specifyIntraHubNetworkLinkV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntraHubNetworkLinkRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoIntraHubNetworkLinkResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/network-links": {
+      "get": {
+        "tags": [
+          "network-link-controller"
+        ],
+        "operationId": "getAllNetworkLinksByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListNetworkLinkResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/network-technologies": {
+      "get": {
+        "tags": [
+          "network-technology-controller"
+        ],
+        "operationId": "getAllNetworkTechnologiesByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyListResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/profiles-json/{profileId}": {
+      "put": {
+        "tags": [
+          "profile-controller"
+        ],
+        "operationId": "editJsonV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoProfileDetailsResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/solar-on-site-resource": {
+      "get": {
+        "tags": [
+          "solar-on-site-resource-controller"
+        ],
+        "operationId": "getAllSolarOnSiteResourcesByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoListSolarOnSiteResourceResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/storage-technologies": {
+      "get": {
+        "tags": [
+          "storage-technology-controller"
+        ],
+        "operationId": "getAllStorageTechnologiesByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyListResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/technology-packages": {
+      "get": {
+        "tags": [
+          "technology-package-controller"
+        ],
+        "operationId": "getAllTechnologyPackagesByScenarioV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageListResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2/scenarios/{scenarioGuid}/technology-packages/{guid}": {
+      "get": {
+        "tags": [
+          "technology-package-controller"
+        ],
+        "operationId": "getTechnologyPackageByGuidV2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenario/{scenarioGuid}/impex": {
+      "post": {
+        "tags": [
+          "impex-controller"
+        ],
+        "operationId": "createNewImpexV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportExportRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoImportExportResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/conversion-technologies/{guid}": {
+      "put": {
+        "tags": [
+          "conversion-technology-controller"
+        ],
+        "operationId": "updateConversionTechnology",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversionTechnologyRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/impex/{guid}": {
+      "put": {
+        "tags": [
+          "impex-controller"
+        ],
+        "operationId": "editImpexV2_1",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportExportRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoImportExportResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/network-technologies/{guid}": {
+      "put": {
+        "tags": [
+          "network-technology-controller"
+        ],
+        "operationId": "updateNetworkTechnologyV2_1",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NetworkTechnologyRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/energy-demands": {
+      "post": {
+        "tags": [
+          "energy-demand-controller"
+        ],
+        "description": "demandProfileId and demandSalePrice must be exclusive",
+        "operationId": "uploadNewEnergyDemandProfileV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergyDemandRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/network-links": {
+      "post": {
+        "tags": [
+          "network-link-controller"
+        ],
+        "operationId": "specifyNetworkLinkV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NetworkLinkRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/network-technologies": {
+      "post": {
+        "tags": [
+          "network-technology-controller"
+        ],
+        "operationId": "specifyNetworkTechnologyV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NetworkTechnologyRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkTechnologyResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/solar-on-site-resource": {
+      "post": {
+        "tags": [
+          "solar-on-site-resource-controller"
+        ],
+        "description": "energyCarrierGuid must be a carrier with subType in: SOLAR_ROOF,BIOMASS,GEOTHERMAL,HYDRO,PROCESS_WASTE_HEAT,SOLAR_FACADE,SOLAR_PARAPET,TIDAL,WIND",
+        "operationId": "uploadNewSolarOnSiteResourceV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolarOnSiteResourceRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/storage-technologies": {
+      "post": {
+        "tags": [
+          "storage-technology-controller"
+        ],
+        "operationId": "specifyStorageTechnologyV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StorageTechnologyRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages": {
+      "post": {
+        "tags": [
+          "technology-package-controller"
+        ],
+        "description": "conversionTechnologies or storageTechnologies must not be empty",
+        "operationId": "specifyTechnologyPackageV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TechnologyPackageRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_1/scenarios/{scenarioGuid}/technology-packages/{guid}": {
+      "put": {
+        "tags": [
+          "technology-package-controller"
+        ],
+        "description": "conversionTechnologies or storageTechnologies must not be empty",
+        "operationId": "updateTechnologyPackageV2_1",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TechnologyPackageRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoTechnologyPackageResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_2/scenarios/solar-on-site-resource/{guid}": {
+      "put": {
+        "tags": [
+          "solar-on-site-resource-controller"
+        ],
+        "operationId": "editSolarOnSiteResourceV2_2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolarOnSiteResourceRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoSolarOnSiteResourceResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_2/scenarios/storage-technologies/{guid}": {
+      "put": {
+        "tags": [
+          "storage-technology-controller"
+        ],
+        "operationId": "updateStorageTechnologyV2_2",
+        "parameters": [
+          {
+            "name": "guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StorageTechnologyRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoStorageTechnologyDetailResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_2/scenarios/{scenarioGuid}/conversion-technologies": {
+      "post": {
+        "tags": [
+          "conversion-technology-controller"
+        ],
+        "description": "Needs at least 1 mode. Each mode needs at least 1 carrier INPUT and 1 carrier OUTPUT. Cannot have same carrier in both INPUT and OUTPUT",
+        "operationId": "specifyConversionTechnologyV2_2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversionTechnologyRequestDtoV2"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoConversionTechnologyResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_2/scenarios/{scenarioGuid}/energy-demands/{demand-guid}": {
+      "put": {
+        "tags": [
+          "energy-demand-controller"
+        ],
+        "operationId": "updateEnergyDemandV2_2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "demand-guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergyDemandRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoEnergyDemandResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/sympheny-app/v2_2/scenarios/{scenarioGuid}/network-links/{network-link-guid}": {
+      "put": {
+        "tags": [
+          "network-link-controller"
+        ],
+        "operationId": "updateNetworkLinkV2_2",
+        "parameters": [
+          {
+            "name": "scenarioGuid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "network-link-guid",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NetworkLinkRequestDtoPUT"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDtoNetworkLinkResponseDtoV2"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     }
   },

@@ -1,0 +1,23 @@
+# Endpoint selection for scripts/merge_openapi.py — which operations of each backend export are
+# published in specs/sympheny_openapi.json.
+#
+# Pattern forms (matched with fnmatch; `*` also crosses `/`):
+#   "METHOD /public/path"   the path as published, i.e. with its /sympheny-app or /api-services prefix
+#   "tag:<name>"            any operation carrying that tag
+#   "op:<operationId>"      one operation by id
+#
+# A source without `include` keeps every operation; with `include`, only matching ones are kept.
+# `exclude` always wins. Patterns that match nothing are reported as warnings.
+
+[webapp]
+exclude = []
+
+# Allowlist: api-services must declare `include`, so nothing is published unless listed here.
+[api-services]
+include = []
+
+[backoffice]
+include = ["POST /backoffice/auth/ext/token", "GET /backoffice/ext/users/profile"]
+
+[sense]
+include = ["tag:External Solver Jobs"]
