@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Docs
+- Clarified conversion technology capacity: how the technology capacity follows from its primary
+  modes, what mode capacity covers, and how the minimum part load, curtailment limitation, peak
+  power, allowed operation and simultaneous operation relate to it. Added a section on minimum part
+  load for technologies using on-site resources (PV, wind). See
+  [Conversion technologies](https://docs.sympheny.com/web-app/concepts/conversion-technologies/).
+- Documented installation, phase-out, replacement and salvage across
+  [Stages](https://docs.sympheny.com/web-app/concepts/stages/).
+
 ## [3.1.0] - 2026-09-24
 
 ### Added

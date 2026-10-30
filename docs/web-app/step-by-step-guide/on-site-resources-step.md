@@ -30,7 +30,7 @@ When sizing a new solar PV field, the only available information may be the **Av
 
 ![Available Resource Area configuration](img/on-site-resources-step-4.png)
 
-The **Available Resource Area (m²)** is the maximum available irradiance profile. The optimisation result determines the optimal size of solar technology to install. Since curtailment may occur, the installed capacity isn't always equal to the maximal operational capacity.
+The **Available Resource Area (m²)** is the maximum area available. The optimisation decides how much of it to use and the size of the solar technology. If you allow curtailment on the technology (a curtailment limitation below 100%), surplus production can be curtailed on its output, so the installed capacity isn't always equal to the highest output.
 
 ![Available Resource Area result](img/on-site-resources-step-5.png)
 
