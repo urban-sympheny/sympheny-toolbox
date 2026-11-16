@@ -15,4 +15,6 @@ Documentation for the Sympheny web app:
 - [What's new](whats-new/index.md): release notes for the Sympheny web app.
 - [Support](support/index.md): FAQs and how to contact support for questions or feedback.
 
+New to Sympheny? Follow the [Sympheny tutorial](https://www.sympheny.com/tutorial) for a guided, hands-on introduction to building and optimising your first energy system model.
+
 Working programmatically with our Python toolbox? See the [REST API](../api/index.md) or the [Python SDK](../sdk/index.md).
