@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documented installation, phase-out, replacement and salvage across
   [Stages](https://docs.sympheny.com/web-app/concepts/stages/).
 - The [Web app](https://docs.sympheny.com/web-app/) landing page now links to the
-  [Sympheny tutorial](https://www.sympheny.com/tutorial).
+  [Sympheny tutorials](https://www.sympheny.com/tutorials).
 
 ## [3.1.0] - 2026-09-24
 
